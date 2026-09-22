@@ -101,7 +101,11 @@ main{position:relative;z-index:1}
 .beneficios .bi svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .hero-feats{display:none;flex-direction:column;gap:11px;list-style:none;padding:22px 0 4px;margin:0;counter-reset:feat}
 .hero-feats li{display:flex;align-items:center;gap:14px;font-size:1.02rem;font-weight:500;color:var(--mineral);letter-spacing:-.01em;counter-increment:feat}
-.hero-feats li .fic{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(242,101,34,.13);border:1px solid rgba(242,101,34,.32);font-family:'DM Mono',monospace;font-weight:500;font-size:.84rem;color:#fa8551}
+.hero-feats li .fic{flex-shrink:0;width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,rgba(242,101,34,.3),rgba(242,101,34,.09));
+  border:1px solid rgba(242,101,34,.42);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 5px 15px -5px rgba(242,101,34,.42);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:.86rem;color:#ff9d6b;letter-spacing:.01em}
 .hero-feats li .fic::before{content:counter(feat,decimal-leading-zero)}
 .rodape-sociais{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
 .r-soc{height:44px;padding:0 18px 0 13px;gap:9px;border-radius:50px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05));backdrop-filter:blur(18px) saturate(200%);border:1px solid rgba(255,255,255,.26);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 22px -12px rgba(0,0,0,.6);transition:transform .3s var(--vai),background .3s,border-color .3s,box-shadow .3s;text-decoration:none}
