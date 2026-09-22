@@ -152,6 +152,7 @@ main{position:relative;z-index:1}
 @keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
+.pobj .cam svg path{transition:fill .32s ease}
 .phead{position:absolute;left:50%;top:50%;width:276px;height:276px;transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
 .phead .beam{position:absolute;inset:0;border:1.5px solid rgba(242,101,34,.95);border-radius:3px;
   box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 6s linear .5s infinite}
@@ -582,17 +583,18 @@ set("ano","textContent",new Date().getFullYear());
         const n = paths.length;
         paths.forEach((p,i) => {
           const t = i / (n - 1);
-          const L = Math.round(16 + t * 64); // 16% (base escura) → 80% (topo brilhante)
-          const S = Math.round(82 + t * 8);  // 82% (base) → 90% (topo mais saturado)
-          p.el.setAttribute("fill", `hsl(22,${S}%,${L}%)`);
+          const L = Math.round(16 + t * 64);
+          const S = Math.round(82 + t * 8);
+          p.el.style.fill = `hsl(22,${S}%,${L}%)`;
         });
       } else {
         const top = paths.length - 1;
-        for (let i = 0; i < top; i++) paths[i].el.setAttribute("fill",`hsl(${h},56%,${paths[i].L}%)`);
+        for (let i = 0; i < top; i++) paths[i].el.style.fill = `hsl(${h},56%,${paths[i].L}%)`;
+        paths[top].el.style.fill = `hsl(${h},72%,64%)`;  // última camada acompanha o ciclo
       }
     }
     function tick(now){
-      if (!document.hidden && now - last > 60){ last = now; recolor(now); }   // ~16fps — transições de cor mais suaves
+      if (!document.hidden && now - last > 33){ last = now; recolor(now); }   // ~30fps
       rafId = requestAnimationFrame(tick);
     }
     const start = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
