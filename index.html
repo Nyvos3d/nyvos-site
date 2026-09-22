@@ -274,11 +274,11 @@ main{position:relative;z-index:1}
 .contato .seta{margin-left:auto;flex-shrink:0;color:var(--cinza-3);transition:transform .4s var(--vai),color .4s}
 .contato:hover .seta{transform:translate(4px,-4px);color:var(--vermelho-luz)}
 .contato .seta svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.mail-inline{display:none;align-items:center;justify-content:center;gap:9px;
-  font-family:'DM Mono',monospace;font-size:.93rem;font-weight:500;color:var(--cinza-3);
+.mail-inline{display:none;align-items:center;justify-content:center;gap:10px;
+  font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--mineral-2);
   text-decoration:none;padding:6px 0;margin-top:24px;transition:color .3s}
-.mail-inline svg{width:14px;height:14px;stroke:var(--cinza-3);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .3s}
-.mail-inline:hover{color:var(--cinza)}.mail-inline:hover svg{stroke:var(--cinza)}
+.mail-inline svg{width:16px;height:16px;stroke:var(--cinza);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .3s}
+.mail-inline:hover{color:var(--mineral)}.mail-inline:hover svg{stroke:var(--mineral)}
 .contato.soon{opacity:.72;cursor:default}
 .contato.soon::before{display:none}
 .contato.soon:hover{transform:none;border-color:var(--traco);box-shadow:none}
@@ -598,36 +598,20 @@ set("ano","textContent",new Date().getFullYear());
     const s = document.createElement("style"); s.textContent = kfCss; document.head.appendChild(s);
     const CYCLE = 22000;
     const animStart = performance.now() + 500;
-    const iso = document.querySelector(".iso");
     const stage = document.querySelector(".stage");
-    let rafId = null, last = 0, wasOrange = false;
+    let rafId = null, last = 0;
     function recolor(now){
       const pos = (Math.max(0, now - animStart) % 4200) / 4200 * 100;
       const allOrange = pos >= lastP1 && pos <= 97;
       const h = ((now % CYCLE) / CYCLE * 360) | 0;
-      if (allOrange !== wasOrange){
-        wasOrange = allOrange;
-        if (iso){
-          if (allOrange){
-            iso.style.animation = "none";
-            requestAnimationFrame(() => {
-              iso.style.transition = "transform 1.4s ease-in-out";
-              iso.style.transform = "rotateX(0deg) rotateZ(0deg)";
-            });
-          } else {
-            iso.style.transition = "transform 1.4s ease-in-out";
-            iso.style.transform = "rotateX(50deg) rotateZ(-15deg)";
-            iso.addEventListener("transitionend", function restore(){
-              iso.style.removeProperty("transition");
-              iso.style.removeProperty("transform");
-              iso.style.removeProperty("animation");
-              iso.removeEventListener("transitionend", restore);
-            });
-          }
-        }
-      }
       if (allOrange){
-        for (const p of paths) p.el.setAttribute("fill","#F26522");
+        // sombreamento gradiente: base escura → topo claro, lê como 3D
+        const n = paths.length;
+        paths.forEach((p,i) => {
+          const t = i / (n - 1);
+          const L = Math.round(22 + t * 50); // 22% (base) → 72% (topo)
+          p.el.setAttribute("fill", `hsl(22,88%,${L}%)`);
+        });
       } else {
         const top = paths.length - 1;
         for (let i = 0; i < top; i++) paths[i].el.setAttribute("fill",`hsl(${h},56%,${paths[i].L}%)`);
