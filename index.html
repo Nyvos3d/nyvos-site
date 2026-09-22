@@ -237,14 +237,9 @@ main{position:relative;z-index:1}
   #cWhats .ct .v{color:var(--mineral);font-weight:700}
   #cWhats .ct small{display:none}
   #cWhats .seta svg{stroke:var(--zap-luz)}
-  #cInsta,#cTiktok,#cLocal,.contato.soon{display:none}
-  #cMail{padding:14px 20px;gap:14px;margin-top:12px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.018));border-color:rgba(154,159,166,.16)}
-  #cMail .ci{width:44px;height:44px;background:rgba(255,255,255,.07)!important;border:1px solid rgba(154,159,166,.18)}
-  #cMail .ci svg{width:22px;height:22px;stroke:var(--mineral-2)}
-  #cMail .ct .k{color:var(--cinza)}
-  #cMail .ct .v{font-family:'DM Mono',monospace;font-weight:500;font-size:.92rem;color:var(--mineral)}
-  #cMail .ct small{display:none}
-  #cMail .seta svg{stroke:var(--cinza-3)}
+  #cInsta,#cTiktok,#cLocal,#cMail,.contato.soon{display:none}
+  #cMail{display:none}
+  .mail-inline{display:flex}
   #rfMail{display:none}
   .redes-cta{display:flex}
   .hero-feats{display:flex}
@@ -277,6 +272,11 @@ main{position:relative;z-index:1}
 .contato .seta{margin-left:auto;flex-shrink:0;color:var(--cinza-3);transition:transform .4s var(--vai),color .4s}
 .contato:hover .seta{transform:translate(4px,-4px);color:var(--vermelho-luz)}
 .contato .seta svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.mail-inline{display:none;align-items:center;justify-content:center;gap:9px;
+  font-family:'DM Mono',monospace;font-size:.82rem;font-weight:500;color:var(--cinza-3);
+  text-decoration:none;padding:6px 0;margin-top:14px;transition:color .3s}
+.mail-inline svg{width:14px;height:14px;stroke:var(--cinza-3);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .3s}
+.mail-inline:hover{color:var(--cinza)}.mail-inline:hover svg{stroke:var(--cinza)}
 .contato.soon{opacity:.72;cursor:default}
 .contato.soon::before{display:none}
 .contato.soon:hover{transform:none;border-color:var(--traco);box-shadow:none}
@@ -483,6 +483,10 @@ main{position:relative;z-index:1}
           <span class="soon-badge">Em breve</span>
         </div>
       </div>
+      <a class="mail-inline" id="cMailMob">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span id="mailAddrMob">nyvos3d@gmail.com</span>
+      </a>
     </div>
   </section>
 </main>
@@ -539,6 +543,8 @@ set("instaHandle","textContent","@"+CONFIG.instagram);
 set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok);
 set("cMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("mailAddr","textContent",CONFIG.email);
+set("cMailMob","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
+set("mailAddrMob","textContent",CONFIG.email);
 set("rfInsta","href",insta); set("rfTiktok","href",tiktok);
 set("rfInstaTxt","textContent","@"+CONFIG.instagram); set("rfTiktokTxt","textContent","@"+CONFIG.tiktok);
 set("rfMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
