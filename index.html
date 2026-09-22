@@ -122,7 +122,7 @@ main{position:relative;z-index:1}
 .glow{position:absolute;left:50%;top:56%;width:66%;height:46%;transform:translate(-50%,-50%);
   background:radial-gradient(closest-side,rgba(224,50,43,.26),transparent 72%);filter:blur(26px);pointer-events:none}
 .iso{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(50deg) rotateZ(-15deg);
-  animation:sway 9s ease-in-out infinite alternate}
+  will-change:transform;animation:sway 9s ease-in-out infinite alternate}
 @keyframes sway{from{transform:rotateX(50deg) rotateZ(-21deg)}to{transform:rotateX(50deg) rotateZ(-7deg)}}
 .plate{position:absolute;left:50%;top:50%;width:74%;height:74%;transform:translate(-50%,-50%);
   background:
@@ -135,7 +135,7 @@ main{position:relative;z-index:1}
 .pshadow{position:absolute;left:50%;top:50%;width:40%;height:40%;transform:translate(-50%,-50%);
   border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent 70%);filter:blur(8px)}
 .pobj{position:absolute;left:50%;top:50%;width:260px;height:260px;transform-style:preserve-3d;
-  transform:translate(-50%,-50%);animation:floatz 7s ease-in-out infinite}
+  will-change:transform;transform:translate(-50%,-50%);animation:floatz 7s ease-in-out infinite}
 @keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
@@ -459,8 +459,8 @@ set("ano","textContent",new Date().getFullYear());
   if (!host) return;
   const P = "M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const N = innerWidth < 620 ? 16 : 24;
-  const STEP = innerWidth < 620 ? 4.4 : 4;
+  const N = innerWidth < 620 ? 12 : 18;
+  const STEP = innerWidth < 620 ? 7 : 5.3;
   const paths = [];   // {el, L} — para recolorir sem filtro (preserva o 3D)
   for (let i = 0; i < N; i++){
     const t = i / (N - 1);
@@ -483,15 +483,24 @@ set("ano","textContent",new Date().getFullYear());
     host.appendChild(cam);
     paths.push({ el: cam.querySelector("path"), L });
   }
-  // troca de cor via JS (não usa filter — o 3D continua)
+  // troca de cor via JS (não usa filter — o 3D continua), leve e pausável
   if (!reduce){
-    const CYCLE = 20000;   // ms por volta completa
-    function tick(now){
-      const h = (now % CYCLE) / CYCLE * 360;
-      for (const p of paths) p.el.setAttribute("fill", `hsl(${h.toFixed(1)},58%,${p.L}%)`);
-      requestAnimationFrame(tick);
+    const CYCLE = 22000;                 // ms por volta completa
+    const stage = document.querySelector(".stage");
+    let rafId = null, last = 0;
+    function recolor(now){
+      const h = ((now % CYCLE) / CYCLE * 360) | 0;
+      for (const p of paths) p.el.setAttribute("fill", `hsl(${h},56%,${p.L}%)`);
     }
-    requestAnimationFrame(tick);
+    function tick(now){
+      if (!document.hidden && now - last > 110){ last = now; recolor(now); }   // ~9x/seg, não a cada frame
+      rafId = requestAnimationFrame(tick);
+    }
+    const start = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
+    const stop  = () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } };
+    if (stage && "IntersectionObserver" in window){
+      new IntersectionObserver(es => es[0].isIntersecting ? start() : stop(), { threshold: 0 }).observe(stage);
+    } else { start(); }
   }
 })();
 
