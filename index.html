@@ -102,9 +102,10 @@ main{position:relative;z-index:1}
 .hero-feats{display:none;flex-direction:column;gap:16px;list-style:none;padding:22px 0 4px;margin:0;counter-reset:feat}
 .hero-feats li{display:flex;align-items:center;gap:14px;font-size:1.02rem;font-weight:500;color:var(--mineral);letter-spacing:-.01em;counter-increment:feat}
 .hero-feats li .fic{flex-shrink:0;width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(145deg,rgba(242,101,34,.3),rgba(242,101,34,.09));
-  border:1px solid rgba(242,101,34,.42);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 5px 15px -5px rgba(242,101,34,.42);
+  background:linear-gradient(145deg,rgba(242,101,34,.18),rgba(242,101,34,.05));
+  backdrop-filter:blur(12px) saturate(160%);
+  border:1px solid rgba(242,101,34,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 4px 12px -5px rgba(242,101,34,.28);
   font-family:'Outfit',sans-serif;font-weight:700;font-size:.86rem;color:#ff9d6b;letter-spacing:.01em}
 .hero-feats li .fic::before{content:counter(feat,decimal-leading-zero)}
 .redes-cta{display:none;flex-direction:column;gap:3px;align-items:center;margin-bottom:5px}
