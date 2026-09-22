@@ -591,10 +591,11 @@ set("ano","textContent",new Date().getFullYear());
   if (!reduce){
     const s = document.createElement("style"); s.textContent = kfCss; document.head.appendChild(s);
     const CYCLE = 22000;                 // ms por volta completa
+    const animStart = performance.now() + 500; // espelha o delay .5s da animacao CSS
     const stage = document.querySelector(".stage");
     let rafId = null, last = 0;
     function recolor(now){
-      const pos = (now % 4200) / 4200 * 100;
+      const pos = (Math.max(0, now - animStart) % 4200) / 4200 * 100;
       const allOrange = pos >= lastP1 && pos <= 97;
       const h = ((now % CYCLE) / CYCLE * 360) | 0;
       if (allOrange){
