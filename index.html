@@ -72,7 +72,7 @@ main{position:relative;z-index:1}
     transparent 300deg,rgba(224,50,43,.07) 330deg,transparent 360deg);
   animation:varre 18s linear infinite;z-index:-1}
 @keyframes varre{to{transform:translateX(-50%) rotate(360deg)}}
-@keyframes zapPulse{0%,100%{box-shadow:0 0 40px -10px rgba(43,217,107,.55),0 8px 28px -8px rgba(43,217,107,.25)}50%{box-shadow:0 0 65px -5px rgba(43,217,107,.85),0 10px 40px -6px rgba(43,217,107,.5)}}
+@keyframes zapPulse{0%,100%{box-shadow:0 16px 42px -16px rgba(43,217,107,.55),0 0 22px -4px rgba(43,217,107,.22),inset 0 1px 0 rgba(255,255,255,.5)}50%{box-shadow:0 22px 56px -14px rgba(43,217,107,.78),0 0 44px 0 rgba(43,217,107,.42),inset 0 1px 0 rgba(255,255,255,.5)}}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(520px,80vh,720px)}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.04fr 1fr;gap:40px}}
 
@@ -85,10 +85,10 @@ main{position:relative;z-index:1}
   letter-spacing:.4em;text-transform:uppercase;color:var(--mineral);white-space:nowrap}
 .logo-tag::before{content:"";width:16px;height:1.5px;background:var(--vermelho);flex-shrink:0}
 @keyframes drop{0%{opacity:0;transform:translateY(-40px) scale(1.04)}60%{opacity:1;transform:translateY(6px)}100%{opacity:1;transform:translateY(0) scale(1)}}
-.hero-txt h1{margin:8px 0 0;font-family:'Outfit',sans-serif;font-weight:500;
-  font-size:clamp(1.2rem,2vw,1.65rem);line-height:1.18;letter-spacing:-.018em;max-width:26ch;
+.hero-txt h1{margin:10px 0 0;font-family:'Outfit',sans-serif;font-weight:600;
+  font-size:clamp(1.55rem,5.2vw,2.05rem);line-height:1.13;letter-spacing:-.025em;max-width:24ch;
   opacity:0;animation:sobe 1s var(--vai) 1.02s forwards}
-.hero-txt h1 b{font-weight:700;position:relative;white-space:normal}
+.hero-txt h1 b{font-weight:800;position:relative;white-space:normal}
 .hero-txt h1 b::after{content:"";position:absolute;left:0;right:0;bottom:-.07em;height:.09em;background:var(--vermelho);border-radius:2px}
 .hero-txt .lead{margin:20px 0 0;max-width:44ch;color:var(--mineral-2);font-size:1.12rem;font-weight:400;
   opacity:0;animation:sobe 1s var(--vai) 1.14s forwards}
@@ -99,12 +99,10 @@ main{position:relative;z-index:1}
   opacity:0;animation:sobe 1s var(--vai) 1.4s forwards}
 .beneficios .bi{display:flex;align-items:center;gap:9px;font-size:1rem;font-weight:500;color:var(--mineral)}
 .beneficios .bi svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.hero-feats{display:none;flex-direction:column;gap:9px;list-style:none;padding:18px 0 0;margin:0}
-.hero-feats li{display:flex;align-items:center;gap:9px;font-size:1rem;font-weight:500;color:var(--mineral)}
-.hero-feats li svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.hero-socials{display:none;gap:10px;align-items:center;justify-content:center;padding:12px 0 6px}
-.h-soc{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;transition:transform .4s var(--vai)}
-.h-soc:active{transform:scale(.94)}
+.hero-feats{display:none;flex-direction:column;gap:11px;list-style:none;padding:22px 0 4px;margin:0;counter-reset:feat}
+.hero-feats li{display:flex;align-items:center;gap:14px;font-size:1.02rem;font-weight:500;color:var(--mineral);letter-spacing:-.01em;counter-increment:feat}
+.hero-feats li .fic{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(224,50,43,.1);border:1px solid rgba(224,50,43,.24);font-family:'DM Mono',monospace;font-weight:500;font-size:.84rem;color:var(--vermelho-luz)}
+.hero-feats li .fic::before{content:counter(feat,decimal-leading-zero)}
 .rodape-sociais{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
 .r-soc{height:42px;padding:0 16px 0 12px;gap:8px;border-radius:50px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.07);backdrop-filter:blur(16px) saturate(180%);border:1px solid rgba(255,255,255,.12);opacity:.9;transition:transform .3s var(--vai),opacity .3s,background .3s,border-color .3s;text-decoration:none}
 .r-soc span{font-family:'DM Mono',monospace;font-size:.72rem;font-weight:500;color:var(--mineral);letter-spacing:.04em;white-space:nowrap}
@@ -216,17 +214,20 @@ main{position:relative;z-index:1}
   .hero-logo{width:172px;margin-bottom:40px}
   .contatos{grid-template-columns:1fr;gap:10px}
   #cWhats{
-    background:rgba(43,217,107,.1);
-    backdrop-filter:blur(24px) saturate(200%);
-    border-color:rgba(43,217,107,.3);
-    animation:zapPulse 2.8s ease-in-out infinite
+    padding:16px 20px;gap:15px;
+    background:linear-gradient(135deg,#41f08c,#2bd96b 46%,#14bd5a);
+    border-color:rgba(255,255,255,.3);
+    animation:zapPulse 3s ease-in-out infinite;
+    transition:transform .3s var(--vai)
   }
-  #cWhats:hover{border-color:rgba(43,217,107,.5);box-shadow:0 0 56px -6px rgba(43,217,107,.8),0 12px 36px -8px rgba(43,217,107,.45)}
-  #cWhats .ci{background:rgba(43,217,107,.18);border-color:rgba(43,217,107,.38)}
-  #cWhats:hover .ci{background:rgba(43,217,107,.28);border-color:rgba(43,217,107,.5)}
-  #cWhats .ct .k{color:var(--cinza)}
-  #cWhats .ct .v,#cWhats .ct small{color:var(--mineral)}
-  #cWhats .seta svg{stroke:var(--cinza-3)}
+  #cWhats:active{transform:scale(.985)}
+  #cWhats .ci{width:50px;height:50px;background:#fff!important;border-color:transparent;box-shadow:0 6px 18px -6px rgba(0,0,0,.45)}
+  #cWhats .ci svg.fill{fill:#1eb858}
+  #cWhats .ct{gap:2px}
+  #cWhats .ct .k{color:rgba(4,19,12,.5);font-weight:600}
+  #cWhats .ct .v{color:#04130c;font-weight:700}
+  #cWhats .ct small{color:rgba(4,19,12,.7)}
+  #cWhats .seta svg{stroke:#04130c}
   #cInsta,#cTiktok,#cMail,#cLocal,.contato.soon{display:none}
   .hero-feats{display:flex}
   .beneficios{display:none}
@@ -282,13 +283,6 @@ main{position:relative;z-index:1}
 .tb-marca svg{height:26px;width:auto;display:block}
 @media(max-width:760px){.tb-marca svg{height:22px}}
 
-/* FAB */
-.waf{display:none}
-.waf::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(43,217,107,.5);animation:pulso 2.8s ease-out infinite}
-.waf:hover{transform:scale(1.08)}
-.waf svg{width:30px;height:30px;fill:#04130c}
-@media(max-width:760px){.waf{width:54px;height:54px}.waf svg{width:27px;height:27px}}
-
 .rev{opacity:0;transform:translateY(34px);transition:opacity .85s var(--vai),transform .85s var(--vai)}
 .rev.in{opacity:1;transform:none}
 
@@ -316,8 +310,8 @@ main{position:relative;z-index:1}
   .contato,.prod{backdrop-filter:none}
   .topbar{backdrop-filter:none;background:rgba(15,16,18,.95)}
   .abre::before{animation:none!important}
-  .zap,.waf{animation:none!important}
-  .zap::before,.waf::before{animation:none!important;box-shadow:0 0 0 3px rgba(43,217,107,.3)}
+  .zap{animation:none!important}
+  .zap::before{animation:none!important;box-shadow:0 0 0 3px rgba(43,217,107,.3)}
 }
 </style>
 </head>
@@ -375,42 +369,13 @@ main{position:relative;z-index:1}
           </div>
         </div>
         <ul class="hero-feats">
-          <li>
-            <svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 3c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
-            Imprimimos em qualquer cor, sem limitação
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg>
-            Logo, nome ou arte em relevo real
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.062 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .963L15.5 14.062a2 2 0 0 0-1.437 1.438l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-            Projetamos qualquer modelo do zero
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
-            Tamanho exato. Encaixe sem folga.
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-            Do pedido à peça em poucos dias
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
-            Acabamento revisado peça a peça
-          </li>
+          <li><span class="fic"></span>Imprimimos em qualquer cor, sem limitação</li>
+          <li><span class="fic"></span>Logo, nome ou arte em relevo real</li>
+          <li><span class="fic"></span>Projetamos qualquer modelo do zero</li>
+          <li><span class="fic"></span>Tamanho exato. Encaixe sem folga.</li>
+          <li><span class="fic"></span>Do pedido à peça em poucos dias</li>
+          <li><span class="fic"></span>Acabamento revisado peça a peça</li>
         </ul>
-      </div>
-      <div class="hero-socials">
-        <a class="h-soc" id="hInsta" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#833AB4,#E1306C)">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
-        </a>
-        <a class="h-soc" id="hTiktok" target="_blank" rel="noopener" style="background:#010101;border-color:#444">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
-        </a>
-        <a class="h-soc" id="hMail" style="background:#EA4335">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        </a>
       </div>
       <div class="descer">Role para conhecer <span class="seta"></span></div>
     </div>
@@ -521,10 +486,6 @@ main{position:relative;z-index:1}
   </div>
 </footer>
 
-<a class="waf" id="waf" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
-</a>
-
 <script>
 /* ═══════════════════════════════════════
    CONFIG — edite aqui seus contatos reais
@@ -543,14 +504,12 @@ const msg = "Olá! Vim pelo site da NYVOS e quero um orçamento de uma peça per
 const insta = `https://instagram.com/${CONFIG.instagram}`;
 const tiktok = `https://www.tiktok.com/@${CONFIG.tiktok}`;
 const set = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
-set("zapHero","href",wa(msg)); set("waf","href",wa(msg)); set("cWhats","href",wa(msg));
+set("zapHero","href",wa(msg)); set("cWhats","href",wa(msg));
 set("cInsta","href",insta);
 set("instaHandle","textContent","@"+CONFIG.instagram);
 set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok);
 set("cMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("mailAddr","textContent",CONFIG.email);
-set("hInsta","href",insta); set("hTiktok","href",tiktok);
-set("hMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("rfInsta","href",insta); set("rfTiktok","href",tiktok);
 set("rfMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("cLocal","href",CONFIG.mapa);
@@ -638,14 +597,13 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
 
 /* ── topbar + FAB no scroll ── */
 const topbar = document.getElementById("topbar");
-document.getElementById("tbMarca").addEventListener("click", e => { e.preventDefault(); scrollTo({top:0,behavior:"smooth"}); });
-document.querySelector(".hero-logo").addEventListener("click", e => { e.preventDefault(); scrollTo({top:0,behavior:"smooth"}); });
-document.querySelector(".rodape .topo").addEventListener("click", e => { e.preventDefault(); scrollTo({top:0,behavior:"smooth"}); });
+const goTopo = e => { e.preventDefault(); scrollTo({top:0,behavior:"smooth"}); };
+document.getElementById("tbMarca")?.addEventListener("click", goTopo);
+document.querySelector(".hero-logo")?.addEventListener("click", goTopo);
 let tbOn = false;
 addEventListener("scroll", () => {
   const s = scrollY > 480;
-  if (s !== tbOn){ tbOn = s; topbar.classList.toggle("on", s);
-    document.getElementById("waf").style.display = s ? "none" : ""; }
+  if (s !== tbOn){ tbOn = s; topbar.classList.toggle("on", s); }
 }, { passive:true });
 </script>
 <style>@keyframes camin{from{opacity:0}to{opacity:1}}</style>
