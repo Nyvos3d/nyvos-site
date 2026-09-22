@@ -218,42 +218,7 @@ main{position:relative;z-index:1}
 
 /* ── contatos ── */
 .contatos{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(max-width:640px){
-  .hero-logo{width:172px;margin-bottom:40px}
-  .contatos{grid-template-columns:1fr;gap:10px}
-  #cWhats{
-    padding:16px 20px;gap:15px;
-    background:linear-gradient(180deg,rgba(43,217,107,.2),rgba(43,217,107,.06));
-    backdrop-filter:blur(20px) saturate(180%);
-    border-color:rgba(43,217,107,.42);
-    animation:zapPulse 3.5s ease-in-out infinite;
-    transition:transform .3s var(--vai)
-  }
-  #cWhats:active{transform:scale(.985)}
-  #cWhats .ci{width:50px;height:50px;background:rgba(43,217,107,.92)!important;border-color:transparent;box-shadow:0 6px 18px -6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3)}
-  #cWhats .ci svg.fill{fill:#fff}
-  #cWhats .ct{gap:2px}
-  #cWhats .ct .k{color:var(--zap-luz);font-weight:600}
-  #cWhats .ct .v{color:var(--mineral);font-weight:700}
-  #cWhats .ct small{display:none}
-  #cWhats .seta svg{stroke:var(--zap-luz)}
-  #cWhats,#cInsta,#cTiktok,#cLocal,#cMail,.contato.soon{display:none}
-  .zap-mob{display:flex!important;width:100%;justify-content:center}
-  .cg-ou{display:flex}
-  #cMail{display:none}
-  .mail-inline{display:flex!important}
-  #rfMail{display:none}
-  .redes-cta{display:flex}
-  .hero-feats{display:flex}
-  .beneficios{display:none}
-  .hero-txt .cta-wrap{display:none}
-  #fazemos,.faixa{display:none}
-  #contato{padding-top:32px}
-  #contato .cab{margin-bottom:22px;gap:9px}
-  #contato .cab p{display:none}
-  #contato .cab .canais-mob{display:block;font-size:.98rem;color:var(--mineral-2);margin-top:1px}
-  #contato .cab h2{font-size:clamp(1.5rem,6vw,1.75rem)}
-}
+
 .contato{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;padding:24px;
   border:1px solid var(--traco);border-radius:18px;
   background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));
@@ -342,6 +307,24 @@ main{position:relative;z-index:1}
   .abre::before{background:conic-gradient(from 200deg at 50% 30%,transparent 0deg,rgba(154,159,166,.04) 30deg,transparent 58deg,transparent 302deg,rgba(224,50,43,.03) 332deg,transparent 360deg);animation-duration:32s}
   .zap::before{box-shadow:0 0 0 3px rgba(43,217,107,.3)}
 }
+@media(max-width:640px){
+  .hero-logo{width:172px;margin-bottom:40px}
+  .contatos{grid-template-columns:1fr;gap:10px}
+  #cWhats,#cInsta,#cTiktok,#cLocal,#cMail,.contato.soon{display:none}
+  .zap-mob{display:flex;width:100%;justify-content:center}
+  .cg-ou{display:flex}
+  .mail-inline{display:flex}
+  #rfMail{display:none}
+  .redes-cta{display:flex}
+  .hero-feats{display:flex}
+  .beneficios{display:none}
+  .hero-txt .cta-wrap{display:none}
+  #fazemos,.faixa{display:none}
+  #contato{padding-top:32px}
+  #contato .cab{margin-bottom:22px;gap:9px}
+  #contato .cab p{display:none}
+  #contato .cab h2{font-size:clamp(1.5rem,6vw,1.75rem)}
+}
 </style>
 </head>
 <body>
@@ -351,7 +334,7 @@ main{position:relative;z-index:1}
 <div class="topbar" id="topbar">
   <div class="col">
     <a class="tb-marca" id="tbMarca" href="#" aria-label="NYVOS — voltar ao topo">
-      <svg viewBox="0 -2 575 100" aria-hidden="true"><g fill="#F3F2EE"><path fill="#F26522" d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/><g transform="translate(128 0)"><path d="M0 0H20L60 62V0H80V96H60L20 34V96H0Z"/><path transform="translate(94 0)" d="M0 0H20L40 36L60 0H80L50 54V96H30V54Z"/><path transform="translate(182 0)" d="M0 0H20L40 64L60 0H80L50 96H30Z"/><path transform="translate(272 0)" fill-rule="evenodd" d="M48 -1.5A48 49.5 0 1 0 48.01 -1.5ZM48 19.5A27 28.5 0 1 1 47.99 19.5Z"/><path transform="translate(378 -1) scale(1 1.0206)" d="M66.42 18.91A34.5 29.5 0 1 0 34 58.5A13.5 8.5 0 1 1 21.31 69.91L1.58 77.09A34.5 29.5 0 1 0 34 37.5A13.5 8.5 0 1 1 46.69 26.09Z"/></g></g></svg>
+      <svg viewBox="0 0 96 96" aria-hidden="true" style="height:28px;width:auto"><path fill="#F26522" d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/></svg>
     </a>
   </div>
 </div>
