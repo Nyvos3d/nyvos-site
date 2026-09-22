@@ -483,7 +483,8 @@ set("ano","textContent",new Date().getFullYear());
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const N = innerWidth < 620 ? 12 : 18;
   const STEP = innerWidth < 620 ? 7 : 5.3;
-  const paths = [];   // {el, L} — para recolorir sem filtro (preserva o 3D)
+  const paths = [];
+  let kfCss = "";
   for (let i = 0; i < N; i++){
     const t = i / (N - 1);
     const ease = t*t*(3-2*t);
@@ -498,17 +499,19 @@ set("ano","textContent",new Date().getFullYear());
     cam.style.transform = `translateZ(${i*STEP}px)`;
     cam.innerHTML = `<svg viewBox="0 0 96 96"><path fill="${col}" d="${P}"/></svg>`;
     if (!reduce){
-      const ratio = Math.max(0, (i*STEP - 2) / 118);
-      const delay = (0.92 + ratio * 4.2).toFixed(2);
+      const r = Math.max(0, (i*STEP - 2) / 118);
+      const p0 = (r * 100).toFixed(1);
+      const p1 = Math.min(88, r * 100 + 7).toFixed(1);
+      kfCss += `@keyframes cb${i}{0%,${p0}%{opacity:0}${p1}%,93%{opacity:1}100%{opacity:0}}`;
       cam.style.opacity = "0";
-      cam.style.animation = "camin .35s ease forwards";
-      cam.style.animationDelay = delay + "s";
+      cam.style.animation = `cb${i} 4.2s linear .5s infinite`;
     }
     host.appendChild(cam);
     paths.push({ el: cam.querySelector("path"), L });
   }
   // troca de cor via JS (não usa filter — o 3D continua), leve e pausável
   if (!reduce){
+    const s = document.createElement("style"); s.textContent = kfCss; document.head.appendChild(s);
     const CYCLE = 22000;                 // ms por volta completa
     const stage = document.querySelector(".stage");
     let rafId = null, last = 0;
