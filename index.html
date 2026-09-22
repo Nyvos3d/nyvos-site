@@ -180,6 +180,7 @@ main{position:relative;z-index:1}
 .cab h2 b{font-weight:700;position:relative}
 .cab h2 b::after{content:"";position:absolute;left:0;right:0;bottom:-.06em;height:.09em;background:var(--vermelho);border-radius:2px}
 .cab p{max-width:48ch;color:var(--mineral-2);font-weight:400;font-size:1.04rem}
+.cab .canais-mob{display:none}
 
 .faixa{padding:8px 0 30px;display:flex;justify-content:center}
 .faixa .degrau{display:flex;align-items:flex-end;gap:8px;height:26px;opacity:0;transform:translateY(14px);
@@ -234,14 +235,14 @@ main{position:relative;z-index:1}
   #cWhats .ct{gap:2px}
   #cWhats .ct .k{color:var(--zap-luz);font-weight:600}
   #cWhats .ct .v{color:var(--mineral);font-weight:700}
-  #cWhats .ct small{color:var(--mineral-2)}
+  #cWhats .ct small{display:none}
   #cWhats .seta svg{stroke:var(--zap-luz)}
   #cInsta,#cTiktok,#cLocal,.contato.soon{display:none}
   #cMail{padding:14px 20px;gap:14px;margin-top:12px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.018));border-color:rgba(154,159,166,.16)}
   #cMail .ci{width:44px;height:44px;background:rgba(255,255,255,.07)!important;border:1px solid rgba(154,159,166,.18)}
   #cMail .ci svg{width:22px;height:22px;stroke:var(--mineral-2)}
   #cMail .ct .k{color:var(--cinza)}
-  #cMail .ct .v{font-size:1.02rem;color:var(--mineral)}
+  #cMail .ct .v{font-family:'DM Mono',monospace;font-weight:500;font-size:.92rem;color:var(--mineral)}
   #cMail .ct small{display:none}
   #cMail .seta svg{stroke:var(--cinza-3)}
   #rfMail{display:none}
@@ -251,8 +252,9 @@ main{position:relative;z-index:1}
   .hero-txt .cta-wrap{display:none}
   #fazemos,.faixa{display:none}
   #contato{padding-top:8px}
-  #contato .cab{margin-bottom:22px;gap:10px}
+  #contato .cab{margin-bottom:22px;gap:9px}
   #contato .cab p{display:none}
+  #contato .cab .canais-mob{display:block;font-size:.98rem;color:var(--mineral-2);margin-top:1px}
   #contato .cab h2{font-size:clamp(1.5rem,6vw,1.75rem)}
 }
 .contato{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;padding:24px;
@@ -447,6 +449,7 @@ main{position:relative;z-index:1}
         <span class="et">Bora criar</span>
         <h2>Manda a ideia. <b>O resto é com a gente.</b></h2>
         <p>Escolha o canal que preferir e chama com a sua ideia.</p>
+        <p class="canais-mob">Chama no WhatsApp ou no e-mail, como preferir.</p>
       </div>
       <div class="contatos rev">
         <a class="contato" id="cWhats" target="_blank" rel="noopener">
@@ -495,11 +498,11 @@ main{position:relative;z-index:1}
         <div class="rodape-sociais">
           <a class="r-soc" id="rfInsta" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
-            <span>Instagram</span>
+            <span id="rfInstaTxt">@nyvos.3d</span>
           </a>
           <a class="r-soc" id="rfTiktok" target="_blank" rel="noopener" aria-label="TikTok">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
-            <span>TikTok</span>
+            <span id="rfTiktokTxt">@nyvos.3d</span>
           </a>
           <a class="r-soc" id="rfMail" aria-label="E-mail">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -537,6 +540,7 @@ set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok
 set("cMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("mailAddr","textContent",CONFIG.email);
 set("rfInsta","href",insta); set("rfTiktok","href",tiktok);
+set("rfInstaTxt","textContent","@"+CONFIG.instagram); set("rfTiktokTxt","textContent","@"+CONFIG.tiktok);
 set("rfMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("cLocal","href",CONFIG.mapa);
 set("cidade","textContent","Retirada em "+CONFIG.cidade);
