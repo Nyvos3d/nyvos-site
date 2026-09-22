@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -2 575 100" width="575" height="100">
   <title>NYVOS — Logo horizontal</title>
   <g fill="#1B1D21">
-    <path d="M0 0H30V32H45V64H60V0H96V96H30V64H21V32H12V96H0Z"/>
+    <path d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/>
     <g transform="translate(128 0)">
       <path d="M0 0H20L60 62V0H80V96H60L20 34V96H0Z"/>
       <path transform="translate(94 0)" d="M0 0H20L40 36L60 0H80L50 54V96H30V54Z"/>
