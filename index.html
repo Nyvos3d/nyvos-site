@@ -183,14 +183,10 @@ main{position:relative;z-index:1}
   -webkit-mask-image:linear-gradient(180deg,transparent,#000);mask-image:linear-gradient(180deg,transparent,#000)}
 .prod:hover{border-color:rgba(224,50,43,.5);transform:translateY(-6px);box-shadow:0 34px 62px -30px rgba(0,0,0,.95),0 0 56px -28px rgba(224,50,43,.6)}
 .prod:hover::before{opacity:1}
-.prod.lit{animation:cardglow 1.5s var(--vai)}
-.prod.lit::before{animation:lineglow 1.5s var(--vai)}
-@keyframes cardglow{
-  0%{box-shadow:0 20px 44px -32px rgba(0,0,0,.95);border-color:rgba(154,159,166,.2)}
-  38%{box-shadow:0 20px 44px -32px rgba(0,0,0,.95),0 0 50px -2px rgba(224,50,43,.7);border-color:rgba(224,50,43,.7)}
-  100%{box-shadow:0 20px 44px -32px rgba(0,0,0,.95);border-color:rgba(154,159,166,.2)}
-}
-@keyframes lineglow{0%,100%{opacity:.55}38%{opacity:1}}
+.prod.active{border-color:rgba(224,50,43,.6);box-shadow:0 22px 48px -30px rgba(0,0,0,.95),0 0 52px -6px rgba(224,50,43,.6)}
+.prod.active::before{opacity:1}
+.prod.active .pic{background:var(--vermelho);border-color:var(--vermelho);box-shadow:0 8px 24px -8px rgba(224,50,43,.7)}
+.prod.active .pic svg{stroke:var(--mineral)}
 .prod .pic{width:52px;height:52px;border-radius:14px;border:1px solid rgba(224,50,43,.35);background:rgba(224,50,43,.12);display:flex;align-items:center;justify-content:center;transition:all .4s var(--vai)}
 .prod:hover .pic{background:var(--vermelho);border-color:var(--vermelho);box-shadow:0 8px 24px -8px rgba(224,50,43,.7)}
 .prod .pic svg{width:26px;height:26px;stroke:var(--vermelho-luz);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s}
@@ -527,12 +523,21 @@ const obs = new IntersectionObserver(es => es.forEach(e => {
 }), { threshold:.12 });
 document.querySelectorAll(".rev").forEach(el => obs.observe(el));
 
-/* ── brilho dos cards conforme entram na tela ── */
+/* ── sensor na linha central da tela: o card que a rolagem cruza acende ── */
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
-  const litObs = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting){ e.target.classList.add("lit"); litObs.unobserve(e.target); }
-  }), { threshold: 0.6 });
-  document.querySelectorAll(".prod").forEach(el => litObs.observe(el));
+  const cards = [...document.querySelectorAll(".prod")];
+  let ticking = false;
+  function updateActive(){
+    const cy = innerHeight / 2;
+    for (const c of cards){
+      const r = c.getBoundingClientRect();
+      c.classList.toggle("active", r.top <= cy && r.bottom >= cy);
+    }
+    ticking = false;
+  }
+  addEventListener("scroll", () => { if (!ticking){ ticking = true; requestAnimationFrame(updateActive); } }, { passive: true });
+  addEventListener("resize", updateActive);
+  updateActive();
 }
 
 /* ── topbar + FAB no scroll ── */
