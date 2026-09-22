@@ -152,18 +152,6 @@ main{position:relative;z-index:1}
 @keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
-.n-trace{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20;
-  filter:drop-shadow(0 0 7px rgba(242,101,34,.65)) drop-shadow(0 0 2px rgba(243,242,238,.35))}
-.n-trace .trail{stroke-dasharray:1;stroke-dashoffset:1;fill:none;
-  stroke:rgba(243,242,238,.82);stroke-width:2.2;stroke-linecap:square;stroke-linejoin:miter;
-  animation:nDraw 1.1s linear 0s 1 forwards}
-.n-trace .tip{stroke-dasharray:0.04 0.96;stroke-dashoffset:0;fill:none;
-  stroke:#F26522;stroke-width:3.8;stroke-linecap:round;
-  animation:nDrawTip 1.1s linear 0s 1 forwards}
-@keyframes nDraw{to{stroke-dashoffset:0}}
-@keyframes nDrawTip{to{stroke-dashoffset:-1}}
-.n-trace.fade{animation:nFadeOut .5s ease-in forwards}
-@keyframes nFadeOut{to{opacity:0}}
 .phead{position:absolute;left:50%;top:50%;width:276px;height:276px;transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
 .phead .beam{position:absolute;inset:0;border:1.5px solid rgba(242,101,34,.95);border-radius:3px;
   box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 6s linear .5s infinite}
@@ -548,28 +536,10 @@ set("ano","textContent",new Date().getFullYear());
   const paths = [];
   let kfCss = "", lastP1 = 0;
 
-  // efeito lápis: N é "desenhado" antes de emergir em 3D
-  if (!reduce){
-    const traceNS = "http://www.w3.org/2000/svg";
-    const traceSvg = document.createElementNS(traceNS,"svg");
-    traceSvg.setAttribute("viewBox","0 0 96 96");
-    traceSvg.setAttribute("class","n-trace");
-    traceSvg.setAttribute("aria-hidden","true");
-    ["trail","tip"].forEach(cls=>{
-      const tp = document.createElementNS(traceNS,"path");
-      tp.setAttribute("pathLength","1");
-      tp.setAttribute("d",P);
-      tp.setAttribute("class",cls);
-      traceSvg.appendChild(tp);
-    });
-    host.appendChild(traceSvg);
-    setTimeout(()=>traceSvg.classList.add("fade"), 1000);
-  }
-
   for (let i = 0; i < N; i++){
     const t = i / (N - 1);
     const ease = t*t*(3-2*t);
-    let L = Math.round(28 + ease*48) + (i%2 ? 5 : 0);   // base escura → topo claro
+    let L = Math.round(28 + ease*48);   // gradiente suave: base escura → topo claro
     if (i === N-1) L = 82;
     L = Math.min(86, L);
     const col = reduce
@@ -582,10 +552,11 @@ set("ano","textContent",new Date().getFullYear());
     if (!reduce){
       const r = Math.max(0, (i*STEP - 2) / 118);
       const p0 = (r * 100).toFixed(1);
-      const p1 = Math.min(88, r * 100 + 7).toFixed(1);
+      const p1 = Math.min(88, r * 100 + 9).toFixed(1);  // fade-in mais longo = mais suave
       if (i === N-1) lastP1 = parseFloat(p1);
-      const hold = i === N-1 ? "99" : "94";
-      kfCss += `@keyframes cb${i}{0%,${p0}%{opacity:0}${p1}%,${hold}%{opacity:1}100%{opacity:0}}`;
+      const hold = i === N-1 ? "99" : "95";
+      // easing embutido: ease-out na entrada, ease-in na saída — toque premium
+      kfCss += `@keyframes cb${i}{0%,${p0}%{opacity:0;animation-timing-function:cubic-bezier(0,0,.2,1)}${p1}%,${hold}%{opacity:1;animation-timing-function:cubic-bezier(.55,0,1,1)}100%{opacity:0}}`;
       cam.style.opacity = "0";
       cam.style.animation = `cb${i} 6s linear .5s infinite`;
     }
@@ -618,7 +589,7 @@ set("ano","textContent",new Date().getFullYear());
       }
     }
     function tick(now){
-      if (!document.hidden && now - last > 110){ last = now; recolor(now); }   // ~9x/seg, não a cada frame
+      if (!document.hidden && now - last > 60){ last = now; recolor(now); }   // ~16fps — transições de cor mais suaves
       rafId = requestAnimationFrame(tick);
     }
     const start = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
