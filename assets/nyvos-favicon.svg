@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <title>NYVOS — Favicon / ícone de app</title>
+  <rect width="96" height="96" rx="18" fill="#1B1D21"/>
+  <path transform="translate(19 21) scale(0.56)" fill="#F3F2EE" d="M0 0H30V32H45V64H60V0H96V96H30V64H21V32H12V96H0Z"/>
+</svg>

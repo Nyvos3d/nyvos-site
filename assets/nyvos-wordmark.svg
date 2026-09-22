@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -2 447 100" width="447" height="100">
+  <title>NYVOS — Wordmark</title>
+  <g fill="#1B1D21">
+    <path d="M0 0H20L60 62V0H80V96H60L20 34V96H0Z"/>
+    <path transform="translate(94 0)" d="M0 0H20L40 36L60 0H80L50 54V96H30V54Z"/>
+    <path transform="translate(182 0)" d="M0 0H20L40 64L60 0H80L50 96H30Z"/>
+    <path transform="translate(272 0)" fill-rule="evenodd" d="M48 -1.5A48 49.5 0 1 0 48.01 -1.5ZM48 19.5A27 28.5 0 1 1 47.99 19.5Z"/>
+    <path transform="translate(378 -1) scale(1 1.0206)" d="M66.42 18.91A34.5 29.5 0 1 0 34 58.5A13.5 8.5 0 1 1 21.31 69.91L1.58 77.09A34.5 29.5 0 1 0 34 37.5A13.5 8.5 0 1 1 46.69 26.09Z"/>
+  </g>
+</svg>
