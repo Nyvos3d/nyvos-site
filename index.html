@@ -72,7 +72,7 @@ main{position:relative;z-index:1}
     transparent 300deg,rgba(224,50,43,.07) 330deg,transparent 360deg);
   animation:varre 18s linear infinite;z-index:-1}
 @keyframes varre{to{transform:translateX(-50%) rotate(360deg)}}
-@keyframes zapPulse{0%,100%{box-shadow:0 16px 42px -16px rgba(43,217,107,.55),0 0 22px -4px rgba(43,217,107,.22),inset 0 1px 0 rgba(255,255,255,.5)}50%{box-shadow:0 22px 56px -14px rgba(43,217,107,.78),0 0 44px 0 rgba(43,217,107,.42),inset 0 1px 0 rgba(255,255,255,.5)}}
+@keyframes zapPulse{0%,100%{box-shadow:0 10px 30px -16px rgba(43,217,107,.36),0 0 13px -6px rgba(43,217,107,.13),inset 0 1px 0 rgba(255,255,255,.16)}50%{box-shadow:0 14px 38px -14px rgba(43,217,107,.5),0 0 24px -5px rgba(43,217,107,.24),inset 0 1px 0 rgba(255,255,255,.16)}}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(520px,80vh,720px)}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.04fr 1fr;gap:40px}}
 
@@ -219,19 +219,20 @@ main{position:relative;z-index:1}
   .contatos{grid-template-columns:1fr;gap:10px}
   #cWhats{
     padding:16px 20px;gap:15px;
-    background:linear-gradient(135deg,#41f08c,#2bd96b 46%,#14bd5a);
-    border-color:rgba(255,255,255,.3);
-    animation:zapPulse 3s ease-in-out infinite;
+    background:linear-gradient(180deg,rgba(43,217,107,.2),rgba(43,217,107,.06));
+    backdrop-filter:blur(20px) saturate(180%);
+    border-color:rgba(43,217,107,.42);
+    animation:zapPulse 3.5s ease-in-out infinite;
     transition:transform .3s var(--vai)
   }
   #cWhats:active{transform:scale(.985)}
-  #cWhats .ci{width:50px;height:50px;background:#fff!important;border-color:transparent;box-shadow:0 6px 18px -6px rgba(0,0,0,.45)}
-  #cWhats .ci svg.fill{fill:#1eb858}
+  #cWhats .ci{width:50px;height:50px;background:rgba(43,217,107,.92)!important;border-color:transparent;box-shadow:0 6px 18px -6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+  #cWhats .ci svg.fill{fill:#fff}
   #cWhats .ct{gap:2px}
-  #cWhats .ct .k{color:rgba(4,19,12,.5);font-weight:600}
-  #cWhats .ct .v{color:#04130c;font-weight:700}
-  #cWhats .ct small{color:rgba(4,19,12,.7)}
-  #cWhats .seta svg{stroke:#04130c}
+  #cWhats .ct .k{color:var(--zap-luz);font-weight:600}
+  #cWhats .ct .v{color:var(--mineral);font-weight:700}
+  #cWhats .ct small{color:var(--mineral-2)}
+  #cWhats .seta svg{stroke:var(--zap-luz)}
   #cInsta,#cTiktok,#cMail,#cLocal,.contato.soon{display:none}
   .hero-feats{display:flex}
   .beneficios{display:none}
@@ -428,7 +429,7 @@ main{position:relative;z-index:1}
   <section class="secao" id="contato" style="scroll-margin-top:78px">
     <div class="col">
       <div class="cab rev">
-        <span class="et">Fale com a gente</span>
+        <span class="et">Bora criar</span>
         <h2>Manda a ideia. <b>O resto é com a gente.</b></h2>
         <p>Escolha o canal que preferir e chama com a sua ideia.</p>
       </div>
