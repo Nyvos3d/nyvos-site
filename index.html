@@ -99,17 +99,21 @@ main{position:relative;z-index:1}
 .beneficios .bi{display:flex;align-items:center;gap:9px;font-size:.92rem;font-weight:500;color:var(--mineral)}
 .beneficios .bi svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .hero-feats{display:none;gap:6px;position:absolute;bottom:0;left:0;right:0;z-index:5;list-style:none;padding:0 10px 10px;margin:0}
-.hero-feats li{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;line-height:1.35;letter-spacing:.005em;color:var(--mineral);font-weight:600;
-  background:rgba(8,9,11,.40);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
-  padding:9px 12px;border-radius:10px;
-  border:1px solid rgba(255,255,255,.10);border-top-color:rgba(255,255,255,.20)}
-.hero-feats li::before{content:"";width:6px;height:6px;min-width:6px;margin-top:4px;border-radius:50%;background:var(--laranja);flex-shrink:0;box-shadow:0 0 8px rgba(242,101,34,.75)}
+.hero-feats li{display:flex;align-items:center;gap:10px;font-size:.88rem;line-height:1.3;letter-spacing:.01em;color:var(--mineral);font-weight:600;
+  background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(200%);-webkit-backdrop-filter:blur(20px) saturate(200%);
+  padding:10px 13px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.11);border-top:1px solid rgba(255,255,255,.24)}
+.hero-feats li::before{display:none}
+.hero-feats .fi{width:32px;height:32px;min-width:32px;border-radius:9px;
+  background:rgba(242,101,34,.16);border:1px solid rgba(242,101,34,.3);
+  display:flex;align-items:center;justify-content:center}
+.hero-feats .fi svg{width:15px;height:15px;stroke:var(--laranja);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .hero-socials{display:none;gap:10px;align-items:center;justify-content:center;padding:12px 0 6px}
 .h-soc{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;transition:transform .4s var(--vai)}
 .h-soc:active{transform:scale(.94)}
-.rodape-sociais{display:flex;gap:8px;align-items:center}
-.r-soc{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;opacity:.9;transition:transform .3s var(--vai),opacity .3s}
-.r-soc:hover{transform:scale(1.1);opacity:1}
+.rodape-sociais{display:flex;gap:9px;align-items:center}
+.r-soc{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;opacity:.88;transition:transform .3s var(--vai),opacity .3s}
+.r-soc:hover{transform:scale(1.08);opacity:1}
 @keyframes sobe{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
 .zap{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
@@ -279,7 +283,7 @@ main{position:relative;z-index:1}
 @media(max-width:760px){.tb-marca svg{height:22px}}
 
 /* FAB */
-.waf{position:fixed;right:20px;bottom:20px;z-index:80;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--zap-luz),var(--zap) 52%,#1eb858);box-shadow:0 14px 34px -8px rgba(43,217,107,.6),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .4s var(--vai)}
+.waf{display:none}
 .waf::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(43,217,107,.5);animation:pulso 2.8s ease-out infinite}
 .waf:hover{transform:scale(1.08)}
 .waf svg{width:30px;height:30px;fill:#04130c}
@@ -359,10 +363,22 @@ main{position:relative;z-index:1}
 
         <div class="stage-wrap">
           <ul class="hero-feats" aria-hidden="true">
-            <li>Imprimimos na cor que você quiser</li>
-            <li>Nome, logo ou arte em relevo</li>
-            <li>Criamos modelos do zero</li>
-            <li>Tamanho e encaixe exatos</li>
+            <li>
+              <span class="fi"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 3c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
+              Imprimimos na cor que você quiser
+            </li>
+            <li>
+              <span class="fi"><svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><circle cx="7" cy="7" r="1" fill="currentColor" stroke="none" style="fill:var(--laranja)"/></svg></span>
+              Nome, logo ou arte em relevo
+            </li>
+            <li>
+              <span class="fi"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.062 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .963L15.5 14.062a2 2 0 0 0-1.437 1.438l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></span>
+              Criamos modelos do zero
+            </li>
+            <li>
+              <span class="fi"><svg viewBox="0 0 24 24"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/></svg></span>
+              Tamanho e encaixe exatos
+            </li>
           </ul>
           <div class="stage">
             <div class="glow"></div>
