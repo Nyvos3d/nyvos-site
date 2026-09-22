@@ -99,19 +99,6 @@ main{position:relative;z-index:1}
   opacity:0;animation:sobe 1s var(--vai) 1.4s forwards}
 .beneficios .bi{display:flex;align-items:center;gap:9px;font-size:1rem;font-weight:500;color:var(--mineral)}
 .beneficios .bi svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.hero-feats{display:none;flex-direction:column;gap:16px;list-style:none;padding:22px 0 4px;margin:0;counter-reset:feat}
-.hero-feats li{display:flex;align-items:center;gap:14px;font-size:1.02rem;font-weight:500;color:var(--mineral);letter-spacing:-.01em;counter-increment:feat;
-  padding:10px 14px 10px 10px;border-radius:13px;
-  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
-  border:1px solid rgba(154,159,166,.13);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
-.hero-feats li .fic{flex-shrink:0;width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(145deg,rgba(242,101,34,.18),rgba(242,101,34,.05));
-  backdrop-filter:blur(12px) saturate(160%);
-  border:1px solid rgba(242,101,34,.28);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 4px 12px -5px rgba(242,101,34,.28);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:.86rem;color:#ff9d6b;letter-spacing:.01em}
-.hero-feats li .fic::before{content:counter(feat,decimal-leading-zero)}
 .redes-cta{display:none;flex-direction:column;gap:3px;align-items:center;margin-bottom:5px}
 .redes-titulo{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.08rem;color:var(--mineral);letter-spacing:-.01em}
 .redes-sub{font-size:.82rem;color:var(--cinza);font-weight:400}
@@ -165,9 +152,14 @@ main{position:relative;z-index:1}
 @keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
+.n-trace{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+.n-trace path{stroke-dasharray:1;stroke-dashoffset:1;fill:none;stroke:rgba(243,242,238,.48);stroke-width:1.4;stroke-linecap:square;stroke-linejoin:miter;animation:nDraw .9s linear 0s 1 forwards}
+@keyframes nDraw{to{stroke-dashoffset:0}}
+.n-trace.fade{animation:nFadeOut .4s ease-in forwards}
+@keyframes nFadeOut{to{opacity:0}}
 .phead{position:absolute;left:50%;top:50%;width:276px;height:276px;transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
 .phead .beam{position:absolute;inset:0;border:1.5px solid rgba(242,101,34,.95);border-radius:3px;
-  box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 4.2s linear .5s infinite}
+  box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 6s linear .5s infinite}
 @keyframes scan{0%{transform:translateZ(2px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateZ(120px);opacity:0}}
 
 .descer{margin:22px auto 0;color:var(--cinza-3);font-size:.7rem;font-weight:500;letter-spacing:.16em;
@@ -321,7 +313,6 @@ main{position:relative;z-index:1}
   .mail-inline{display:flex}
   #rfMail{display:none}
   .redes-cta{display:flex}
-  .hero-feats{display:flex}
   .beneficios{display:none}
   .hero-txt .cta-wrap{display:none}
   #fazemos,.faixa{display:none}
@@ -385,14 +376,6 @@ main{position:relative;z-index:1}
             </div>
           </div>
         </div>
-        <ul class="hero-feats">
-          <li><span class="fic"></span>Imprimimos em qualquer cor, sem limitação</li>
-          <li><span class="fic"></span>Logo, nome ou arte em relevo real</li>
-          <li><span class="fic"></span>Projetamos qualquer modelo do zero</li>
-          <li><span class="fic"></span>Tamanho exato. Encaixe sem folga.</li>
-          <li><span class="fic"></span>Do pedido à peça em poucos dias</li>
-          <li><span class="fic"></span>Acabamento revisado peça a peça</li>
-        </ul>
       </div>
       <div class="descer">Role para conhecer <span class="seta"></span></div>
     </div>
@@ -520,7 +503,7 @@ main{position:relative;z-index:1}
    CONFIG — edite aqui seus contatos reais
    ═══════════════════════════════════════ */
 const CONFIG = {
-  whatsapp: "5534920024416",
+  whatsapp: "5534988941661",
   instagram: "nyvos.3d",
   tiktok: "nyvos.3d",
   email: "nyvos3d@gmail.com",
@@ -558,6 +541,22 @@ set("ano","textContent",new Date().getFullYear());
   const STEP = innerWidth < 620 ? 7 : 5.3;
   const paths = [];
   let kfCss = "", lastP1 = 0;
+
+  // efeito lápis: N é "desenhado" antes de emergir em 3D
+  if (!reduce){
+    const traceNS = "http://www.w3.org/2000/svg";
+    const traceSvg = document.createElementNS(traceNS,"svg");
+    traceSvg.setAttribute("viewBox","0 0 96 96");
+    traceSvg.setAttribute("class","n-trace");
+    traceSvg.setAttribute("aria-hidden","true");
+    const tp = document.createElementNS(traceNS,"path");
+    tp.setAttribute("pathLength","1");
+    tp.setAttribute("d",P);
+    traceSvg.appendChild(tp);
+    host.appendChild(traceSvg);
+    setTimeout(()=>traceSvg.classList.add("fade"), 800);
+  }
+
   for (let i = 0; i < N; i++){
     const t = i / (N - 1);
     const ease = t*t*(3-2*t);
@@ -576,10 +575,10 @@ set("ano","textContent",new Date().getFullYear());
       const p0 = (r * 100).toFixed(1);
       const p1 = Math.min(88, r * 100 + 7).toFixed(1);
       if (i === N-1) lastP1 = parseFloat(p1);
-      const hold = i === N-1 ? "97" : "93";
+      const hold = i === N-1 ? "99" : "94";
       kfCss += `@keyframes cb${i}{0%,${p0}%{opacity:0}${p1}%,${hold}%{opacity:1}100%{opacity:0}}`;
       cam.style.opacity = "0";
-      cam.style.animation = `cb${i} 4.2s linear .5s infinite`;
+      cam.style.animation = `cb${i} 6s linear .5s infinite`;
     }
     host.appendChild(cam);
     paths.push({ el: cam.querySelector("path"), L });
@@ -592,16 +591,17 @@ set("ano","textContent",new Date().getFullYear());
     const stage = document.querySelector(".stage");
     let rafId = null, last = 0;
     function recolor(now){
-      const pos = (Math.max(0, now - animStart) % 4200) / 4200 * 100;
-      const allOrange = pos >= lastP1 && pos <= 97;
+      const pos = (Math.max(0, now - animStart) % 6000) / 6000 * 100;
+      const allOrange = pos >= lastP1 && pos <= 99;
       const h = ((now % CYCLE) / CYCLE * 360) | 0;
       if (allOrange){
-        // sombreamento gradiente: base escura → topo claro, lê como 3D
+        // sombreamento gradiente: base bem escura → topo brilhante, profundidade 3D
         const n = paths.length;
         paths.forEach((p,i) => {
           const t = i / (n - 1);
-          const L = Math.round(22 + t * 50); // 22% (base) → 72% (topo)
-          p.el.setAttribute("fill", `hsl(22,88%,${L}%)`);
+          const L = Math.round(16 + t * 64); // 16% (base escura) → 80% (topo brilhante)
+          const S = Math.round(82 + t * 8);  // 82% (base) → 90% (topo mais saturado)
+          p.el.setAttribute("fill", `hsl(22,${S}%,${L}%)`);
         });
       } else {
         const top = paths.length - 1;
