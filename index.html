@@ -27,7 +27,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
-  --carbono:#161819;--grafite:#1E2024;--grafite-2:#2A2D32;
+  --carbono:#1E2024;--grafite:#282B30;--grafite-2:#333640;
   --vidro:rgba(255,255,255,.035);
   --traco:rgba(154,159,166,.16);
   --mineral:#F3F2EE;--mineral-2:#B9BAB6;--cinza:#9A9FA6;--cinza-3:#6E727A;
@@ -109,9 +109,9 @@ main{position:relative;z-index:1}
 #rfMail{background:linear-gradient(180deg,rgba(234,67,53,.34),rgba(234,67,53,.12));border-color:rgba(234,67,53,.5)}
 @keyframes sobe{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
-.zap{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:.01em;
-  padding:17px 30px;border-radius:100px;color:var(--mineral);
+.zap{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:.93rem;letter-spacing:.01em;
+  padding:13px 26px;border-radius:100px;color:var(--mineral);
   background:rgba(43,217,107,.13);
   backdrop-filter:blur(16px) saturate(180%);
   border:1px solid rgba(43,217,107,.28);
@@ -120,7 +120,7 @@ main{position:relative;z-index:1}
 .zap::before{content:"";position:absolute;inset:0;border-radius:100px;animation:pulso 2.8s ease-out infinite}
 @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(43,217,107,.22)}70%{box-shadow:0 0 0 22px rgba(43,217,107,0)}100%{box-shadow:0 0 0 0 rgba(43,217,107,0)}}
 .zap:hover{transform:translateY(-3px) scale(1.03)}
-.zap svg.ico{width:22px;height:22px}
+.zap svg.ico{width:19px;height:19px}
 .zap-mob{display:none}
 .linha-btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;
   font-family:'Outfit',sans-serif;font-weight:600;font-size:1.02rem;padding:17px 26px;border-radius:100px;
@@ -237,7 +237,7 @@ main{position:relative;z-index:1}
 .cg-ou::before,.cg-ou::after{content:"";flex:1;height:1px;background:rgba(154,159,166,.16)}
 .cg-ou span{font-family:'DM Mono',monospace;font-size:.66rem;font-weight:500;color:var(--cinza-3);letter-spacing:.12em;text-transform:uppercase}
 .mail-inline{display:none;align-items:center;justify-content:center;gap:10px;
-  font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--mineral-2);
+  font-family:'Outfit',sans-serif;font-size:.93rem;font-weight:700;color:var(--mineral);
   text-decoration:none;padding:6px 0;margin-top:0;transition:color .3s}
 .mail-inline svg{width:16px;height:16px;stroke:var(--cinza);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .3s}
 .mail-inline:hover{color:var(--mineral)}.mail-inline:hover svg{stroke:var(--mineral)}
@@ -299,7 +299,7 @@ main{position:relative;z-index:1}
     radial-gradient(160% 110% at 65% -5%,rgba(224,50,43,.07),transparent 72%),
     radial-gradient(120% 80% at 30% 110%,rgba(224,50,43,.04),transparent 68%)}
   .contato,.prod{backdrop-filter:none}
-  .topbar{backdrop-filter:none;background:rgba(15,16,18,.95)}
+  .topbar{backdrop-filter:none;background:rgba(30,32,36,.97)}
   .abre::before{background:conic-gradient(from 200deg at 50% 30%,transparent 0deg,rgba(154,159,166,.04) 30deg,transparent 58deg,transparent 302deg,rgba(224,50,43,.03) 332deg,transparent 360deg);animation-duration:32s}
   .zap::before{box-shadow:0 0 0 3px rgba(43,217,107,.3)}
 }
