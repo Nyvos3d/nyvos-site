@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0F1012">
 <meta name="format-detection" content="telephone=no">
-<title>NYVOS · Impressão 3D — design & fabricação digital</title>
-<meta name="description" content="NYVOS transforma ideias em objetos, camada por camada. Impressão 3D premium. Fale com a gente.">
+<title>NYVOS · Impressão 3D</title>
+<meta name="description" content="NYVOS transforma ideias em objetos, camada por camada. Impressão 3D. Fale com a gente.">
 <meta name="author" content="NYVOS">
 <meta property="og:type" content="website">
 <meta property="og:title" content="NYVOS · Impressão 3D">
@@ -70,7 +70,14 @@ main{position:relative;z-index:1}
     transparent 300deg,rgba(224,50,43,.06) 330deg,transparent 360deg);
   animation:varre 18s linear infinite;z-index:-1}
 @keyframes varre{to{transform:translateX(-50%) rotate(360deg)}}
-.hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(560px,86vh,760px)}
+.hero-tag{display:flex;justify-content:center;margin-bottom:18px;opacity:0;animation:sobe 1s var(--vai) .35s forwards}
+.badge{display:inline-flex;align-items:center;gap:11px;font-family:'Outfit',sans-serif;font-weight:600;
+  font-size:.95rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mineral);
+  padding:11px 24px;border-radius:100px;background:rgba(224,50,43,.12);border:1px solid rgba(224,50,43,.42);
+  box-shadow:0 10px 30px -12px rgba(224,50,43,.5)}
+.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--vermelho);box-shadow:0 0 12px var(--vermelho);animation:pisca 2.4s ease-in-out infinite}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.35}}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(540px,82vh,740px)}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.04fr 1fr;gap:40px}}
 
 .hero-txt{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
@@ -182,6 +189,12 @@ main{position:relative;z-index:1}
 .contato .seta{margin-left:auto;flex-shrink:0;color:var(--cinza-3);transition:transform .4s var(--vai),color .4s}
 .contato:hover .seta{transform:translate(4px,-4px);color:var(--vermelho-luz)}
 .contato .seta svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.contato.soon{opacity:.72;cursor:default}
+.contato.soon::before{display:none}
+.contato.soon:hover{transform:none;border-color:var(--traco);box-shadow:none}
+.contato.soon:hover .ci{background:var(--grafite);border-color:var(--traco)}
+.soon-badge{margin-left:auto;flex-shrink:0;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--vermelho);border:1px solid rgba(224,50,43,.4);border-radius:100px;padding:6px 12px}
 
 /* rodapé */
 .rodape{position:relative;z-index:1;border-top:1px solid var(--traco);padding:44px 0 38px;background:linear-gradient(180deg,transparent,rgba(154,159,166,.03))}
@@ -263,12 +276,12 @@ main{position:relative;z-index:1}
   <!-- APRESENTAÇÃO -->
   <header class="abre">
     <div class="col">
+      <div class="hero-tag"><span class="badge">Impressão 3D</span></div>
       <div class="hero-grid">
         <div class="hero-txt">
           <a class="hero-logo" href="#" aria-label="NYVOS">
             <svg viewBox="0 -2 575 100"><g fill="#F3F2EE"><path d="M0 0H30V32H45V64H60V0H96V96H30V64H21V32H12V96H0Z"/><g transform="translate(128 0)"><path d="M0 0H20L60 62V0H80V96H60L20 34V96H0Z"/><path transform="translate(94 0)" d="M0 0H20L40 36L60 0H80L50 54V96H30V54Z"/><path transform="translate(182 0)" d="M0 0H20L40 64L60 0H80L50 96H30Z"/><path transform="translate(272 0)" fill-rule="evenodd" d="M48 -1.5A48 49.5 0 1 0 48.01 -1.5ZM48 19.5A27 28.5 0 1 1 47.99 19.5Z"/><path transform="translate(378 -1) scale(1 1.0206)" d="M66.42 18.91A34.5 29.5 0 1 0 34 58.5A13.5 8.5 0 1 1 21.31 69.91L1.58 77.09A34.5 29.5 0 1 0 34 37.5A13.5 8.5 0 1 1 46.69 26.09Z"/></g></g></svg>
           </a>
-          <span class="et">Impressão 3D · Design & Fabricação Digital</span>
           <h1>Sua ideia, impressa <b>camada por camada</b>.</h1>
           <p class="lead">Objetos desenhados e impressos em 3D, sob medida. Chama a gente e a gente resolve.</p>
           <div class="cta-wrap">
@@ -320,9 +333,14 @@ main{position:relative;z-index:1}
           <span class="ct"><span class="k">Instagram</span><span class="v" id="instaHandle">@nyvos3d</span><small>Coleção, bastidores e novidades</small></span>
           <span class="seta"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
         </a>
+        <a class="contato" id="cTiktok" target="_blank" rel="noopener">
+          <span class="ci"><svg class="fill" viewBox="0 0 24 24"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg></span>
+          <span class="ct"><span class="k">TikTok</span><span class="v" id="tiktokHandle">@Nyvos.3d</span><small>Vídeos e bastidores das impressões</small></span>
+          <span class="seta"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+        </a>
         <a class="contato" id="cMail">
           <span class="ci"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
-          <span class="ct"><span class="k">E-mail</span><span class="v" id="mailAddr">contato@nyvos.com.br</span><small>Para orçamentos e parcerias</small></span>
+          <span class="ct"><span class="k">E-mail</span><span class="v" id="mailAddr">nyvos3d@gmail.com</span><small>Para orçamentos e parcerias</small></span>
           <span class="seta"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
         </a>
         <a class="contato" id="cLocal" target="_blank" rel="noopener">
@@ -330,6 +348,11 @@ main{position:relative;z-index:1}
           <span class="ct"><span class="k">Localização</span><span class="v" id="cidade">[Sua cidade]</span><small>Entrega e retirada combinadas</small></span>
           <span class="seta"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
         </a>
+        <div class="contato soon">
+          <span class="ci"><svg viewBox="0 0 24 24"><path d="M6 8h12l-.8 11.2a1 1 0 0 1-1 .8H7.8a1 1 0 0 1-1-.8L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></span>
+          <span class="ct"><span class="k">Shopee</span><span class="v">Loja oficial</span><small>Compre com segurança pela plataforma</small></span>
+          <span class="soon-badge">Em breve</span>
+        </div>
       </div>
     </div>
   </section>
@@ -344,6 +367,7 @@ main{position:relative;z-index:1}
       <div class="flinks">
         <a id="fWhats" target="_blank" rel="noopener">WhatsApp</a>
         <a id="fInsta" target="_blank" rel="noopener">Instagram</a>
+        <a id="fTiktok" target="_blank" rel="noopener">TikTok</a>
         <a id="fMail">E-mail</a>
       </div>
     </div>
@@ -365,7 +389,8 @@ main{position:relative;z-index:1}
 const CONFIG = {
   whatsapp: "5534920024416",
   instagram: "nyvos3d",
-  email: "contato@nyvos.com.br",
+  tiktok: "Nyvos.3d",
+  email: "nyvos3d@gmail.com",
   cidade: "Uberlândia · MG",
   mapa: "https://maps.google.com/?q=Uberlandia+MG"
 };
@@ -373,11 +398,14 @@ const CONFIG = {
 const wa = t => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
 const msg = "Olá! Vim pelo site da NYVOS e quero fazer um orçamento de impressão 3D.";
 const insta = `https://instagram.com/${CONFIG.instagram}`;
+const tiktok = `https://www.tiktok.com/@${CONFIG.tiktok}`;
 const set = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
 set("zapHero","href",wa(msg)); set("tbZap","href",wa(msg)); set("waf","href",wa(msg));
 set("cWhats","href",wa(msg)); set("fWhats","href",wa(msg));
 set("cInsta","href",insta); set("fInsta","href",insta);
 set("instaHandle","textContent","@"+CONFIG.instagram);
+set("cTiktok","href",tiktok); set("fTiktok","href",tiktok);
+set("tiktokHandle","textContent","@"+CONFIG.tiktok);
 set("cMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("fMail","href",`mailto:${CONFIG.email}`);
 set("mailAddr","textContent",CONFIG.email);
