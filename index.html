@@ -77,11 +77,13 @@ main{position:relative;z-index:1}
 .hero-logo{width:clamp(220px,32vw,320px);margin-bottom:24px;display:flex;flex-direction:column;gap:11px;
   opacity:0;transform:translateY(-40px);animation:drop 1.15s var(--vai) .1s forwards}
 .hero-logo>svg{width:100%;height:auto;display:block;filter:drop-shadow(0 12px 34px rgba(0,0,0,.5))}
-.logo-tag{display:flex;align-items:center;gap:12px;width:100%;
-  font-family:'DM Mono',monospace;font-weight:500;font-size:clamp(.64rem,1.5vw,.76rem);
-  letter-spacing:.32em;text-transform:uppercase;color:var(--vermelho-luz);white-space:nowrap}
-.logo-tag::before{content:"";width:22px;height:2px;background:var(--vermelho);flex-shrink:0}
-.logo-tag::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(224,50,43,.5),transparent)}
+.logo-tag{display:flex;align-items:center;gap:11px;width:100%;
+  font-family:'DM Mono',monospace;font-weight:500;font-size:clamp(.7rem,1.6vw,.82rem);
+  letter-spacing:.34em;text-transform:uppercase;color:var(--mineral);white-space:nowrap}
+.logo-tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--vermelho);flex-shrink:0;
+  box-shadow:0 0 10px rgba(224,50,43,.8);animation:pisca 2.6s ease-in-out infinite}
+.logo-tag::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(154,159,166,.4),transparent)}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes drop{0%{opacity:0;transform:translateY(-40px) scale(1.04)}60%{opacity:1;transform:translateY(6px)}100%{opacity:1;transform:translateY(0) scale(1)}}
 .hero-txt h1{margin:8px 0 0;font-family:'Outfit',sans-serif;font-weight:700;
   font-size:clamp(2.15rem,4.9vw,3.35rem);line-height:1.0;letter-spacing:-.03em;max-width:16ch;
@@ -249,9 +251,10 @@ main{position:relative;z-index:1}
   .hero-txt{align-items:center;text-align:center}
   .hero-txt h1{max-width:20ch}
   .hero-txt .cta-wrap,.beneficios{justify-content:center}
-  .stage{max-width:420px;margin-top:6px}
-  .print{transform:scale3d(.56,.56,.56)}
-  .glow{width:52%;height:36%}
+  .hero-grid{gap:0}
+  .stage{max-width:360px;margin:-26px auto 0}
+  .print{transform:scale3d(.7,.7,.7)}
+  .glow{width:54%;height:38%}
   .descer{display:none}
 }
 @media(max-width:760px){.col{padding:0 16px}.secao{padding:38px 0}}
