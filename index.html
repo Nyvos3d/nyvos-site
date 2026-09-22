@@ -27,7 +27,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
-  --carbono:#1E2024;--grafite:#282B30;--grafite-2:#333640;
+  --carbono:#1B1D21;--grafite:#252729;--grafite-2:#313336;
   --vidro:rgba(255,255,255,.035);
   --traco:rgba(154,159,166,.16);
   --mineral:#F3F2EE;--mineral-2:#B9BAB6;--cinza:#9A9FA6;--cinza-3:#6E727A;
@@ -298,8 +298,8 @@ main{position:relative;z-index:1}
   .refletor{background:
     radial-gradient(160% 110% at 65% -5%,rgba(224,50,43,.07),transparent 72%),
     radial-gradient(120% 80% at 30% 110%,rgba(224,50,43,.04),transparent 68%)}
-  .contato,.prod{backdrop-filter:none}
-  .topbar{backdrop-filter:none;background:rgba(30,32,36,.97)}
+  .contato,.prod,.zap,.r-soc{backdrop-filter:none}
+  .topbar{backdrop-filter:none;background:rgba(27,29,33,.97)}
   .abre::before{background:conic-gradient(from 200deg at 50% 30%,transparent 0deg,rgba(154,159,166,.04) 30deg,transparent 58deg,transparent 302deg,rgba(224,50,43,.03) 332deg,transparent 360deg);animation-duration:32s}
   .zap::before{box-shadow:0 0 0 3px rgba(43,217,107,.3)}
 }
@@ -599,8 +599,9 @@ set("ano","textContent",new Date().getFullYear());
         paths[top].el.style.fill = `hsl(${h},72%,64%)`;  // última camada acompanha o ciclo
       }
     }
+    const fpsLimit = innerWidth < 620 ? 80 : 33; // mobile: ~12fps, desktop: ~30fps
     function tick(now){
-      if (!document.hidden && now - last > 33){ last = now; recolor(now); }   // ~30fps
+      if (!document.hidden && now - last > fpsLimit){ last = now; recolor(now); }
       rafId = requestAnimationFrame(tick);
     }
     const start = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
@@ -614,8 +615,10 @@ set("ano","textContent",new Date().getFullYear());
 /* ── reveal on scroll ── */
 const obs = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting){ e.target.classList.add("in"); obs.unobserve(e.target); }
-}), { threshold:.12 });
+}), { threshold:.05 });
 document.querySelectorAll(".rev").forEach(el => obs.observe(el));
+// fallback: garante que nenhum .rev fique preso em opacity:0
+setTimeout(() => document.querySelectorAll(".rev:not(.in)").forEach(el => el.classList.add("in")), 1200);
 
 /* ── sensor na linha central da tela: o card que a rolagem cruza acende ── */
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
