@@ -98,16 +98,9 @@ main{position:relative;z-index:1}
   opacity:0;animation:sobe 1s var(--vai) 1.4s forwards}
 .beneficios .bi{display:flex;align-items:center;gap:9px;font-size:1rem;font-weight:500;color:var(--mineral)}
 .beneficios .bi svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.hero-feats{display:none;gap:6px;position:absolute;bottom:0;left:0;right:0;z-index:5;list-style:none;padding:0 10px 10px;margin:0}
-.hero-feats li{display:flex;align-items:center;gap:10px;font-size:1rem;line-height:1.3;letter-spacing:.01em;color:var(--mineral);font-weight:600;
-  background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(200%);-webkit-backdrop-filter:blur(20px) saturate(200%);
-  padding:10px 13px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.11);border-top:1px solid rgba(255,255,255,.24)}
-.hero-feats li::before{display:none}
-.hero-feats .fi{width:32px;height:32px;min-width:32px;border-radius:9px;
-  background:rgba(242,101,34,.16);border:1px solid rgba(242,101,34,.3);
-  display:flex;align-items:center;justify-content:center}
-.hero-feats .fi svg{width:15px;height:15px;stroke:var(--laranja);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero-feats{display:none;flex-direction:column;gap:9px;list-style:none;padding:18px 0 0;margin:0}
+.hero-feats li{display:flex;align-items:center;gap:9px;font-size:1rem;font-weight:500;color:var(--mineral)}
+.hero-feats li svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .hero-socials{display:none;gap:10px;align-items:center;justify-content:center;padding:12px 0 6px}
 .h-soc{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;transition:transform .4s var(--vai)}
 .h-soc:active{transform:scale(.94)}
@@ -159,7 +152,7 @@ main{position:relative;z-index:1}
 .pobj .cam svg{width:100%;height:100%;display:block}
 .phead{position:absolute;left:50%;top:50%;width:276px;height:276px;transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
 .phead .beam{position:absolute;inset:0;border:1.5px solid rgba(242,101,34,.95);border-radius:3px;
-  box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 4.2s var(--vai) .5s infinite}
+  box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 4.2s linear .5s infinite}
 @keyframes scan{0%{transform:translateZ(2px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateZ(120px);opacity:0}}
 
 .descer{margin:22px auto 0;color:var(--cinza-3);font-size:.7rem;font-weight:500;letter-spacing:.16em;
@@ -228,9 +221,9 @@ main{position:relative;z-index:1}
   #cWhats .ct .v,#cWhats .ct small{color:#0D1117}
   #cWhats .seta svg{stroke:#0D1117}
   #cInsta,#cTiktok,#cMail,#cLocal,.contato.soon{display:none}
-  .stage-wrap{padding-bottom:152px}
-  .hero-feats{display:grid;grid-template-columns:1fr 1fr}
-  .hero-txt .cta-wrap,.hero-txt .beneficios{display:none}
+  .hero-feats{display:flex}
+  .beneficios{flex-direction:column;gap:9px}
+  .hero-txt .cta-wrap{display:none}
   #fazemos,.faixa,#contato .cab{display:none}
 }
 .contato{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;padding:24px;
@@ -362,24 +355,6 @@ main{position:relative;z-index:1}
         </div>
 
         <div class="stage-wrap">
-          <ul class="hero-feats" aria-hidden="true">
-            <li>
-              <span class="fi"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 3c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
-              Imprimimos na cor que você quiser
-            </li>
-            <li>
-              <span class="fi"><svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><circle cx="7" cy="7" r="1" fill="currentColor" stroke="none" style="fill:var(--laranja)"/></svg></span>
-              Nome, logo ou arte em relevo
-            </li>
-            <li>
-              <span class="fi"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.062 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .963L15.5 14.062a2 2 0 0 0-1.437 1.438l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></span>
-              Desenhamos qualquer modelo
-            </li>
-            <li>
-              <span class="fi"><svg viewBox="0 0 24 24"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/><path d="m13.5 4.5 2 2"/></svg></span>
-              Tamanho e encaixe exatos
-            </li>
-          </ul>
           <div class="stage">
             <div class="glow"></div>
             <div class="iso">
@@ -392,6 +367,24 @@ main{position:relative;z-index:1}
             </div>
           </div>
         </div>
+        <ul class="hero-feats">
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5.5 12 3c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+            Imprimimos em qualquer cor, sem limitação
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg>
+            Logo, nome ou arte em relevo real
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.062 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .963L15.5 14.062a2 2 0 0 0-1.437 1.438l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            Projetamos qualquer modelo do zero
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            Tamanho exato. Encaixe sem folga.
+          </li>
+        </ul>
       </div>
       <div class="hero-socials">
         <a class="h-soc" id="hInsta" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#833AB4,#E1306C)">
