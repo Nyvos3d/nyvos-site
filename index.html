@@ -37,10 +37,10 @@
   --laranja:#F26522;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden;background:var(--carbono)}
 body{background:var(--carbono);color:var(--mineral);
   font-family:'Instrument Sans',system-ui,sans-serif;
-  font-size:16.5px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
@@ -72,7 +72,6 @@ main{position:relative;z-index:1}
     transparent 300deg,rgba(224,50,43,.07) 330deg,transparent 360deg);
   animation:varre 18s linear infinite;z-index:-1}
 @keyframes varre{to{transform:translateX(-50%) rotate(360deg)}}
-@keyframes zapPulse{0%,100%{box-shadow:0 10px 30px -16px rgba(43,217,107,.36),0 0 13px -6px rgba(43,217,107,.13),inset 0 1px 0 rgba(255,255,255,.16)}50%{box-shadow:0 14px 38px -14px rgba(43,217,107,.5),0 0 24px -5px rgba(43,217,107,.24),inset 0 1px 0 rgba(255,255,255,.16)}}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(520px,80vh,720px)}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.04fr 1fr;gap:40px}}
 
@@ -301,6 +300,9 @@ main{position:relative;z-index:1}
   .topbar{backdrop-filter:none;background:rgba(15,16,18,.95)}
   .abre::before{background:conic-gradient(from 200deg at 50% 30%,transparent 0deg,rgba(154,159,166,.04) 30deg,transparent 58deg,transparent 302deg,rgba(224,50,43,.03) 332deg,transparent 360deg);animation-duration:32s}
   .zap::before{box-shadow:0 0 0 3px rgba(43,217,107,.3)}
+}
+@media(max-width:640px){
+  .abre::before{animation:none}
 }
 @media(max-width:640px){
   .hero-logo{width:172px;margin-bottom:40px}
