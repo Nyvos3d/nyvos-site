@@ -142,8 +142,8 @@ main{position:relative;z-index:1}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
 .phead{position:absolute;left:50%;top:50%;width:276px;height:276px;transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
-.phead .beam{position:absolute;inset:0;border:1px solid rgba(255,90,80,.95);border-radius:3px;
-  box-shadow:0 0 22px 3px rgba(224,50,43,.65),inset 0 0 14px rgba(224,50,43,.4);animation:scan 4.2s var(--vai) infinite}
+.phead .beam{position:absolute;inset:0;border:1.5px solid rgba(242,101,34,.95);border-radius:3px;
+  box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 4.2s var(--vai) .5s infinite}
 @keyframes scan{0%{transform:translateZ(2px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateZ(120px);opacity:0}}
 
 .descer{margin:22px auto 0;color:var(--cinza-3);font-size:.7rem;font-weight:500;letter-spacing:.16em;
@@ -498,9 +498,11 @@ set("ano","textContent",new Date().getFullYear());
     cam.style.transform = `translateZ(${i*STEP}px)`;
     cam.innerHTML = `<svg viewBox="0 0 96 96"><path fill="${col}" d="${P}"/></svg>`;
     if (!reduce){
+      const ratio = Math.max(0, (i*STEP - 2) / 118);
+      const delay = (0.92 + ratio * 4.2).toFixed(2);
       cam.style.opacity = "0";
-      cam.style.animation = "camin .5s var(--vai) forwards";
-      cam.style.animationDelay = (0.6 + i*0.05) + "s";
+      cam.style.animation = "camin .35s ease forwards";
+      cam.style.animationDelay = delay + "s";
     }
     host.appendChild(cam);
     paths.push({ el: cam.querySelector("path"), L });
