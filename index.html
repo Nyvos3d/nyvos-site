@@ -98,6 +98,18 @@ main{position:relative;z-index:1}
   opacity:0;animation:sobe 1s var(--vai) 1.4s forwards}
 .beneficios .bi{display:flex;align-items:center;gap:9px;font-size:.92rem;font-weight:500;color:var(--mineral)}
 .beneficios .bi svg{width:17px;height:17px;stroke:var(--vermelho-luz);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.hero-feats{display:none;gap:6px;position:absolute;bottom:0;left:0;right:0;z-index:5;list-style:none;padding:0 10px 10px;margin:0}
+.hero-feats li{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;line-height:1.35;letter-spacing:.005em;color:var(--mineral);font-weight:600;
+  background:rgba(8,9,11,.40);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+  padding:9px 12px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.10);border-top-color:rgba(255,255,255,.20)}
+.hero-feats li::before{content:"";width:6px;height:6px;min-width:6px;margin-top:4px;border-radius:50%;background:var(--laranja);flex-shrink:0;box-shadow:0 0 8px rgba(242,101,34,.75)}
+.hero-socials{display:none;gap:10px;align-items:center;justify-content:center;padding:12px 0 6px}
+.h-soc{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;transition:transform .4s var(--vai)}
+.h-soc:active{transform:scale(.94)}
+.rodape-sociais{display:flex;gap:8px;align-items:center}
+.r-soc{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;opacity:.9;transition:transform .3s var(--vai),opacity .3s}
+.r-soc:hover{transform:scale(1.1);opacity:1}
 @keyframes sobe{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
 .zap{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
@@ -199,12 +211,23 @@ main{position:relative;z-index:1}
 /* ── contatos ── */
 .contatos{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media(max-width:640px){
-  .contatos{grid-template-columns:repeat(3,1fr);gap:10px}
-  #cWhats{grid-column:1/-1;border-color:rgba(43,217,107,.35);background:linear-gradient(135deg,rgba(43,217,107,.09),rgba(43,217,107,.03))}
-  .contato:not(#cWhats){flex-direction:column;align-items:center;justify-content:center;padding:16px 8px;gap:8px}
-  .contato:not(#cWhats) .ct,.contato:not(#cWhats) .seta,.soon-badge{display:none}
-  .contato:not(#cWhats) .ci{width:46px;height:46px;border-radius:12px}
-  #cLocal,.contato.soon{display:none}
+  .contatos{grid-template-columns:1fr;gap:10px}
+  #cWhats{
+    background:var(--zap);
+    border-color:transparent;
+    box-shadow:0 0 44px -8px rgba(43,217,107,.85),0 8px 28px -8px rgba(43,217,107,.4)
+  }
+  #cWhats:hover{border-color:transparent;box-shadow:0 0 56px -6px rgba(43,217,107,.95),0 12px 36px -8px rgba(43,217,107,.55)}
+  #cWhats .ci{background:rgba(0,0,0,.18);border-color:rgba(0,0,0,.12)}
+  #cWhats:hover .ci{background:rgba(0,0,0,.25);border-color:rgba(0,0,0,.2)}
+  #cWhats .ct .k{color:rgba(0,0,0,.55)}
+  #cWhats .ct .v,#cWhats .ct small{color:#0D1117}
+  #cWhats .seta svg{stroke:#0D1117}
+  #cInsta,#cTiktok,#cMail,#cLocal,.contato.soon{display:none}
+  .stage-wrap{padding-bottom:152px}
+  .hero-feats{display:grid;grid-template-columns:1fr 1fr}
+  .hero-txt .cta-wrap,.hero-txt .beneficios{display:none}
+  #fazemos,.faixa,#contato .cab{display:none}
 }
 .contato{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;padding:24px;
   border:1px solid var(--traco);border-radius:18px;
@@ -239,7 +262,7 @@ main{position:relative;z-index:1}
 
 /* rodapé */
 .rodape{position:relative;z-index:1;border-top:1px solid var(--traco);padding:40px 0 36px;background:linear-gradient(180deg,transparent,rgba(154,159,166,.03))}
-.rodape .base{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.rodape .base{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap}
 .rodape .fmarca svg{width:140px;height:auto}
 .rodape .rt{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
 .rodape .base small{color:var(--cinza-3);font-size:.82rem;font-weight:400;font-family:'DM Mono',monospace}
@@ -316,7 +339,7 @@ main{position:relative;z-index:1}
             <svg viewBox="0 -2 575 100"><g fill="#F3F2EE"><path fill="#F26522" d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/><g transform="translate(128 0)"><path d="M0 0H20L60 62V0H80V96H60L20 34V96H0Z"/><path transform="translate(94 0)" d="M0 0H20L40 36L60 0H80L50 54V96H30V54Z"/><path transform="translate(182 0)" d="M0 0H20L40 64L60 0H80L50 96H30Z"/><path transform="translate(272 0)" fill-rule="evenodd" d="M48 -1.5A48 49.5 0 1 0 48.01 -1.5ZM48 19.5A27 28.5 0 1 1 47.99 19.5Z"/><path transform="translate(378 -1) scale(1 1.0206)" d="M66.42 18.91A34.5 29.5 0 1 0 34 58.5A13.5 8.5 0 1 1 21.31 69.91L1.58 77.09A34.5 29.5 0 1 0 34 37.5A13.5 8.5 0 1 1 46.69 26.09Z"/></g></g></svg>
             <span class="logo-tag">Impressão 3D</span>
           </a>
-          <h1>Do jeito que <b>só você tem.</b></h1>
+          <h1>Criado do zero, <b>feito só pra você.</b></h1>
           <p class="lead">Você traz a ideia, a gente desenha, imprime em 3D e entrega.</p>
           <div class="cta-wrap">
             <a class="zap" id="zapHero" target="_blank" rel="noopener">
@@ -335,6 +358,12 @@ main{position:relative;z-index:1}
         </div>
 
         <div class="stage-wrap">
+          <ul class="hero-feats" aria-hidden="true">
+            <li>Imprimimos na cor que você quiser</li>
+            <li>Nome, logo ou arte em relevo</li>
+            <li>Criamos modelos do zero</li>
+            <li>Tamanho e encaixe exatos</li>
+          </ul>
           <div class="stage">
             <div class="glow"></div>
             <div class="iso">
@@ -347,6 +376,17 @@ main{position:relative;z-index:1}
             </div>
           </div>
         </div>
+      </div>
+      <div class="hero-socials">
+        <a class="h-soc" id="hInsta" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#833AB4,#E1306C)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
+        </a>
+        <a class="h-soc" id="hTiktok" target="_blank" rel="noopener" style="background:#010101;border-color:#444">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
+        </a>
+        <a class="h-soc" id="hMail" style="background:#EA4335">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
       </div>
       <div class="descer">Role para conhecer <span class="seta"></span></div>
     </div>
@@ -436,12 +476,19 @@ main{position:relative;z-index:1}
 <footer class="rodape">
   <div class="col">
     <div class="base">
-      <div class="fmarca">
-        <svg viewBox="0 -2 575 100" aria-label="NYVOS"><g fill="#F3F2EE"><path d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/><g transform="translate(128 0)"><path d="M0 0H20L60 62V0H80V96H60L20 34V96H0Z"/><path transform="translate(94 0)" d="M0 0H20L40 36L60 0H80L50 54V96H30V54Z"/><path transform="translate(182 0)" d="M0 0H20L40 64L60 0H80L50 96H30Z"/><path transform="translate(272 0)" fill-rule="evenodd" d="M48 -1.5A48 49.5 0 1 0 48.01 -1.5ZM48 19.5A27 28.5 0 1 1 47.99 19.5Z"/><path transform="translate(378 -1) scale(1 1.0206)" d="M66.42 18.91A34.5 29.5 0 1 0 34 58.5A13.5 8.5 0 1 1 21.31 69.91L1.58 77.09A34.5 29.5 0 1 0 34 37.5A13.5 8.5 0 1 1 46.69 26.09Z"/></g></g></svg>
-      </div>
       <div class="rt">
         <small>© <span id="ano"></span> NYVOS · Impressão 3D</small>
-        <a class="topo">Voltar ao topo ↑</a>
+        <div class="rodape-sociais">
+          <a class="r-soc" id="rfInsta" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#833AB4,#E1306C)" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
+          </a>
+          <a class="r-soc" id="rfTiktok" target="_blank" rel="noopener" style="background:#010101;border-color:#444" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
+          </a>
+          <a class="r-soc" id="rfMail" style="background:#EA4335" aria-label="E-mail">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -475,6 +522,10 @@ set("instaHandle","textContent","@"+CONFIG.instagram);
 set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok);
 set("cMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("mailAddr","textContent",CONFIG.email);
+set("hInsta","href",insta); set("hTiktok","href",tiktok);
+set("hMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
+set("rfInsta","href",insta); set("rfTiktok","href",tiktok);
+set("rfMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("cLocal","href",CONFIG.mapa);
 set("cidade","textContent","Retirada em "+CONFIG.cidade);
 set("ano","textContent",new Date().getFullYear());
