@@ -183,6 +183,14 @@ main{position:relative;z-index:1}
   -webkit-mask-image:linear-gradient(180deg,transparent,#000);mask-image:linear-gradient(180deg,transparent,#000)}
 .prod:hover{border-color:rgba(224,50,43,.5);transform:translateY(-6px);box-shadow:0 34px 62px -30px rgba(0,0,0,.95),0 0 56px -28px rgba(224,50,43,.6)}
 .prod:hover::before{opacity:1}
+.prod.lit{animation:cardglow 1.5s var(--vai)}
+.prod.lit::before{animation:lineglow 1.5s var(--vai)}
+@keyframes cardglow{
+  0%{box-shadow:0 20px 44px -32px rgba(0,0,0,.95);border-color:rgba(154,159,166,.2)}
+  38%{box-shadow:0 20px 44px -32px rgba(0,0,0,.95),0 0 50px -2px rgba(224,50,43,.7);border-color:rgba(224,50,43,.7)}
+  100%{box-shadow:0 20px 44px -32px rgba(0,0,0,.95);border-color:rgba(154,159,166,.2)}
+}
+@keyframes lineglow{0%,100%{opacity:.55}38%{opacity:1}}
 .prod .pic{width:52px;height:52px;border-radius:14px;border:1px solid rgba(224,50,43,.35);background:rgba(224,50,43,.12);display:flex;align-items:center;justify-content:center;transition:all .4s var(--vai)}
 .prod:hover .pic{background:var(--vermelho);border-color:var(--vermelho);box-shadow:0 8px 24px -8px rgba(224,50,43,.7)}
 .prod .pic svg{width:26px;height:26px;stroke:var(--vermelho-luz);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s}
@@ -228,7 +236,7 @@ main{position:relative;z-index:1}
 .rodape .base small{color:var(--cinza-3);font-size:.82rem;font-weight:400;font-family:'DM Mono',monospace}
 .rodape .topo{display:inline-flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:.74rem;font-weight:500;color:var(--vermelho);text-transform:uppercase;letter-spacing:.1em;cursor:pointer}
 .rodape .topo:hover{color:var(--vermelho-luz)}
-@media(max-width:640px){.rodape .base{justify-content:center;text-align:center}}
+@media(max-width:640px){.rodape .base{flex-direction:column;justify-content:center;text-align:center;gap:18px}.rodape .rt{flex-direction:column;gap:12px}}
 
 /* topbar */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(15,16,18,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--traco);transform:translateY(-100%);transition:transform .45s var(--vai)}
@@ -249,13 +257,13 @@ main{position:relative;z-index:1}
 .rev.in{opacity:1;transform:none}
 
 @media(max-width:900px){
-  .abre{padding:16px 0 18px}
+  .abre{padding:16px 0 4px}
   .hero-txt{align-items:center;text-align:center}
   .hero-txt h1{max-width:20ch}
   .hero-txt .cta-wrap,.beneficios{justify-content:center}
   .hero-grid{gap:0}
-  .stage{max-width:360px;margin:-26px auto 0}
-  .print{transform:scale3d(.7,.7,.7)}
+  .stage{max-width:340px;margin:-22px auto -46px}
+  .print{transform:scale3d(.72,.72,.72)}
   .glow{width:54%;height:38%}
   .descer{display:none}
 }
@@ -408,7 +416,7 @@ main{position:relative;z-index:1}
         </a>
         <div class="contato soon">
           <span class="ci"><svg viewBox="0 0 24 24"><path d="M6 8h12l-.8 11.2a1 1 0 0 1-1 .8H7.8a1 1 0 0 1-1-.8L6 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></span>
-          <span class="ct"><span class="k">Shopee</span><span class="v">Loja oficial</span><small>Compre com segurança pela plataforma</small></span>
+          <span class="ct"><span class="k">Shopee</span><span class="v">Loja oficial</span><small>Compre pela plataforma</small></span>
           <span class="soon-badge">Em breve</span>
         </div>
       </div>
@@ -518,6 +526,14 @@ const obs = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting){ e.target.classList.add("in"); obs.unobserve(e.target); }
 }), { threshold:.12 });
 document.querySelectorAll(".rev").forEach(el => obs.observe(el));
+
+/* ── brilho dos cards conforme entram na tela ── */
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
+  const litObs = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add("lit"); litObs.unobserve(e.target); }
+  }), { threshold: 0.6 });
+  document.querySelectorAll(".prod").forEach(el => litObs.observe(el));
+}
 
 /* ── topbar + FAB no scroll ── */
 const topbar = document.getElementById("topbar");
