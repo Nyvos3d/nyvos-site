@@ -129,6 +129,7 @@ main{position:relative;z-index:1}
 @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(43,217,107,.4)}70%{box-shadow:0 0 0 20px rgba(43,217,107,0)}100%{box-shadow:0 0 0 0 rgba(43,217,107,0)}}
 .zap:hover{transform:translateY(-3px) scale(1.03)}
 .zap svg.ico{width:22px;height:22px}
+.zap-mob{display:none}
 .linha-btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;
   font-family:'Outfit',sans-serif;font-weight:600;font-size:1.02rem;padding:17px 26px;border-radius:100px;
   color:var(--mineral);border:1px solid var(--traco);background:var(--vidro);
@@ -237,7 +238,8 @@ main{position:relative;z-index:1}
   #cWhats .ct .v{color:var(--mineral);font-weight:700}
   #cWhats .ct small{display:none}
   #cWhats .seta svg{stroke:var(--zap-luz)}
-  #cInsta,#cTiktok,#cLocal,#cMail,.contato.soon{display:none}
+  #cWhats,#cInsta,#cTiktok,#cLocal,#cMail,.contato.soon{display:none}
+  .zap-mob{display:flex!important;width:100%;justify-content:center}
   #cMail{display:none}
   .mail-inline{display:flex!important}
   #rfMail{display:none}
@@ -274,7 +276,7 @@ main{position:relative;z-index:1}
 .contato .seta svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .mail-inline{display:none;align-items:center;justify-content:center;gap:9px;
   font-family:'DM Mono',monospace;font-size:.93rem;font-weight:500;color:var(--cinza-3);
-  text-decoration:none;padding:6px 0;margin-top:14px;transition:color .3s}
+  text-decoration:none;padding:6px 0;margin-top:24px;transition:color .3s}
 .mail-inline svg{width:14px;height:14px;stroke:var(--cinza-3);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .3s}
 .mail-inline:hover{color:var(--cinza)}.mail-inline:hover svg{stroke:var(--cinza)}
 .contato.soon{opacity:.72;cursor:default}
@@ -482,6 +484,10 @@ main{position:relative;z-index:1}
           <span class="soon-badge">Em breve</span>
         </div>
       </div>
+      <a class="zap zap-mob" id="zapMob" target="_blank" rel="noopener">
+        <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+        Pedir meu orçamento
+      </a>
       <a class="mail-inline" id="cMailMob">
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         <span id="mailAddrMob">nyvos3d@gmail.com</span>
@@ -536,7 +542,7 @@ const msg = "Olá! Vim pelo site da NYVOS e quero um orçamento de uma peça per
 const insta = `https://instagram.com/${CONFIG.instagram}`;
 const tiktok = `https://www.tiktok.com/@${CONFIG.tiktok}`;
 const set = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
-set("zapHero","href",wa(msg)); set("cWhats","href",wa(msg));
+set("zapHero","href",wa(msg)); set("cWhats","href",wa(msg)); set("zapMob","href",wa(msg));
 set("cInsta","href",insta);
 set("instaHandle","textContent","@"+CONFIG.instagram);
 set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok);
@@ -590,14 +596,36 @@ set("ano","textContent",new Date().getFullYear());
   // troca de cor via JS (não usa filter — o 3D continua), leve e pausável
   if (!reduce){
     const s = document.createElement("style"); s.textContent = kfCss; document.head.appendChild(s);
-    const CYCLE = 22000;                 // ms por volta completa
-    const animStart = performance.now() + 500; // espelha o delay .5s da animacao CSS
+    const CYCLE = 22000;
+    const animStart = performance.now() + 500;
+    const iso = document.querySelector(".iso");
     const stage = document.querySelector(".stage");
-    let rafId = null, last = 0;
+    let rafId = null, last = 0, wasOrange = false;
     function recolor(now){
       const pos = (Math.max(0, now - animStart) % 4200) / 4200 * 100;
       const allOrange = pos >= lastP1 && pos <= 97;
       const h = ((now % CYCLE) / CYCLE * 360) | 0;
+      if (allOrange !== wasOrange){
+        wasOrange = allOrange;
+        if (iso){
+          if (allOrange){
+            iso.style.animation = "none";
+            requestAnimationFrame(() => {
+              iso.style.transition = "transform 1.4s ease-in-out";
+              iso.style.transform = "rotateX(0deg) rotateZ(0deg)";
+            });
+          } else {
+            iso.style.transition = "transform 1.4s ease-in-out";
+            iso.style.transform = "rotateX(50deg) rotateZ(-15deg)";
+            iso.addEventListener("transitionend", function restore(){
+              iso.style.removeProperty("transition");
+              iso.style.removeProperty("transform");
+              iso.style.removeProperty("animation");
+              iso.removeEventListener("transitionend", restore);
+            });
+          }
+        }
+      }
       if (allOrange){
         for (const p of paths) p.el.setAttribute("fill","#F26522");
       } else {
