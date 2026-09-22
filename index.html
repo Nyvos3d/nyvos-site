@@ -236,7 +236,11 @@ main{position:relative;z-index:1}
   .hero-feats{display:flex}
   .beneficios{display:none}
   .hero-txt .cta-wrap{display:none}
-  #fazemos,.faixa,#contato .cab{display:none}
+  #fazemos,.faixa{display:none}
+  #contato{padding-top:8px}
+  #contato .cab{margin-bottom:22px;gap:10px}
+  #contato .cab p{display:none}
+  #contato .cab h2{font-size:clamp(1.5rem,6vw,1.75rem)}
 }
 .contato{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;padding:24px;
   border:1px solid var(--traco);border-radius:18px;
@@ -277,7 +281,7 @@ main{position:relative;z-index:1}
 .rodape .base small{color:var(--cinza-3);font-size:.82rem;font-weight:400;font-family:'DM Mono',monospace}
 .rodape .topo{display:inline-flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:.74rem;font-weight:500;color:var(--vermelho);text-transform:uppercase;letter-spacing:.1em;cursor:pointer}
 .rodape .topo:hover{color:var(--vermelho-luz)}
-@media(max-width:640px){.rodape .base{flex-direction:column;justify-content:center;text-align:center;gap:18px}.rodape .rt{flex-direction:column;gap:12px}}
+@media(max-width:640px){.rodape{padding:34px 0 32px}.rodape .base{flex-direction:column;justify-content:center;text-align:center;gap:18px}.rodape .rt{flex-direction:column;gap:18px}.rodape .rt .rodape-sociais{margin-bottom:2px}.rodape .base small{font-size:.78rem}}
 
 /* topbar */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(15,16,18,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--traco);transform:translateY(-100%);transition:transform .45s var(--vai)}
@@ -365,7 +369,7 @@ main{position:relative;z-index:1}
               <div class="pshadow"></div>
               <div class="print">
                 <div class="pobj" id="pobj"></div>
-                <div class="phead"><div class="beam"></div></div>
+                <div class="phead"></div>
               </div>
             </div>
           </div>
@@ -468,7 +472,6 @@ main{position:relative;z-index:1}
   <div class="col">
     <div class="base">
       <div class="rt">
-        <small>© <span id="ano"></span> NYVOS · Impressão 3D</small>
         <div class="rodape-sociais">
           <a class="r-soc" id="rfInsta" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
@@ -483,6 +486,7 @@ main{position:relative;z-index:1}
             <span>E-mail</span>
           </a>
         </div>
+        <small>© <span id="ano"></span> NYVOS · Impressão 3D</small>
       </div>
     </div>
   </div>
