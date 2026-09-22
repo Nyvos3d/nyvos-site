@@ -72,6 +72,7 @@ main{position:relative;z-index:1}
     transparent 300deg,rgba(224,50,43,.07) 330deg,transparent 360deg);
   animation:varre 18s linear infinite;z-index:-1}
 @keyframes varre{to{transform:translateX(-50%) rotate(360deg)}}
+@keyframes zapPulse{0%,100%{box-shadow:0 0 40px -10px rgba(43,217,107,.55),0 8px 28px -8px rgba(43,217,107,.25)}50%{box-shadow:0 0 65px -5px rgba(43,217,107,.85),0 10px 40px -6px rgba(43,217,107,.5)}}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(520px,80vh,720px)}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.04fr 1fr;gap:40px}}
 
@@ -105,8 +106,11 @@ main{position:relative;z-index:1}
 .h-soc{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;transition:transform .4s var(--vai)}
 .h-soc:active{transform:scale(.94)}
 .rodape-sociais{display:flex;gap:14px;align-items:center}
-.r-soc{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;opacity:.9;transition:transform .3s var(--vai),opacity .3s}
-.r-soc:hover{transform:scale(1.08);opacity:1}
+.r-soc{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.07);backdrop-filter:blur(16px) saturate(180%);border:1px solid rgba(255,255,255,.12);opacity:.9;transition:transform .3s var(--vai),opacity .3s,background .3s,border-color .3s}
+.r-soc:hover{transform:scale(1.08);opacity:1;background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22)}
+#rfInsta{background:rgba(225,48,108,.18);border-color:rgba(225,48,108,.32)}
+#rfTiktok{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+#rfMail{background:rgba(234,67,53,.18);border-color:rgba(234,67,53,.32)}
 @keyframes sobe{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
 .zap{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
@@ -208,21 +212,25 @@ main{position:relative;z-index:1}
 /* ── contatos ── */
 .contatos{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media(max-width:640px){
+  .topbar{transform:none!important}
+  .abre{padding-top:72px!important}
+  .hero-logo{display:none}
   .contatos{grid-template-columns:1fr;gap:10px}
   #cWhats{
-    background:var(--zap);
-    border-color:transparent;
-    box-shadow:0 0 44px -8px rgba(43,217,107,.85),0 8px 28px -8px rgba(43,217,107,.4)
+    background:rgba(43,217,107,.1);
+    backdrop-filter:blur(24px) saturate(200%);
+    border-color:rgba(43,217,107,.3);
+    animation:zapPulse 2.8s ease-in-out infinite
   }
-  #cWhats:hover{border-color:transparent;box-shadow:0 0 56px -6px rgba(43,217,107,.95),0 12px 36px -8px rgba(43,217,107,.55)}
-  #cWhats .ci{background:rgba(0,0,0,.18);border-color:rgba(0,0,0,.12)}
-  #cWhats:hover .ci{background:rgba(0,0,0,.25);border-color:rgba(0,0,0,.2)}
-  #cWhats .ct .k{color:rgba(0,0,0,.55)}
-  #cWhats .ct .v,#cWhats .ct small{color:#0D1117}
-  #cWhats .seta svg{stroke:#0D1117}
+  #cWhats:hover{border-color:rgba(43,217,107,.5);box-shadow:0 0 56px -6px rgba(43,217,107,.8),0 12px 36px -8px rgba(43,217,107,.45)}
+  #cWhats .ci{background:rgba(43,217,107,.18);border-color:rgba(43,217,107,.38)}
+  #cWhats:hover .ci{background:rgba(43,217,107,.28);border-color:rgba(43,217,107,.5)}
+  #cWhats .ct .k{color:var(--cinza)}
+  #cWhats .ct .v,#cWhats .ct small{color:var(--mineral)}
+  #cWhats .seta svg{stroke:var(--cinza-3)}
   #cInsta,#cTiktok,#cMail,#cLocal,.contato.soon{display:none}
   .hero-feats{display:flex}
-  .beneficios{flex-direction:column;gap:9px}
+  .beneficios{flex-direction:column;gap:9px;align-self:flex-start}
   .hero-txt .cta-wrap{display:none}
   #fazemos,.faixa,#contato .cab{display:none}
 }
@@ -488,13 +496,13 @@ main{position:relative;z-index:1}
       <div class="rt">
         <small>© <span id="ano"></span> NYVOS · Impressão 3D</small>
         <div class="rodape-sociais">
-          <a class="r-soc" id="rfInsta" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#833AB4,#E1306C)" aria-label="Instagram">
+          <a class="r-soc" id="rfInsta" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
           </a>
-          <a class="r-soc" id="rfTiktok" target="_blank" rel="noopener" style="background:#010101;border-color:#444" aria-label="TikTok">
+          <a class="r-soc" id="rfTiktok" target="_blank" rel="noopener" aria-label="TikTok">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
           </a>
-          <a class="r-soc" id="rfMail" style="background:#EA4335" aria-label="E-mail">
+          <a class="r-soc" id="rfMail" aria-label="E-mail">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </a>
         </div>
