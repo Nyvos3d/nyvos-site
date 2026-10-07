@@ -84,13 +84,6 @@ main{position:relative;z-index:1}
 
 /* ═══════════ HERO ═══════════ */
 .abre{position:relative;overflow:hidden;padding:calc(76px + env(safe-area-inset-top)) 0 30px}
-.abre::before{content:"";position:absolute;top:-30%;left:66%;width:90%;height:150%;
-  transform:translateX(-50%);pointer-events:none;
-  background:conic-gradient(from 200deg at 50% 30%,
-    transparent 0deg,rgba(154,159,166,.08) 26deg,transparent 54deg,
-    transparent 300deg,rgba(154,159,166,.06) 330deg,transparent 360deg);
-  animation:varre 18s linear infinite;z-index:-1}
-@keyframes varre{to{transform:translateX(-50%) rotate(360deg)}}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;min-height:clamp(520px,80vh,720px)}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.04fr 1fr;gap:40px}}
 
@@ -164,8 +157,14 @@ p{text-wrap:pretty}
 /* ── cena de impressão 3D (WebGL): pôster estático até o primeiro quadro ── */
 .stage-wrap{position:relative;opacity:0;animation:sobe 1.1s var(--vai) .5s forwards}
 .stage{position:relative;width:100%;aspect-ratio:1/1;max-width:560px;margin:0 auto}
-.glow{position:absolute;left:50%;top:60%;width:70%;height:44%;transform:translate(-50%,-50%);
-  background:radial-gradient(closest-side,rgba(242,101,34,.22),transparent 72%);filter:blur(26px);pointer-events:none}
+/* fundo de estúdio: foco de luz frio atrás da máquina (mesma família do refletor da página, vindo do alto à direita)
+   e um piso iluminado sob a base, onde as sombras assentam — destaca sem caixa nem borda */
+.stage::before{content:"";position:absolute;left:-14%;right:-14%;top:-10%;bottom:-6%;pointer-events:none;
+  background:
+    radial-gradient(42% 39% at 54% 45%,rgba(196,201,209,.17),rgba(196,201,209,.065) 48%,transparent 76%),
+    radial-gradient(36% 8.5% at 50% 83%,rgba(214,218,224,.15),rgba(214,218,224,.045) 55%,transparent 76%)}
+.glow{position:absolute;left:50%;top:66%;width:56%;height:30%;transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,rgba(242,101,34,.2),transparent 72%);filter:blur(26px);pointer-events:none}
 .stage canvas,.stage-poster{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stage canvas{opacity:0;transition:opacity .9s var(--vai)}
 .stage canvas.on{opacity:1}
@@ -293,12 +292,10 @@ p{text-wrap:pretty}
   .refletor{background:
     radial-gradient(160% 110% at 65% -5%,rgba(154,159,166,.07),transparent 72%),
     radial-gradient(120% 80% at 30% 110%,rgba(154,159,166,.04),transparent 68%)}
-  .abre::before{background:conic-gradient(from 200deg at 50% 30%,transparent 0deg,rgba(154,159,166,.04) 30deg,transparent 58deg,transparent 302deg,rgba(154,159,166,.03) 332deg,transparent 360deg);animation-duration:32s}
 }
 /* desempenho em celulares e telas de toque (inclusive deitados e tablets): câmera fixa, sem varredura de fundo,
    sem desfoque de vidro — nada de reordenar os planos 3D a cada quadro */
 @media(max-width:640px),(hover:none){
-  .abre::before{display:none}
   .topbar.on{backdrop-filter:none;-webkit-backdrop-filter:none}
   .topbar.on{background:rgba(27,29,33,.97)}
   .zap,.prod{backdrop-filter:none}
