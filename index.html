@@ -584,7 +584,7 @@ set("ano","textContent",new Date().getFullYear());
     L = Math.min(86, L);
     const col = reduce
       ? `hsl(210,4%,${L}%)`
-      : (i === N-1 ? '#F26522' : `hsl(8,58%,${L})`);
+      : (i === N-1 ? '#F26522' : `hsl(8,58%,${L}%)`);
     const cam = document.createElement("div");
     cam.className = "cam";
     cam.style.transform = `translateZ(${i*STEP}px)`;
@@ -613,7 +613,8 @@ set("ano","textContent",new Date().getFullYear());
     function recolor(now){
       const pos = (Math.max(0, now - animStart) % 6000) / 6000 * 100;
       const allOrange = pos >= lastP1 && pos <= 99;
-      const h = ((now % CYCLE) / CYCLE * 360) | 0;
+      // oscila só na faixa quente da marca: vermelho (4°) ↔ âmbar (34°)
+      const h = Math.round(19 + 15 * Math.sin(now / CYCLE * Math.PI * 2));
       if (allOrange){
         // sombreamento gradiente: base bem escura → topo brilhante, profundidade 3D
         const n = paths.length;
@@ -625,8 +626,8 @@ set("ano","textContent",new Date().getFullYear());
         });
       } else {
         const top = paths.length - 1;
-        for (let i = 0; i < top; i++) paths[i].el.style.fill = `hsl(${h},56%,${paths[i].L}%)`;
-        paths[top].el.style.fill = `hsl(${h},72%,64%)`;  // última camada acompanha o ciclo
+        for (let i = 0; i < top; i++) paths[i].el.style.fill = `hsl(${h},64%,${paths[i].L}%)`;
+        paths[top].el.style.fill = `hsl(${h},82%,62%)`;  // última camada acompanha o ciclo
       }
     }
     const fpsLimit = innerWidth < 620 ? 80 : 33; // mobile: ~12fps, desktop: ~30fps
