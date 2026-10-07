@@ -1,11 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
-  <rect width="1080" height="1920" fill="#1B1D21"/>
-  <g transform="translate(305 725) scale(4.895833333333333)">
-    <path fill="none" stroke="#F3F2EE" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M14 76C14 52 28 42 48 42C68 42 82 52 82 76"/>
-    <path fill="none" stroke="#F3F2EE" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M20 42H76"/>
-    <rect x="14" y="38" width="8" height="8" fill="#F3F2EE"/>
-    <rect x="74" y="38" width="8" height="8" fill="#F3F2EE"/>
-    <rect x="8" y="70" width="12" height="12" fill="#F3F2EE"/>
-    <rect x="76" y="70" width="12" height="12" fill="#F3F2EE"/>
-    <rect x="41" y="35" width="14" height="14" fill="#F26522"/></g>
+  <defs>
+    <radialGradient id="f" cx="540" cy="960" r="669.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#18191C"/><stop offset="1" stop-color="#0A0B0D"/>
+    </radialGradient>
+    <radialGradient id="g" cx="540" cy="960" r="418" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F26522" stop-opacity=".16"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#f)"/>
+  <circle cx="540" cy="960" r="418" fill="url(#g)"/>
+  <circle cx="540" cy="960" r="432" fill="none" stroke="#F26522" stroke-opacity=".28" stroke-width="2"/>
+  <g transform="translate(320 740) scale(4.583333333333333)"><path fill="#FF8A4C"  d="M48 6L86 28L48 50L10 28Z"/><path fill="#F26522"  d="M10 28L48 50V94L10 72Z"/><path fill="#C94A12"  d="M86 28L48 50V94L86 72Z"/></g>
 </svg>

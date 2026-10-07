@@ -1,7 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
-  <rect width="1080" height="1920" fill="#1B1D21"/>
-  <g transform="translate(305 725) scale(4.895833333333333)">
-    <path fill="none" stroke="#F3F2EE" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M12 30H84V66H12Z"/>
-    <path fill="none" stroke="#F3F2EE" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M24 30V46 M36 30V40 M48 30V46 M60 30V40"/>
-    <path fill="none" stroke="#F26522" stroke-width="6" stroke-linecap="butt" d="M72 30V52"/></g>
+  <defs>
+    <radialGradient id="f" cx="540" cy="960" r="669.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#18191C"/><stop offset="1" stop-color="#0A0B0D"/>
+    </radialGradient>
+    <radialGradient id="g" cx="540" cy="960" r="418" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F26522" stop-opacity=".16"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#f)"/>
+  <circle cx="540" cy="960" r="418" fill="url(#g)"/>
+  <circle cx="540" cy="960" r="432" fill="none" stroke="#F26522" stroke-opacity=".28" stroke-width="2"/>
+  <g transform="translate(320 740) scale(4.583333333333333)"><path fill="#FF8A4C"  d="M6 8H12V40H6Z M84 8H90V40H84Z M12 21H84V27H12Z M12 24L28 14V34Z M84 24L68 14V34Z"/><path fill="#F26522"  d="M6 52H58V68H90V92H6Z"/></g>
 </svg>

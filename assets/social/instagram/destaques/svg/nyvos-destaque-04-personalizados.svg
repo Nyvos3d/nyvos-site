@@ -1,9 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
-  <rect width="1080" height="1920" fill="#1B1D21"/>
-  <g transform="translate(305 725) scale(4.895833333333333)">
-    <g transform="rotate(45 48 48)">
-      <path fill="none" stroke="#F3F2EE" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M40 10H56V62L48 76L40 62Z M40 22H56"/>
-      <path fill="#F26522" d="M44.5 69.5L48 76L51.5 69.5Z"/>
-    </g>
-    <path fill="none" stroke="#F3F2EE" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M60 84H82"/></g>
+  <defs>
+    <radialGradient id="f" cx="540" cy="960" r="669.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#18191C"/><stop offset="1" stop-color="#0A0B0D"/>
+    </radialGradient>
+    <radialGradient id="g" cx="540" cy="960" r="418" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F26522" stop-opacity=".16"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#f)"/>
+  <circle cx="540" cy="960" r="418" fill="url(#g)"/>
+  <circle cx="540" cy="960" r="432" fill="none" stroke="#F26522" stroke-opacity=".28" stroke-width="2"/>
+  <g transform="translate(320 740) scale(4.583333333333333)"><path fill="#F26522" fill-rule="evenodd" d="M12 76V18H24V6H72V18H84V76H64V54H32V76Z M32 38H64V24H32Z"/><path fill="#FF8A4C"  d="M12 84H84V92H12Z"/></g>
 </svg>

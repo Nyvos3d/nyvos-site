@@ -1,9 +1,7 @@
 const { chromium } = require("/opt/node-tools/node_modules/playwright");
 const fs = require("fs"), path = require("path");
-const { perfil, PERFIS, ICONES, TEMAS, capa, C } = require("./art.js");
-// pasta de saída de cada tema de destaques; a prévia de cada perfil usa o tema que combina com ele
-const PASTA = { carbono: "destaques", laranja: "destaques-laranja" };
-const TEMA_DO_PERFIL = { "perfil-invertido": "laranja" };
+const { perfil, PERFIS } = require("./art.js");
+const { GLIFOS, capaEstrato } = require("./glifos.js");
 
 const OUT = process.argv[2];
 const LABELS = {
@@ -23,24 +21,24 @@ async function shot(page, svg, w, h, file) {
   const b = await chromium.launch();
   const page = await b.newPage();
   const page2 = await b.newPage({ deviceScaleFactor: 2.5 });
-  for (const d of ["perfil", "perfil/svg", ...Object.values(PASTA).flatMap((p) => [p, `${p}/svg`])]) fs.mkdirSync(path.join(OUT, d), { recursive: true });
+  for (const d of ["perfil", "perfil/svg", "destaques", "destaques/svg"]) fs.mkdirSync(path.join(OUT, d), { recursive: true });
 
   for (const [nome, cfg] of Object.entries(PERFIS)) {
     const svg = perfil(cfg);
     fs.writeFileSync(path.join(OUT, "perfil/svg", `nyvos-${nome}.svg`), svg);
     for (const px of [1080, 2048]) await shot(page, svg, px, px, path.join(OUT, "perfil", `nyvos-${nome}-${px}.png`));
   }
-  for (const tema of Object.keys(TEMAS)) for (const id of Object.keys(ICONES)) {
-    const svg = capa(id, { tema });
-    fs.writeFileSync(path.join(OUT, PASTA[tema], "svg", `nyvos-destaque-${id}.svg`), svg);
-    await shot(page, svg, 1080, 1920, path.join(OUT, PASTA[tema], `nyvos-destaque-${id}.png`));
+  for (const id of Object.keys(GLIFOS)) {
+    const svg = capaEstrato(id);
+    fs.writeFileSync(path.join(OUT, "destaques/svg", `nyvos-destaque-${id}.svg`), svg);
+    await shot(page, svg, 1080, 1920, path.join(OUT, "destaques", `nyvos-destaque-${id}.png`));
   }
 
   // prévia do perfil (mock) — só para conferência
   const av = (cfg) => perfil(cfg).replace("<svg ", '<svg width="100%" height="100%" ');
-  const hl = (tema) => Object.keys(ICONES).map((id) => `
-    <div class="h"><div class="ring"><div class="c">${capa(id, { w: 1080, h: 1080, tema }).replace("<svg ", '<svg width="100%" height="100%" ')}</div></div><span>${LABELS[id]}</span></div>`).join("");
-  const mock = (cfg, tema) => `<!doctype html><html><head><meta charset="utf-8">
+  const hl = Object.keys(GLIFOS).map((id) => `
+    <div class="h"><div class="ring"><div class="c">${capaEstrato(id, { w: 1080, h: 1080 }).replace("<svg ", '<svg width="100%" height="100%" ')}</div></div><span>${LABELS[id]}</span></div>`).join("");
+  const mock = (cfg) => `<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#000;color:#F5F5F5;font-family:'Instrument Sans',system-ui,sans-serif;width:430px}
@@ -56,10 +54,10 @@ body{margin:0;background:#000;color:#F5F5F5;font-family:'Instrument Sans',system
 <div class="top"><div class="av">${av(cfg)}</div>
 <div class="n"><div><b>48</b>posts</div><div><b>1.2K</b>seguidores</div><div><b>210</b>seguindo</div></div></div>
 <div class="bio"><b>NYVOS</b><br><span>Design &amp; Fabricação Digital</span><br>Peças em 3D criadas do zero, feitas só pra você.<br>Uberlândia · MG</div>
-<div class="hs">${hl(tema)}</div></body></html>`;
+<div class="hs">${hl}</div></body></html>`;
   for (const [nome, cfg] of Object.entries(PERFIS)) {
     await page2.setViewportSize({ width: 430, height: 520 });
-    await page2.setContent(mock(cfg, TEMA_DO_PERFIL[nome] || "carbono"), { waitUntil: "networkidle" });
+    await page2.setContent(mock(cfg), { waitUntil: "networkidle" });
     await page2.screenshot({ path: path.join(OUT, `previa-${nome}.png`), fullPage: true, scale: "device" });
   }
   await b.close();
