@@ -32,7 +32,7 @@ const CONFIG = {
 };
 ```
 
-O `CONFIG` atualiza os botões de WhatsApp, o menu de redes sociais e o e-mail ao carregar a página.
+O `CONFIG` atualiza os botões de WhatsApp e os ícones de Instagram, TikTok e e-mail do cabeçalho ao carregar a página.
 Os mesmos links também estão escritos direto no HTML (`href` de `zapHero`, `zapFim`, `tbInsta`,
 `tbTiktok`, `tbMail`) para funcionarem sem JavaScript e serem lidos por buscadores — ao trocar um
 contato, atualize os dois lugares (e o `telephone`/`sameAs` do JSON-LD no `<head>`).

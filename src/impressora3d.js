@@ -22,15 +22,17 @@ function iniciar(){
   try {
     renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, powerPreference: mob ? "default" : "high-performance" });
   } catch (e) { return; }                       // sem WebGL: o pôster estático continua no lugar
-  const PR_MAX = Math.min(window.devicePixelRatio || 1, mob ? 1.5 : 2);
+  // nitidez: até 2× em qualquer aparelho (telas 3× de celular ficavam moles a 1,5×)
+  const DPR = window.devicePixelRatio || 1;
+  const PR_MAX = Math.min(DPR, 2), PR_PISO = Math.min(PR_MAX, DPR >= 2 ? 1.5 : 1);
   let pr = PR_MAX;
   renderer.setPixelRatio(pr);
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.02;
-  renderer.shadowMap.enabled = !mob;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.VSMShadowMap;          // sombras macias (penumbra) e baratas
 
   const cena = new THREE.Scene();
   cena.environment = ambiente(renderer);
@@ -198,16 +200,36 @@ function iniciar(){
   const ativa = [0, 1, 2].map(() => add(peca, cubo, M.quente));
   const brasa = [0, 1, 2].map(() => semSombra(add(peca, cubo, M.brasa)));
 
+  // ── brilho da peça pronta ──
+  const ALTURA_N = NC * LH;
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: texturaBrilho(), color: 0xFF7A2E, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0 }));
+  halo.scale.set(300, 300, 1);
+  halo.position.set(0, ALTURA_N * .55, -ESP);
+  peca.add(halo);
+  const texFaisca = texturaFaisca();
+  const faiscas = [[48, 96], [-48, 96], [48, 0], [-48, 64]].map(([x, y]) => {
+    const f = new THREE.Sprite(new THREE.SpriteMaterial({ map: texFaisca, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0 }));
+    f.position.set(x * U, y * U * ALTURA_N / (96 * U), ESP / 2 + 2);
+    f.scale.set(0, 0, 1);
+    peca.add(f);
+    return f;
+  });
+  const LARANJA = new THREE.Color(COR.laranja);
+  M.peca.emissive = LARANJA.clone();
+  M.peca.emissiveIntensity = 0;
+
   // ── luzes ──
   const chave = new THREE.DirectionalLight(0xFFF3E6, 2.3);
   chave.position.set(-3.2, 7.5, 5.2);
   chave.target.position.set(0, 1.6, -.4);
-  chave.castShadow = !mob;
-  Object.assign(chave.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 18 });
-  chave.shadow.mapSize.set(2048, 2048);
-  chave.shadow.bias = -.0004;
-  chave.shadow.normalBias = .02;
-  chave.shadow.radius = 3;
+  chave.castShadow = true;
+  // a câmera de sombra cobre a máquina inteira e a sombra no chão (sem cortes retos)
+  Object.assign(chave.shadow.camera, { left: -5.5, right: 5.5, top: 5.5, bottom: -5.5, near: 2, far: 20 });
+  chave.shadow.mapSize.set(mob ? 1024 : 2048, mob ? 1024 : 2048);
+  chave.shadow.bias = -.0006;
+  chave.shadow.normalBias = .015;
+  chave.shadow.radius = mob ? 5 : 7;
+  chave.shadow.blurSamples = mob ? 8 : 16;
   cena.add(chave, chave.target);
   const contra = new THREE.DirectionalLight(0xFF8A4C, 1.5);
   contra.position.set(4.5, 4, -6);
@@ -216,7 +238,12 @@ function iniciar(){
   cena.add(varre, varre.target);
   varre.target.position.set(0, 1.4, -.5);
 
-  // chão: só a sombra de contato — a máquina "flutua" como foto de produto
+  // chão: sombra projetada macia (some nas bordas) + sombra de contato logo abaixo da base
+  const chao = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), new THREE.ShadowMaterial({ opacity: .34 }));
+  chao.rotation.x = -Math.PI / 2;
+  chao.position.set(.4, 0, -.6);
+  chao.receiveShadow = true;
+  cena.add(chao);
   const contato = new THREE.Mesh(new THREE.PlaneGeometry(5, 5.2), new THREE.MeshBasicMaterial({ map: texturaContato(), transparent: true, depthWrite: false }));
   contato.rotation.x = -Math.PI / 2;
   contato.position.set(-.2, .002, -.08);
@@ -313,18 +340,35 @@ function iniciar(){
     luzBico.intensity = quente * .22;
     bobina.rotation.x = -t * .35;
 
+    // peça pronta: o N acende num pulso, respira e ganha halo; faíscas piscam nas quinas
+    let acende = 0;
+    if (sweep >= 0){
+      const ent = suave(cl(sweep / .18));                         // entrada do brilho
+      const sai = 1 - suave(cl((sweep - .82) / .18));             // saída antes de sumir
+      acende = ent * sai * (.62 + .2 * Math.sin(sweep * Math.PI * 6));
+    }
+    M.peca.emissiveIntensity = .38 * acende;
+    halo.material.opacity = .55 * acende;
+    faiscas.forEach((f, i) => {
+      const k = sweep < 0 ? 0 : cl((sweep - .12 - i * .14) / .16);   // cada faísca em sequência
+      const v = Math.sin(Math.PI * k);
+      f.material.opacity = v;
+      f.scale.set(34 * v, 34 * v, 1);
+      f.material.rotation = k * Math.PI;
+    });
+
     // brilho de estúdio: uma luz atravessa a peça pronta da esquerda para a direita
     if (sweep >= 0){
       const s = suave(sweep);
       varre.position.set(lerp(-6, 6, s), 3.2, 5);
-      varre.intensity = 3.2 * Math.sin(Math.PI * Math.min(1, sweep * 1.6));
+      varre.intensity = 2.6 * Math.sin(Math.PI * Math.min(1, sweep * 1.6));
     } else varre.intensity = 0;
     return { nx, ny };
   }
 
   // ── tamanho, laço de animação, qualidade adaptativa e pausa fora da tela ──
   function ajusta(){
-    const w = cv.clientWidth, h = cv.clientHeight;
+    const r = cv.getBoundingClientRect(), w = r.width, h = r.height;
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     cam.aspect = w / h;
@@ -363,20 +407,32 @@ function iniciar(){
   const t0 = performance.now();
   let raf = null, ultimo = 0, primeiro = true, ativo = true;
   const passo = mob ? 1000 / 30 : 0;
-  // qualidade adaptativa: se os quadros ficarem lentos, reduz a resolução (e as sombras) até ficar fluido
-  let amostras = 0, soma = 0, antes = 0;
+  // qualidade adaptativa: só age em lentidão sustentada, depois do aquecimento (compilação de shaders e
+  // primeiros quadros sempre engasgam). Primeiro abre mão das sombras; a resolução só cai até um piso nítido.
+  let amostras = 0, soma = 0, antes = 0, aquece = 180, lentas = 0;
   const LIMITE = mob ? 45 : 30;
   function mede(agora){
-    if (antes){ soma += agora - antes; amostras++; }
+    if (antes){
+      const d = agora - antes;
+      if (aquece > 0) aquece--;
+      else if (d < 250){ soma += d; amostras++; }     // ignora pausas (troca de aba, rolagem parada)
+    }
     antes = agora;
-    if (amostras < 90) return;
+    if (amostras < 120) return;
     const media = soma / amostras;
     amostras = soma = 0;
-    if (media > LIMITE && pr > 1){
-      pr = Math.max(1, pr - .5);
+    lentas = media > LIMITE ? lentas + 1 : 0;
+    if (lentas < 2) return;
+    lentas = 0;
+    if (renderer.shadowMap.enabled){
+      renderer.shadowMap.enabled = false;
+      chave.castShadow = false;
+      chao.visible = false;
+      cena.traverse(o => o.material && (o.material.needsUpdate = true));
+    } else if (pr > PR_PISO){
+      pr = Math.max(PR_PISO, pr - .25);
       renderer.setPixelRatio(pr);
       ajusta();
-      if (renderer.shadowMap.enabled && pr <= 1.5){ renderer.shadowMap.enabled = false; chave.castShadow = false; cena.traverse(o => o.material && (o.material.needsUpdate = true)); }
     }
   }
   function laco(agora){
@@ -642,6 +698,20 @@ function texturaBrilho(){
     r.addColorStop(.6, "rgba(242,101,34,.25)");
     r.addColorStop(1, "rgba(242,101,34,0)");
     g.fillStyle = r; g.fillRect(0, 0, w, w);
+  });
+}
+
+// faísca de 4 pontas (a mesma do brilho da marca)
+function texturaFaisca(){
+  return canvas(64, 64, (g, w) => {
+    const c = w / 2;
+    const r = g.createRadialGradient(c, c, 0, c, c, c);
+    r.addColorStop(0, "rgba(255,248,238,1)"); r.addColorStop(.3, "rgba(255,200,150,.5)"); r.addColorStop(1, "rgba(255,160,90,0)");
+    g.fillStyle = r;
+    g.beginPath();
+    g.moveTo(c, 0); g.quadraticCurveTo(c + 4, c - 4, w, c); g.quadraticCurveTo(c + 4, c + 4, c, w);
+    g.quadraticCurveTo(c - 4, c + 4, 0, c); g.quadraticCurveTo(c - 4, c - 4, c, 0);
+    g.fill();
   });
 }
 
