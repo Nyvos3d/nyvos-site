@@ -16,19 +16,23 @@ Página única, autossuficiente, com foco em contato.
     - `instagram/perfil/` — foto de perfil (4 variações, 1080 e 2048 px + SVG)
     - `instagram/destaques/` — 10 capas de destaques 1080×1920 "Estrato": glifos sólidos na geometria do N, nos três laranjas da marca + mineral, sobre fundo quase preto (+ SVG)
     - `instagram/fonte/` — gerador (`node fonte/render.js <saida>`, requer Playwright)
-  - `favicon/` — ícones 16–512 px + `.ico`
+  - `favicon/` — ícones 16–512 px + `.ico` + `apple-touch-icon.png` (180 px, fundo cheio para o iOS)
 
 ## Editar contatos
 No topo do `<script>` em `index.html`, edite o objeto `CONFIG`:
 
 ```js
 const CONFIG = {
-  whatsapp: "5534920024416",   // só números, DDI+DDD
-  instagram: "nyvos",
-  email: "contato@nyvos.com.br",
+  whatsapp: "5534988941661",   // só números, DDI+DDD
+  instagram: "nyvos.3d",
+  tiktok: "nyvos.3d",
+  email: "nyvos3d@gmail.com",
   cidade: "Uberlândia · MG",
-  mapa: "https://maps.google.com/?q=..."
+  mapa: "https://maps.google.com/?q=Uberlandia+MG"
 };
 ```
 
-WhatsApp, Instagram e e-mail se propagam automaticamente para todos os botões, o FAB e o rodapé.
+O `CONFIG` atualiza os botões de WhatsApp, o menu de redes sociais e o e-mail ao carregar a página.
+Os mesmos links também estão escritos direto no HTML (`href` de `zapHero`, `zapFim`, `tbInsta`,
+`tbTiktok`, `tbMail`) para funcionarem sem JavaScript e serem lidos por buscadores — ao trocar um
+contato, atualize os dois lugares (e o `telephone`/`sameAs` do JSON-LD no `<head>`).
