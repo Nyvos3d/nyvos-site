@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#F26522"/>
+  <g transform="translate(305 725) scale(4.895833333333333)">
+    <g transform="rotate(45 48 48)">
+      <path fill="none" stroke="#1B1D21" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M40 10H56V62L48 76L40 62Z M40 22H56"/>
+      <path fill="#F3F2EE" d="M44.5 69.5L48 76L51.5 69.5Z"/>
+    </g>
+    <path fill="none" stroke="#1B1D21" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter" d="M60 84H82"/></g>
+</svg>

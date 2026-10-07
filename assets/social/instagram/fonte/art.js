@@ -19,13 +19,13 @@ const PERFIS = {
   "perfil-claro": { fundo: C.mineral, simbolo: C.carbono },
 };
 
-// ---------- Ícones (grade 96, traço 6, cantos retos, 1 acento laranja) ----------
-const L = `fill="none" stroke="${C.mineral}" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter"`;
-const A = `fill="${C.acento}"`;
-const AL = `fill="none" stroke="${C.acento}" stroke-width="6" stroke-linecap="butt"`;
+// ---------- Ícones (grade 96, traço 6, cantos retos, 1 acento — cores por tema) ----------
+const L = `fill="none" stroke="__LINHA__" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter"`;
+const A = `fill="__ACENTO__"`;
+const AL = `fill="none" stroke="__ACENTO__" stroke-width="6" stroke-linecap="butt"`;
 
 const ICONES = {
-  "01-sobre": `<path transform="translate(18 18) scale(.625)" fill="${C.acento}" d="${SIMBOLO}"/>`,
+  "01-sobre": `<path transform="translate(18 18) scale(.625)" fill="__SIMBOLO__" d="${SIMBOLO}"/>`,
 
   "02-portfolio": `
     <path ${A} d="M48 12L80 30L48 48L16 30Z"/>
@@ -51,10 +51,10 @@ const ICONES = {
   "06-modelagem": `
     <path ${L} d="M14 76C14 52 28 42 48 42C68 42 82 52 82 76"/>
     <path ${L} d="M20 42H76"/>
-    <rect x="14" y="38" width="8" height="8" fill="${C.mineral}"/>
-    <rect x="74" y="38" width="8" height="8" fill="${C.mineral}"/>
-    <rect x="8" y="70" width="12" height="12" fill="${C.mineral}"/>
-    <rect x="76" y="70" width="12" height="12" fill="${C.mineral}"/>
+    <rect x="14" y="38" width="8" height="8" fill="__LINHA__"/>
+    <rect x="74" y="38" width="8" height="8" fill="__LINHA__"/>
+    <rect x="8" y="70" width="12" height="12" fill="__LINHA__"/>
+    <rect x="76" y="70" width="12" height="12" fill="__LINHA__"/>
     <rect x="41" y="35" width="14" height="14" ${A}/>`,
 
   "07-sob-medida": `
@@ -72,17 +72,24 @@ const ICONES = {
     <path ${A} d="M42 30H54V54H42Z"/>`,
 
   "10-feedbacks": `
-    <path fill="${C.mineral}" d="M20 28H44V52L34 70H24L32 52H20Z"/>
+    <path fill="__LINHA__" d="M20 28H44V52L34 70H24L32 52H20Z"/>
     <path ${A} d="M52 28H76V52L66 70H56L64 52H52Z"/>`,
 };
 
+// temas das capas: fundo, cor do traço, do único acento e do símbolo (ícone "Sobre")
+const TEMAS = {
+  carbono: { fundo: C.carbono, linha: C.mineral, acento: C.acento, simbolo: C.acento },
+  laranja: { fundo: C.acento, linha: C.carbono, acento: C.mineral, simbolo: C.carbono },
+};
+
 // capa 1080x1920: ícone centralizado (o Instagram recorta o círculo central)
-function capa(id, { w = 1080, h = 1920, tam = 470 } = {}) {
-  const x = (w - tam) / 2, y = (h - tam) / 2;
+function capa(id, { w = 1080, h = 1920, tam = 470, tema = "carbono" } = {}) {
+  const t = TEMAS[tema], x = (w - tam) / 2, y = (h - tam) / 2;
+  const icone = ICONES[id].replaceAll("__LINHA__", t.linha).replaceAll("__ACENTO__", t.acento).replaceAll("__SIMBOLO__", t.simbolo);
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}">
-  <rect width="${w}" height="${h}" fill="${C.carbono}"/>
-  <g transform="translate(${x} ${y}) scale(${tam / 96})">${ICONES[id]}</g>
+  <rect width="${w}" height="${h}" fill="${t.fundo}"/>
+  <g transform="translate(${x} ${y}) scale(${tam / 96})">${icone}</g>
 </svg>`;
 }
 
-module.exports = { C, SIMBOLO, perfil, PERFIS, ICONES, capa };
+module.exports = { C, SIMBOLO, perfil, PERFIS, ICONES, TEMAS, capa };
