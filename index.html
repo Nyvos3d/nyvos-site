@@ -14,6 +14,14 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="NYVOS">
 <meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"NYVOS","alternateName":"NYVOS Impressão 3D",
+ "description":"Peças personalizadas impressas em 3D sob encomenda: modelagem, impressão e acabamento revisado.",
+ "telephone":"+55 34 98894-1661","email":"nyvos3d@gmail.com",
+ "address":{"@type":"PostalAddress","addressLocality":"Uberlândia","addressRegion":"MG","addressCountry":"BR"},
+ "areaServed":{"@type":"Country","name":"Brasil"},
+ "sameAs":["https://instagram.com/nyvos.3d","https://www.tiktok.com/@nyvos.3d"]}
+</script>
 <meta name="twitter:title" content="NYVOS · Impressão 3D">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NiA5NiI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiByeD0iMTgiIGZpbGw9IiMxQjFEMjEiLz48cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOSAyMSkgc2NhbGUoMC41NikiIGZpbGw9IiNGM0YyRUUiIGQ9Ik0wIDBIMzRWMzJINTBWNjRINjZWMEg5NlY5NkgzNlY2NEgyNlYzMkgxNlY5NkgwWiIvPjwvc3ZnPg==">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NiA5NiI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiByeD0iMTgiIGZpbGw9IiMxQjFEMjEiLz48cGF0aCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOSAyMSkgc2NhbGUoMC41NikiIGZpbGw9IiNGM0YyRUUiIGQ9Ik0wIDBIMzRWMzJINTBWNjRINjZWMEg5NlY5NkgzNlY2NEgyNlYzMkgxNlY5NkgwWiIvPjwvc3ZnPg==">
@@ -230,8 +238,17 @@ p{text-wrap:pretty}
 .pobj .cam svg{width:100%;height:100%;display:block}
 .pobj .wall{position:absolute;transform-origin:0 0;opacity:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .pobj .cam .hot{fill:#ffb36b;opacity:0}
-.pobj .sheen{position:absolute;inset:0;pointer-events:none;opacity:0;
-  background:linear-gradient(112deg,transparent 38%,rgba(255,236,214,.6) 50%,transparent 62%) 120% 0/250% 100% no-repeat;
+/* iluminação de estúdio da peça pronta: luz principal no topo, foco na mesa, brilho e faíscas */
+.pobj .sheen{background:linear-gradient(112deg,transparent 38%,rgba(255,236,214,.6) 50%,transparent 62%) 120% 0/250% 100% no-repeat}
+.pobj .lit{background:radial-gradient(62% 60% at 26% 20%,rgba(255,250,244,.8),rgba(255,214,176,.3) 44%,transparent 76%),
+  linear-gradient(135deg,rgba(255,255,255,.16),transparent 55%)}
+.pobj .spot{position:absolute;inset:-28%;pointer-events:none;opacity:0;
+  background:radial-gradient(closest-side,rgba(255,226,200,.36),rgba(255,190,140,.12) 55%,transparent 72%)}
+.pobj .faisca{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;pointer-events:none}
+.pobj .faisca i{position:absolute;left:-13px;top:-13px;width:26px;height:26px;display:block;opacity:0;transform:scale(0);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 0c.6 5.6 1.9 9.5 3.4 10.6 1.5 1.1 4.5 1.3 8.6 1.4-4.1.1-7.1.3-8.6 1.4C13.9 14.5 12.6 18.4 12 24c-.6-5.6-1.9-9.5-3.4-10.6C7.1 12.3 4.1 12.1 0 12c4.1-.1 7.1-.3 8.6-1.4C10.1 9.5 11.4 5.6 12 0Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter:drop-shadow(0 0 4px rgba(255,214,170,.95))}
+.pobj .sheen,.pobj .lit{position:absolute;inset:0;pointer-events:none;opacity:0;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") 0 0/100% 100%;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") 0 0/100% 100%}
 /* cabeçote: linha de deposição + bico com ponta incandescente em zigue-zague */
@@ -348,10 +365,27 @@ p{text-wrap:pretty}
 /* topbar */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(27,29,33,.84);backdrop-filter:blur(12px) saturate(140%);border-bottom:1px solid var(--traco);transform:translateY(-100%);transition:transform .45s var(--vai)}
 .topbar.on{transform:none}
-.topbar .col{display:flex;align-items:center;justify-content:center;padding-top:11px;padding-bottom:11px}
-.tb-marca{display:inline-flex;align-items:center;line-height:1}
+.topbar .col{display:flex;align-items:center;justify-content:space-between;padding-top:10px;padding-bottom:10px}
+.tb-marca{display:inline-flex;align-items:center;gap:10px;line-height:1}
 .tb-marca svg{height:26px;width:auto;display:block}
+.tb-marca span{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:.04em;color:var(--mineral)}
+/* CTA persistente: depois que o hero sai da tela, o WhatsApp continua a um toque */
+.tb-zap{display:inline-flex;align-items:center;gap:8px;padding:8px 15px 8px 13px;border-radius:100px;
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;color:var(--mineral);
+  background:rgba(43,217,107,.14);border:1px solid rgba(43,217,107,.32);transition:transform .2s var(--vai),background .3s}
+.tb-zap svg{width:16px;height:16px;fill:currentColor}
+.tb-zap:hover{background:rgba(43,217,107,.22)}.tb-zap:active{transform:scale(.96)}
 @media(max-width:760px){.tb-marca svg{height:22px}}
+
+/* ── como funciona: expectativa clara = lead mais qualificado ── */
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:passo}
+.passo{position:relative;padding:28px 24px 26px;border-radius:18px;border:1px solid var(--traco);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012))}
+.passo .n{display:inline-flex;align-items:center;gap:10px;font-family:'DM Mono',monospace;font-size:.72rem;font-weight:500;letter-spacing:.18em;color:var(--acento)}
+.passo .n::after{content:"";width:28px;height:1px;background:linear-gradient(90deg,var(--acento),transparent)}
+.passo h3{margin:14px 0 8px;font-family:'Outfit',sans-serif;font-weight:600;font-size:1.18rem;letter-spacing:-.01em;color:var(--mineral)}
+.passo p{font-size:.98rem;line-height:1.55;color:var(--mineral-2)}
+.fecho{display:none}
 
 .rev{opacity:0;transform:translateY(34px);transition:opacity .85s var(--vai),transform .85s var(--vai)}
 .rev.in{opacity:1;transform:none}
@@ -368,6 +402,7 @@ p{text-wrap:pretty}
   .descer{display:none}
 }
 @media(max-width:760px){.col{padding:0 16px}.secao{padding:38px 0}}
+@media(max-width:860px){.passos{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
   .rev,.hero-logo,.hero-txt h1,.hero-txt .lead,.hero-txt .cta-wrap,.beneficios,.stage-wrap,.faixa .degrau{opacity:1!important;transform:none!important}
@@ -422,6 +457,30 @@ p{text-wrap:pretty}
   .zap:hover{transform:none}
   .zap:active{transform:scale(.97);transition-duration:.12s}
 
+  /* desempenho: câmera fixa — sem reordenar ~35 planos 3D a cada quadro (era a causa do travamento) */
+  .iso{animation:none;transform:rotateX(50deg) rotateZ(-14deg)}
+  .pobj{animation:none}
+
+  /* estrutura mobile: CTA cedo → como funciona → chamada final */
+  main{display:flex;flex-direction:column}
+  #processo{order:1;padding-top:8px;padding-bottom:40px}
+  #processo .cab{margin-bottom:26px;gap:12px}
+  #processo .cab h2{font-size:1.6rem;line-height:1.12;max-width:15ch}
+  .passos{grid-template-columns:1fr;gap:0}
+  .passo{border:0;background:none;padding:0 0 24px 46px}
+  .passo::before{content:"";position:absolute;left:15px;top:38px;bottom:8px;width:1px;
+    background:linear-gradient(180deg,rgba(242,101,34,.55),rgba(154,159,166,.12))}
+  .passo:last-child{padding-bottom:4px}.passo:last-child::before{display:none}
+  .passo .n{position:absolute;left:0;top:0;width:31px;height:31px;justify-content:center;border-radius:50%;
+    border:1px solid rgba(242,101,34,.5);background:rgba(242,101,34,.09);font-size:.66rem;letter-spacing:.02em;
+    box-shadow:0 0 18px -6px rgba(242,101,34,.6)}
+  .passo .n::after{display:none}
+  .passo h3{margin:5px 0 5px;font-size:1.06rem}
+  .passo p{font-size:.92rem;line-height:1.5}
+  .fecho{display:flex;flex-direction:column;align-items:stretch;gap:16px;margin-top:30px;padding-top:28px;border-top:1px solid var(--traco);text-align:center}
+  .fecho p{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.22rem;letter-spacing:-.015em;color:var(--mineral);text-wrap:balance}
+  .fecho .zap{display:flex;width:100%;min-height:52px}
+
   /* rodapé respeita a barra do iPhone */
   .rodape{padding:20px 0 calc(20px + env(safe-area-inset-bottom))}
   .rodape .base small{margin-top:0;letter-spacing:.04em}
@@ -436,7 +495,11 @@ p{text-wrap:pretty}
 <div class="topbar" id="topbar">
   <div class="col">
     <a class="tb-marca" id="tbMarca" href="#" aria-label="NYVOS — voltar ao topo">
-      <svg viewBox="0 0 96 96" aria-hidden="true" style="height:28px;width:auto"><path fill="#F26522" d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/></svg>
+      <svg viewBox="0 0 96 96" aria-hidden="true"><path fill="#F26522" d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/></svg><span>NYVOS</span>
+    </a>
+    <a class="tb-zap" id="zapTop" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+      WhatsApp
     </a>
   </div>
 </div>
@@ -530,11 +593,47 @@ p{text-wrap:pretty}
 
   <div class="faixa rev"><div class="degrau"><i></i><i></i><i></i><i></i><i></i></div></div>
 
+  <!-- COMO FUNCIONA -->
+  <section class="secao" id="processo">
+    <div class="col">
+      <div class="cab rev">
+        <span class="et">Como funciona</span>
+        <h2>Do rascunho à <b>peça pronta.</b></h2>
+      </div>
+      <div class="passos rev">
+        <div class="passo">
+          <span class="n">01</span>
+          <h3>Conta a sua ideia</h3>
+          <p>Manda uma foto, desenho ou referência. Pode ser só um rascunho — a gente entende.</p>
+        </div>
+        <div class="passo">
+          <span class="n">02</span>
+          <h3>Análise e orçamento</h3>
+          <p>Estudamos tamanho, material e acabamento da sua peça e enviamos um orçamento detalhado.</p>
+        </div>
+        <div class="passo">
+          <span class="n">03</span>
+          <h3>Impressão e entrega</h3>
+          <p>Aprovado, modelamos, imprimimos camada por camada e revisamos cada detalhe antes de entregar.</p>
+        </div>
+      </div>
+      <div class="fecho rev">
+        <p>Sua peça começa com uma mensagem.</p>
+        <a class="zap" id="zapFim" target="_blank" rel="noopener">
+          <span class="zap-luz" aria-hidden="true"></span><span class="zap-ico"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg></span>
+          Clique aqui
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="faixa rev"><div class="degrau"><i></i><i></i><i></i><i></i><i></i></div></div>
+
   <!-- CONTATOS -->
   <section class="secao" id="contato" style="scroll-margin-top:78px">
     <div class="col">
       <div class="cab rev">
-        <span class="et">Orçamento sem compromisso</span>
+        <span class="et">Direto com quem imprime</span>
         <h2>Chama a gente. <b>Resposta no mesmo dia.</b></h2>
       </div>
       <div class="contatos rev">
@@ -641,7 +740,7 @@ const msg = "Olá! Vim pelo site da NYVOS e quero um orçamento de uma peça per
 const insta = `https://instagram.com/${CONFIG.instagram}`;
 const tiktok = `https://www.tiktok.com/@${CONFIG.tiktok}`;
 const set = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
-set("zapHero","href",wa(msg)); set("cWhats","href",wa(msg)); set("zapMob","href",wa(msg));
+["zapHero","cWhats","zapMob","zapTop","zapFim"].forEach(id => set(id, "href", wa(msg)));
 set("cInsta","href",insta);
 set("instaHandle","textContent","@"+CONFIG.instagram);
 set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok);
@@ -666,7 +765,7 @@ set("ano","textContent",new Date().getFullYear());
   const N = mob ? 12 : 18;
   const STEP = mob ? 7 : 5.3;
   const W = 260, K = W / 96, HT = (N - 1) * STEP;
-  const T = 9, PE = 60;              // ciclo de 9s; impressão termina em 60% dele
+  const T = 11, PE = 52;             // ciclo de 11s: impressão até 52%, depois peça pronta em destaque
   const anim = name => `${name} ${T}s linear .5s infinite both`;
   host.style.setProperty("--h", 22);
   let css = "";
@@ -696,7 +795,7 @@ set("ano","textContent",new Date().getFullYear());
       // corte aplicado no <svg> (2D), nunca no plano 3D — o Safari renderiza clip-path em 3D de forma instável
       // camadas internas somem assim que as paredes ficam opacas: nada semitransparente sobreposto
       const end = top ? `${en}%,95%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}`
-                      : `${en}%,${PE + 7}%{opacity:1;clip-path:inset(0 0 0 0)}${PE + 7.2}%,100%{opacity:0;clip-path:inset(0 0 0 0)}`;
+                      : `${en}%,${PE + 5.5}%{opacity:1;clip-path:inset(0 0 0 0)}${PE + 5.7}%,100%{opacity:0;clip-path:inset(0 0 0 0)}`;
       css += `@keyframes ly${i}{0%{opacity:0;clip-path:${hid}}${i ? `${s}%{opacity:1;clip-path:${hid}}` : ""}${end}}`;
       // filamento recém-depositado sai incandescente e esfria em ~0,3s
       css += `@keyframes hot${i}{0%,${en}%{opacity:.85}${cool}%,100%{opacity:0}}`;
@@ -728,16 +827,37 @@ set("ano","textContent",new Date().getFullYear());
     if (reduce) w.style.opacity = 1; else w.style.animation = anim("solid");
     host.appendChild(w);
   });
-  if (reduce){ ao.style.opacity = 1; tela.classList.add("ok"); telaBar.style.transform = "scaleX(1)"; return; }
+  // 3. estúdio: luz principal no topo e foco de luz na mesa (acendem quando a peça fica pronta)
+  const lit = document.createElement("div");
+  lit.className = "lit";
+  lit.style.transform = `translateZ(${HT + .5}px)`;
+  const spot = document.createElement("div");
+  spot.className = "spot";
+  spot.style.transform = "translateZ(.4px)";
+  host.prepend(spot);
+  host.appendChild(lit);
+  if (reduce){ ao.style.opacity = lit.style.opacity = spot.style.opacity = 1; tela.classList.add("ok"); telaBar.style.transform = "scaleX(1)"; return; }
   ao.style.animation = anim("ao");
+  lit.style.animation = spot.style.animation = anim("luzes");
+  telaBar.style.animation = anim("barra");          // barra animada pelo navegador: lisa, sem saltos
   document.querySelector(".glow").style.animation = anim("brilho");
 
-  // 3. brilho de acabamento no topo da peça pronta
+  // brilho que varre a superfície + faíscas nas quinas, sempre de frente para a câmera
   const sh = document.createElement("div");
   sh.className = "sheen";
   sh.style.transform = `translateZ(${HT + .6}px)`;
   sh.style.animation = anim("sheen");
   host.appendChild(sh);
+  [[96, 96], [0, 0], [96, 0]].forEach(([x, y], i) => {
+    const f = document.createElement("div");
+    f.className = "faisca";
+    f.style.transform = `translate3d(${x * K}px,${y * K}px,${HT + 2}px) rotateZ(14deg) rotateX(-50deg)`;
+    f.innerHTML = "<i></i>";
+    const s = PE + 21 + i * 4.5;
+    css += `@keyframes fa${i}{0%,${s}%{opacity:0;transform:scale(0) rotate(0)}${s + 2.5}%{opacity:1;transform:scale(1) rotate(45deg)}${s + 6}%,100%{opacity:0;transform:scale(0) rotate(90deg)}}`;
+    f.firstChild.style.animation = anim("fa" + i);
+    host.appendChild(f);
+  });
 
   // 4. cabeçote: percorre cada camada, sobe de camada, e no fim se afasta
   const hd = document.createElement("div");
@@ -750,21 +870,23 @@ set("ano","textContent",new Date().getFullYear());
     hk += `${(PE * (i + 1) / N - .05).toFixed(2)}%{transform:translate3d(${b}px,0,${z}px)}`;
     endX = b;
   }
-  hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 8}%{opacity:0;transform:translate3d(${endX}px,0,${HT + 90}px)}100%{opacity:0;transform:translate3d(0,0,1px)}`;
+  hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 6}%{opacity:0;transform:translate3d(${endX}px,0,${HT + 90}px)}100%{opacity:0;transform:translate3d(0,0,1px)}`;
+  // linha do tempo (% de 11s): impressão 0→52 · fusão →57 · inspeção 59→68 · estúdio 68→95 · reinício
   css += `@keyframes head{${hk}}`;
-  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 6}%,95%{opacity:1}100%{opacity:0}}`;
+  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 5}%,95%{opacity:1}100%{opacity:0}}`;
   css += `@keyframes ao{0%{opacity:0}${(PE / N).toFixed(2)}%,95%{opacity:1}100%{opacity:0}}`;
-  // inspeção: um feixe percorre o contorno do topo; depois o brilho de peça pronta
-  css += `@keyframes rim{0%,${PE + 12}%{opacity:0;stroke-dashoffset:0}${PE + 13.5}%{opacity:1}${PE + 25}%{opacity:1;stroke-dashoffset:-100}${PE + 26.5}%,100%{opacity:0;stroke-dashoffset:-100}}`;
-  css += `@keyframes sheen{0%,${PE + 25}%{opacity:0;background-position:120% 0}${PE + 27}%{opacity:1}${PE + 37}%{opacity:1;background-position:-20% 0}${PE + 39}%,100%{opacity:0;background-position:-20% 0}}`;
-  css += `@keyframes brilho{0%,${PE}%{opacity:.7;transform:translate(-50%,-50%) scale(1)}${PE + 10}%,92%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}}`;
+  css += `@keyframes barra{0%{transform:scaleX(0)}${PE}%,95%{transform:scaleX(1)}95.2%,100%{transform:scaleX(0)}}`;
+  css += `@keyframes rim{0%,${PE + 7}%{opacity:0;stroke-dashoffset:0}${PE + 8}%{opacity:1}${PE + 16}%{opacity:1;stroke-dashoffset:-100}${PE + 17}%,100%{opacity:0;stroke-dashoffset:-100}}`;
+  css += `@keyframes luzes{0%,${PE + 16}%{opacity:0}${PE + 20}%,95%{opacity:1}100%{opacity:0}}`;
+  css += `@keyframes sheen{0%,${PE + 19}%{opacity:0;background-position:120% 0}${PE + 20}%{opacity:1}${PE + 28}%{opacity:1;background-position:-20% 0}${PE + 29}%,100%{opacity:0;background-position:-20% 0}}`;
+  css += `@keyframes brilho{0%,${PE}%{opacity:.7;transform:translate(-50%,-50%) scale(1)}${PE + 16}%{opacity:.9;transform:translate(-50%,-50%) scale(1.06)}${PE + 21}%,92%{opacity:1;transform:translate(-50%,-50%) scale(1.22)}100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}}`;
   hd.style.animation = anim("head");
   host.appendChild(hd);
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
-  // cor: oscila na família laranja durante a impressão e assenta no laranja da marca quando a peça fica pronta
+  // cor: no desktop oscila na família laranja durante a impressão; no celular fica fixa no laranja da marca (sem repintar a peça)
   const ref = host.querySelector(".cam svg"), stage = document.querySelector(".stage");
-  const t0 = performance.now() + 500, fps = mob ? 80 : 40;
+  const t0 = performance.now() + 500, fps = mob ? 100 : 40;
   let rafId = null, last = 0, lastLabel = "";
   function tick(now){
     if (!document.hidden && now - last > fps){
@@ -772,20 +894,21 @@ set("ano","textContent",new Date().getFullYear());
       const a = ref.getAnimations ? ref.getAnimations()[0] : null;
       const ms = a && a.currentTime != null ? a.currentTime - 500 : now - t0;
       const pos = (((ms % (T * 1000)) + T * 1000) % (T * 1000)) / (T * 10);
-      const osc = 20 + 10 * Math.sin(now / 22000 * Math.PI * 2);
-      const f = pos < PE ? 0 : pos < PE + 8 ? (pos - PE) / 8 : pos < 96 ? 1 : 1 - (pos - 96) / 4;
-      host.style.setProperty("--h", (osc + (22 - osc) * f * f * (3 - 2 * f)).toFixed(1));
-      // mini tela da impressora: status, percentual, barra e mensagem de máquina
+      if (!mob){
+        const osc = 20 + 10 * Math.sin(now / 22000 * Math.PI * 2);
+        const f = pos < PE ? 0 : pos < PE + 8 ? (pos - PE) / 8 : pos < 96 ? 1 : 1 - (pos - 96) / 4;
+        host.style.setProperty("--h", (osc + (22 - osc) * f * f * (3 - 2 * f)).toFixed(1));
+      }
+      // mini tela: só texto muda aqui (a barra é animação CSS)
       let st, msg, ok = false, prog = 1;
       if (pos < PE){ prog = pos / PE; st = "Imprimindo"; msg = `Camada ${String(Math.min(N, Math.floor(prog * N) + 1)).padStart(2, "0")}/${N}`; }
-      else if (pos < PE + 26){ st = "Inspeção"; msg = "Acabamento"; }
+      else if (pos < PE + 16){ st = "Inspeção"; msg = "Acabamento"; }
       else if (pos < 95){ st = "Peça pronta"; msg = "Retire a peça"; ok = true; }
       else { st = "Preparando"; msg = "Nivelando mesa"; prog = 0; }
       const pc = Math.round(prog * 100) + "%";
       if (st !== lastLabel){ telaSt.textContent = st; lastLabel = st; tela.classList.toggle("ok", ok); }
       if (telaPc.textContent !== pc) telaPc.textContent = pc;
       if (telaMsg.textContent !== msg) telaMsg.textContent = msg;
-      telaBar.style.transform = `scaleX(${prog.toFixed(3)})`;
     }
     rafId = requestAnimationFrame(tick);
   }
