@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="f-03-clientes" cx="540" cy="960" r="648" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1A1B1F"/><stop offset="1" stop-color="#08090B"/>
+    </radialGradient>
+    <radialGradient id="g-03-clientes" cx="540" cy="1036.8" r="544" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F26522" stop-opacity=".13"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="halo-03-clientes" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+    <linearGradient id="calor-03-clientes" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="96"><stop offset="0.0000" stop-color="#ff8a4c"/><stop offset="0.0833" stop-color="#ff8a4c"/><stop offset="0.0833" stop-color="#fd8344"/><stop offset="0.1667" stop-color="#fd8344"/><stop offset="0.1667" stop-color="#fa7d3d"/><stop offset="0.2500" stop-color="#fa7d3d"/><stop offset="0.2500" stop-color="#f87635"/><stop offset="0.3333" stop-color="#f87635"/><stop offset="0.3333" stop-color="#f66f2d"/><stop offset="0.4167" stop-color="#f66f2d"/><stop offset="0.4167" stop-color="#f36826"/><stop offset="0.5000" stop-color="#f36826"/><stop offset="0.5000" stop-color="#ed6220"/><stop offset="0.5833" stop-color="#ed6220"/><stop offset="0.5833" stop-color="#e25b1d"/><stop offset="0.6667" stop-color="#e25b1d"/><stop offset="0.6667" stop-color="#d85519"/><stop offset="0.7500" stop-color="#d85519"/><stop offset="0.7500" stop-color="#cd4e15"/><stop offset="0.8333" stop-color="#cd4e15"/><stop offset="0.8333" stop-color="#c34812"/><stop offset="0.9167" stop-color="#c34812"/><stop offset="0.9167" stop-color="#b8410e"/><stop offset="1.0000" stop-color="#b8410e"/></linearGradient>
+    <mask id="camadas-03-clientes" maskUnits="userSpaceOnUse" x="-20" y="-20" width="136" height="136"><rect x="-20" y="0" width="136" height="6" fill="#fff"/><rect x="-20" y="8" width="136" height="6" fill="#fff"/><rect x="-20" y="16" width="136" height="6" fill="#fff"/><rect x="-20" y="24" width="136" height="6" fill="#fff"/><rect x="-20" y="32" width="136" height="6" fill="#fff"/><rect x="-20" y="40" width="136" height="6" fill="#fff"/><rect x="-20" y="48" width="136" height="6" fill="#fff"/><rect x="-20" y="56" width="136" height="6" fill="#fff"/><rect x="-20" y="64" width="136" height="6" fill="#fff"/><rect x="-20" y="72" width="136" height="6" fill="#fff"/><rect x="-20" y="80" width="136" height="6" fill="#fff"/><rect x="-20" y="88" width="136" height="6" fill="#fff"/><rect x="-20" y="96" width="136" height="6" fill="#fff"/></mask>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#f-03-clientes)"/>
+  <circle cx="540" cy="960" r="507.59999999999997" fill="url(#g-03-clientes)"/>
+  <circle cx="540" cy="960" r="498.96000000000004" fill="none" stroke="#F26522" stroke-opacity=".22" stroke-width="2"/>
+  <g transform="translate(220 640) scale(6.666666666666667)"><g filter="url(#halo-03-clientes)" opacity=".55"><path fill="#F26522" d="M8 8H88V64H44L24 86V64H8Z"/></g><path fill="url(#calor-03-clientes)" mask="url(#camadas-03-clientes)" d="M8 8H88V64H44L24 86V64H8Z"/><path fill="#F3F2EE" d="M48.00 15.00L53.05 29.04L67.97 29.51L56.18 38.66L60.34 52.99L48.00 44.60L35.66 52.99L39.82 38.66L28.03 29.51L42.95 29.04Z"/></g>
+</svg>
