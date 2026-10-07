@@ -119,6 +119,50 @@ p{text-wrap:pretty}
 #rfMail{background:linear-gradient(180deg,rgba(234,67,53,.34),rgba(234,67,53,.12));border-color:rgba(234,67,53,.5)}
 @keyframes sobe{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
+/* WhatsApp: balão "digitando…", ícone que vibra como notificação, reflexo no vidro e onda no toque */
+.zap-ico{position:relative;display:inline-flex}
+.zap-ico svg{transform-origin:50% 60%;animation:toque 6.5s 2s infinite}
+@keyframes toque{0%,2%{transform:rotate(0)}3.2%{transform:rotate(-16deg)}4.6%{transform:rotate(13deg)}6%{transform:rotate(-8deg)}7.4%,100%{transform:rotate(0)}}
+.zap-bolha{position:absolute;left:4px;bottom:calc(100% + 13px);display:flex;align-items:center;gap:3px;padding:7px 9px;
+  border-radius:12px 12px 12px 3px;background:#F3F2EE;box-shadow:0 8px 18px -8px rgba(0,0,0,.7);
+  transform-origin:0 100%;opacity:0;pointer-events:none;animation:bolha 6.5s 2s infinite}
+.zap-bolha i{width:5px;height:5px;border-radius:50%;background:#1EB858;animation:digita 1s ease-in-out infinite}
+.zap-bolha i:nth-child(2){animation-delay:.14s}.zap-bolha i:nth-child(3){animation-delay:.28s}
+@keyframes digita{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-3px);opacity:1}}
+@keyframes bolha{0%{opacity:0;transform:scale(.35) translateY(8px);animation-timing-function:cubic-bezier(.2,1.6,.4,1)}
+  6%,58%{opacity:1;transform:none;animation-timing-function:ease-in}64%,100%{opacity:0;transform:scale(.7) translateY(4px)}}
+.zap-luz{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.zap-luz::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent);
+  transform:translateX(-140%) skewX(-18deg);animation:luz 6.5s 2.5s ease-in-out infinite}
+@keyframes luz{0%{transform:translateX(-140%) skewX(-18deg)}22%,100%{transform:translateX(320%) skewX(-18deg)}}
+.zap-onda{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:rgba(255,255,255,.32);animation:onda .6s ease-out forwards}
+@keyframes onda{to{transform:scale(38);opacity:0}}
+
+/* canais secundários (mobile): mesma linguagem de vidro do resto da página */
+.canais{display:none;grid-template-columns:repeat(3,1fr);gap:8px}
+.canal{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 4px 12px;border-radius:18px;text-decoration:none;color:var(--mineral);
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.09);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:transform .2s var(--vai),border-color .3s}
+.canal svg{width:22px;height:22px;margin-bottom:6px;fill:none;stroke:var(--mineral);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}
+.canal svg.fill{fill:var(--mineral);stroke:none}
+.canal b{font-family:'Outfit',sans-serif;font-weight:600;font-size:.86rem;letter-spacing:-.005em}
+.canal small{font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--cinza-3)}
+.canal:active{transform:scale(.96);border-color:rgba(242,101,34,.45)}
+.canal:active svg{stroke:var(--laranja)}.canal:active svg.fill{fill:var(--laranja)}
+
+/* HUD da impressora: conta a história da peça */
+.hud{display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:4px;position:relative;z-index:2;
+  font-family:'DM Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza)}
+.hud-txt{display:inline-flex;align-items:center;gap:9px;min-height:1.2em}
+.hud-txt::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--laranja);box-shadow:0 0 10px var(--laranja);animation:hudpisca 1.1s ease-in-out infinite}
+.hud.ok .hud-txt{color:var(--mineral-2)}
+.hud.ok .hud-txt::before{background:var(--zap);box-shadow:0 0 10px var(--zap);animation:none}
+@keyframes hudpisca{50%{opacity:.3}}
+.hud-bar{width:132px;height:2px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden}
+.hud-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--vermelho),var(--laranja));transform-origin:0 50%;transform:scaleX(0);transition:background .4s}
+.hud.ok .hud-bar i{background:var(--zap)}
+
 .zap{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
   font-family:'Outfit',sans-serif;font-weight:600;font-size:.93rem;letter-spacing:.01em;
   padding:13px 26px;border-radius:100px;color:var(--mineral);
@@ -143,7 +187,7 @@ p{text-wrap:pretty}
 .stage-wrap{position:relative;opacity:0;animation:sobe 1.1s var(--vai) .5s forwards}
 .stage{position:relative;width:100%;aspect-ratio:1/1;max-width:540px;margin:0 auto;perspective:1500px;perspective-origin:50% 46%}
 .glow{position:absolute;left:50%;top:56%;width:66%;height:46%;transform:translate(-50%,-50%);
-  background:radial-gradient(closest-side,rgba(224,50,43,.26),transparent 72%);filter:blur(26px);pointer-events:none}
+  background:radial-gradient(closest-side,rgba(242,101,34,.26),transparent 72%);filter:blur(26px);pointer-events:none}
 .iso{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(50deg) rotateZ(-15deg);
   will-change:transform;animation:sway 9s ease-in-out infinite alternate}
 @keyframes sway{from{transform:rotateX(50deg) rotateZ(-21deg)}to{transform:rotateX(50deg) rotateZ(-7deg)}}
@@ -158,6 +202,13 @@ p{text-wrap:pretty}
   border:1px solid rgba(154,159,166,.30);border-radius:8px;
   box-shadow:0 30px 50px -20px rgba(0,0,0,.8),0 0 80px -18px rgba(224,50,43,.32),inset 0 0 46px rgba(0,0,0,.55)}
 .plate::after{content:"";position:absolute;inset:7%;border:1px dashed rgba(154,159,166,.14);border-radius:4px}
+.plate::before{content:"NYVOS";position:absolute;left:0;right:0;bottom:1.6%;text-align:center;
+  font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.6em;color:rgba(214,218,224,.2)}
+.pobj .ao svg,.pobj .cam svg{overflow:visible}
+.pobj .ao{position:absolute;inset:0;opacity:0}
+.pobj .ao path{fill:none;stroke:#000;stroke-linejoin:round}
+.pobj .cam .rim{fill:none;stroke:#fff4e6;stroke-width:.9;stroke-linecap:round;stroke-dasharray:12 88;opacity:0;
+  filter:drop-shadow(0 0 1.5px rgba(255,190,130,.9))}
 .pshadow{position:absolute;left:50%;top:50%;width:40%;height:40%;transform:translate(-50%,-50%);
   border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent 70%);filter:blur(8px)}
 .print{position:absolute;inset:0;transform-style:preserve-3d;transform:scale3d(1,1,1)}
@@ -265,11 +316,6 @@ p{text-wrap:pretty}
 .cg-ou{display:none;align-items:center;gap:11px;margin:14px 0 8px}
 .cg-ou::before,.cg-ou::after{content:"";flex:1;height:1px;background:rgba(154,159,166,.16)}
 .cg-ou span{font-family:'DM Mono',monospace;font-size:.66rem;font-weight:500;color:var(--cinza-3);letter-spacing:.12em;text-transform:uppercase}
-.mail-inline{display:none;align-items:center;justify-content:center;gap:10px;
-  font-family:'Outfit',sans-serif;font-size:.93rem;font-weight:700;color:var(--mineral);
-  text-decoration:none;padding:6px 0;margin-top:0;transition:color .3s}
-.mail-inline svg{width:16px;height:16px;stroke:var(--cinza);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:stroke .3s}
-.mail-inline:hover{color:var(--mineral)}.mail-inline:hover svg{stroke:var(--mineral)}
 .contato.soon{opacity:.72;cursor:default}
 .contato.soon::before{display:none}
 .contato.soon:hover{transform:none;border-color:var(--traco);box-shadow:none}
@@ -341,9 +387,8 @@ p{text-wrap:pretty}
   #cWhats,#cInsta,#cTiktok,#cLocal,#cMail,.contato.soon{display:none}
   .zap-mob{display:flex;width:100%;justify-content:center}
   .cg-ou{display:flex}
-  .mail-inline{display:flex}
-  #rfMail{display:none}
-  .redes-cta{display:flex}
+  .canais{display:grid}
+  .rodape .rt .redes-cta,.rodape .rt .rodape-sociais{display:none}
   .beneficios{display:none}
   .hero-txt .cta-wrap{display:none}
   #fazemos,.faixa{display:none}
@@ -351,10 +396,6 @@ p{text-wrap:pretty}
   #contato .cab{margin-bottom:22px;gap:9px}
   #contato .cab p{display:none}
   #contato .cab h2{font-size:clamp(1.5rem,6vw,1.75rem)}
-  .rodape-sociais{flex-direction:column;align-items:center;gap:6px}
-  .r-soc{height:auto;padding:12px 22px;gap:14px}
-  .r-soc svg{width:28px;height:28px}
-  .r-soc span{font-size:.92rem}
 
   /* hero: ritmo vertical compacto, sem vazios */
   .abre{padding:calc(20px + env(safe-area-inset-top)) 0 0}
@@ -372,17 +413,16 @@ p{text-wrap:pretty}
   #contato .cab h2{font-size:1.6rem;line-height:1.12;max-width:16ch}
   .zap-mob{min-height:52px;letter-spacing:.02em}
   .garantias{display:flex}
-  .cg-ou{margin:18px 0 10px}
-  .mail-inline{color:var(--mineral-2)}
+  .cg-ou{margin:22px 0 14px}
+  .cg-ou span{letter-spacing:.18em}
 
   /* toque: feedback tátil no lugar do hover que "gruda" no touch */
-  .zap:hover,.r-soc:hover{transform:none}
-  .zap:active,.r-soc:active{transform:scale(.97);transition-duration:.12s}
-  .mail-inline:active{color:var(--mineral)}
+  .zap:hover{transform:none}
+  .zap:active{transform:scale(.97);transition-duration:.12s}
 
   /* rodapé respeita a barra do iPhone */
-  .rodape{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
-  .rodape .base small{margin-top:22px;letter-spacing:.04em}
+  .rodape{padding:20px 0 calc(20px + env(safe-area-inset-bottom))}
+  .rodape .base small{margin-top:0;letter-spacing:.04em}
 }
 </style>
 </head>
@@ -412,7 +452,7 @@ p{text-wrap:pretty}
           <p class="lead">Você traz a ideia. A gente modela, imprime em 3D e entrega pronta.</p>
           <div class="cta-wrap">
             <a class="zap" id="zapHero" target="_blank" rel="noopener">
-              <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+              <span class="zap-luz" aria-hidden="true"></span><span class="zap-ico"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg><span class="zap-bolha" aria-hidden="true"><i></i><i></i><i></i></span></span>
               Clique aqui
             </a>
             <a class="linha-btn" href="#fazemos">
@@ -437,6 +477,7 @@ p{text-wrap:pretty}
               </div>
             </div>
           </div>
+          <div class="hud" id="hud" aria-hidden="true"><span class="hud-txt" id="hudTxt">Peça pronta</span><span class="hud-bar"><i id="hudBar"></i></span></div>
         </div>
       </div>
       <div class="descer">Role para conhecer <span class="seta"></span></div>
@@ -520,18 +561,28 @@ p{text-wrap:pretty}
         </div>
       </div>
       <a class="zap zap-mob" id="zapMob" target="_blank" rel="noopener">
-        <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+        <span class="zap-luz" aria-hidden="true"></span><span class="zap-ico"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg><span class="zap-bolha" aria-hidden="true"><i></i><i></i><i></i></span></span>
         Clique aqui
       </a>
       <div class="garantias">
         <span><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Entrega em poucos dias</span>
         <span><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>Acabamento revisado</span>
       </div>
-      <div class="cg-ou"><span>ou</span></div>
-      <a class="mail-inline" id="cMailMob">
-        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        <span id="mailAddrMob">nyvos3d@gmail.com</span>
-      </a>
+      <div class="cg-ou"><span>ou, se preferir</span></div>
+      <nav class="canais" aria-label="Outros canais">
+        <a class="canal" id="chInsta" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg>
+          <b>Instagram</b><small>Portfólio</small>
+        </a>
+        <a class="canal" id="chTiktok" target="_blank" rel="noopener">
+          <svg class="fill" viewBox="0 0 24 24"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
+          <b>TikTok</b><small>Bastidores</small>
+        </a>
+        <a class="canal" id="chMail">
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <b>E-mail</b><small>Orçamentos</small>
+        </a>
+      </nav>
     </div>
   </section>
 </main>
@@ -587,8 +638,8 @@ set("instaHandle","textContent","@"+CONFIG.instagram);
 set("cTiktok","href",tiktok); set("tiktokHandle","textContent","@"+CONFIG.tiktok);
 set("cMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("mailAddr","textContent",CONFIG.email);
-set("cMailMob","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
-set("mailAddrMob","textContent",CONFIG.email);
+set("chInsta","href",insta); set("chTiktok","href",tiktok);
+set("chMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("rfInsta","href",insta); set("rfTiktok","href",tiktok);
 set("rfInstaTxt","textContent","@"+CONFIG.instagram); set("rfTiktokTxt","textContent","@"+CONFIG.tiktok);
 set("rfMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
@@ -610,6 +661,14 @@ set("ano","textContent",new Date().getFullYear());
   const anim = name => `${name} ${T}s linear .5s infinite both`;
   host.style.setProperty("--h", 22);
   let css = "";
+  const hud = document.getElementById("hud"), hudTxt = document.getElementById("hudTxt"), hudBar = document.getElementById("hudBar");
+
+  // 0. sombra de contato no formato do N: três contornos esmaecendo = oclusão suave, sem filtro de blur
+  const ao = document.createElement("div");
+  ao.className = "ao";
+  ao.style.transform = "translateZ(.3px)";
+  ao.innerHTML = `<svg viewBox="0 0 96 96">${[[7,.1],[4.5,.16],[2.2,.26]].map(([w,o]) => `<path d="${P}" stroke-width="${w}" stroke-opacity="${o}"/>`).join("")}</svg>`;
+  host.appendChild(ao);
 
   // 1. camadas depositadas atrás do bico, alternando a direção a cada camada
   for (let i = 0; i < N; i++){
@@ -617,8 +676,10 @@ set("ano","textContent",new Date().getFullYear());
     const cam = document.createElement("div");
     cam.className = "cam";
     cam.style.transform = `translateZ(${i*STEP}px)`;
-    cam.innerHTML = `<svg viewBox="0 0 96 96"><path d="${P}"/>${reduce ? "" : `<path class="hot" d="${P}"/>`}</svg>`;
-    cam.querySelector("path").style.fill = `hsl(var(--h),${top ? 84 : 66}%,${top ? 66 : Math.round(26 + e*40)}%)`;
+    cam.innerHTML = `<svg viewBox="0 0 96 96"><path d="${P}"/>${reduce ? "" : `<path class="hot" d="${P}"/>`}${top && !reduce ? `<path class="rim" d="${P}" pathLength="100"/>` : ""}</svg>`;
+    const face = cam.querySelector("path");
+    face.style.fill = `hsl(var(--h),${top ? 84 : 66}%,${top ? 66 : Math.round(26 + e*40)}%)`;
+    if (top) Object.assign(face.style, { stroke: "hsl(var(--h),95%,82%)", strokeWidth: ".5", strokeOpacity: ".75", strokeLinejoin: "round" });
     if (!reduce){
       const s = (PE * i / N).toFixed(2), en = (PE * (i + 1) / N).toFixed(2), cool = (PE * (i + 1) / N + 3).toFixed(2);
       const hid = i % 2 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)";
@@ -631,6 +692,7 @@ set("ano","textContent",new Date().getFullYear());
       css += `@keyframes hot${i}{0%,${en}%{opacity:.85}${cool}%,100%{opacity:0}}`;
       cam.firstChild.style.animation = anim("ly" + i);
       cam.querySelector(".hot").style.animation = anim("hot" + i);
+      if (top) cam.querySelector(".rim").style.animation = anim("rim");
     }
     host.appendChild(cam);
   }
@@ -656,7 +718,9 @@ set("ano","textContent",new Date().getFullYear());
     if (reduce) w.style.opacity = 1; else w.style.animation = anim("solid");
     host.appendChild(w);
   });
-  if (reduce) return;
+  if (reduce){ ao.style.opacity = 1; hud.classList.add("ok"); hudBar.style.transform = "scaleX(1)"; return; }
+  ao.style.animation = anim("ao");
+  document.querySelector(".glow").style.animation = anim("brilho");
 
   // 3. brilho de acabamento no topo da peça pronta
   const sh = document.createElement("div");
@@ -679,7 +743,11 @@ set("ano","textContent",new Date().getFullYear());
   hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 8}%{opacity:0;transform:translate3d(${endX}px,0,${HT + 90}px)}100%{opacity:0;transform:translate3d(0,0,1px)}`;
   css += `@keyframes head{${hk}}`;
   css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 6}%,95%{opacity:1}100%{opacity:0}}`;
-  css += `@keyframes sheen{0%,${PE + 9}%{opacity:0;background-position:120% 0}${PE + 11}%{opacity:1}${PE + 22}%{opacity:1;background-position:-20% 0}${PE + 24}%,100%{opacity:0;background-position:-20% 0}}`;
+  css += `@keyframes ao{0%{opacity:0}${(PE / N).toFixed(2)}%,95%{opacity:1}100%{opacity:0}}`;
+  // inspeção: um feixe percorre o contorno do topo; depois o brilho de peça pronta
+  css += `@keyframes rim{0%,${PE + 12}%{opacity:0;stroke-dashoffset:0}${PE + 13.5}%{opacity:1}${PE + 25}%{opacity:1;stroke-dashoffset:-100}${PE + 26.5}%,100%{opacity:0;stroke-dashoffset:-100}}`;
+  css += `@keyframes sheen{0%,${PE + 25}%{opacity:0;background-position:120% 0}${PE + 27}%{opacity:1}${PE + 37}%{opacity:1;background-position:-20% 0}${PE + 39}%,100%{opacity:0;background-position:-20% 0}}`;
+  css += `@keyframes brilho{0%,${PE}%{opacity:.7;transform:translate(-50%,-50%) scale(1)}${PE + 10}%,92%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}}`;
   hd.style.animation = anim("head");
   host.appendChild(hd);
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
@@ -687,7 +755,7 @@ set("ano","textContent",new Date().getFullYear());
   // cor: oscila na faixa quente durante a impressão e assenta no laranja da marca quando a peça fica pronta
   const ref = host.querySelector(".cam svg"), stage = document.querySelector(".stage");
   const t0 = performance.now() + 500, fps = mob ? 80 : 40;
-  let rafId = null, last = 0;
+  let rafId = null, last = 0, lastLabel = "";
   function tick(now){
     if (!document.hidden && now - last > fps){
       last = now;
@@ -697,6 +765,15 @@ set("ano","textContent",new Date().getFullYear());
       const osc = 19 + 15 * Math.sin(now / 22000 * Math.PI * 2);
       const f = pos < PE ? 0 : pos < PE + 8 ? (pos - PE) / 8 : pos < 96 ? 1 : 1 - (pos - 96) / 4;
       host.style.setProperty("--h", (osc + (22 - osc) * f * f * (3 - 2 * f)).toFixed(1));
+      // painel da impressora
+      let label, ok = false, prog = 1;
+      if (pos < PE){ prog = pos / PE; label = `Imprimindo · camada ${String(Math.min(N, Math.floor(prog * N) + 1)).padStart(2, "0")}/${N}`; }
+      else if (pos < PE + 26) label = "Inspeção de acabamento";
+      else if (pos < 95){ label = "Peça pronta"; ok = true; }
+      else { label = "Preparando a mesa"; prog = 0; }
+      if (label !== lastLabel){ hudTxt.textContent = label; lastLabel = label; }
+      hud.classList.toggle("ok", ok);
+      hudBar.style.transform = `scaleX(${prog.toFixed(3)})`;
     }
     rafId = requestAnimationFrame(tick);
   }
@@ -706,6 +783,18 @@ set("ano","textContent",new Date().getFullYear());
     new IntersectionObserver(es => es[0].isIntersecting ? start() : stop(), { threshold: 0 }).observe(stage);
   } else { start(); }
 })();
+
+/* ── WhatsApp: onda a partir do ponto de toque + vibração curta (Android) ── */
+document.querySelectorAll(".zap").forEach(z => {
+  z.addEventListener("pointerdown", e => {
+    const r = z.getBoundingClientRect(), o = document.createElement("span");
+    o.className = "zap-onda";
+    o.style.left = (e.clientX - r.left) + "px"; o.style.top = (e.clientY - r.top) + "px";
+    z.querySelector(".zap-luz").appendChild(o);
+    setTimeout(() => o.remove(), 650);
+  });
+  z.addEventListener("click", () => { if (navigator.vibrate) navigator.vibrate(12); });
+});
 
 /* ── reveal on scroll ── */
 const obs = new IntersectionObserver(es => es.forEach(e => {
