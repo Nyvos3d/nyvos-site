@@ -5,6 +5,9 @@ Página única, autossuficiente, com foco em contato.
 
 ## Estrutura
 - `index.html` — o site (HTML/CSS/JS inline, sem dependências além das Google Fonts)
+- `assets/impressora3d.min.js` — cena 3D do hero (WebGL/three.js): impressora imprimindo o N, já empacotada
+  - fonte em `src/impressora3d.js`; para regerar: `npm install` e `npm run build:3d`
+  - `assets/impressora3d-poster.webp` — quadro estático exibido até o WebGL carregar (e sem WebGL)
 - `favicon.ico` — favicon multi-resolução
 - `assets/` — identidade visual da marca
   - `*.svg` — logo, símbolo e wordmark (vetor, escala infinita)

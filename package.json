@@ -1,0 +1,12 @@
+{
+  "name": "nyvos-site",
+  "private": true,
+  "description": "Site da NYVOS. Só a cena 3D do hero tem build: src/impressora3d.js → assets/impressora3d.min.js",
+  "scripts": {
+    "build:3d": "esbuild src/impressora3d.js --bundle --minify --format=esm --target=es2020 --legal-comments=none --banner:js=\"/*! three.js r186 | MIT License | Copyright © 2010-2026 three.js authors | https://github.com/mrdoob/three.js */\" --outfile=assets/impressora3d.min.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "three": "0.186.1"
+  }
+}
