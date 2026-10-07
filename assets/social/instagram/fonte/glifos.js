@@ -1,175 +1,245 @@
-// NYVOS — capas de destaques "Camadas"
-// Tudo o que é peça impressa aparece fatiado em camadas (passo 8, fresta 2) e
-// aquece de baixo para cima: laranja escuro na base, laranja claro na camada
-// que acabou de sair do bico. Máquina e detalhes ficam sólidos; o mineral é a luz.
+// NYVOS — capas de destaques "Estúdio"
+// Cada destaque é uma peça impressa de verdade, fotografada no estúdio da marca:
+// filamento laranja, mineral e carbono (a paleta da NYVOS), camadas visíveis como
+// cordões de FDM com luz e sombra, espessura real e a mesa de impressão embaixo.
+// Onde há processo (Bastidores, Do zero) a camada de cima ainda está quente.
 const { SIMBOLO } = require("./art.js");
 
-const T = { luz: "#FF8A4C", base: "#F26522", esc: "#B8410E", min: "#F3F2EE" };
-const FUNDO = { centro: "#1A1B1F", borda: "#08090B" };
-const PASSO = 8, FRESTA = 2;
+const T = { luz: "#FF8A4C", base: "#F26522", esc: "#B8410E", min: "#F3F2EE", carbono: "#1B1D21", grafite: "#252729" };
+const FUNDO = { centro: "#2C2F35", meio: "#17181C", borda: "#0B0C0E" };
+const P = 4;        // altura de camada (unidades do glifo, grade 96)
+const MESA = 81;    // topo da mesa: as camadas nascem daqui para cima
 
-const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
-const mistura = (a, b, t) => "#" + hex(a).map((v, i) => Math.round(v + (hex(b)[i] - v) * t).toString(16).padStart(2, "0")).join("");
+// filamentos: face da frente e lateral (mais escura, de costas para a luz)
+const MAT = {
+  laranja: { frente: T.base, lado: "#9E3A0C" },
+  mineral: { frente: "#ECEAE4", lado: "#9C998F" },
+  carbono: { frente: "#33363C", lado: "#16171A" },
+};
 
-// cor de cada camada: luz no topo, base no meio, escuro embaixo
-function corCamada(k, n) {
-  const t = k / (n - 1);
-  return t < 0.5 ? mistura(T.luz, T.base, t * 2) : mistura(T.base, T.esc, (t - 0.5) * 2);
+const fx = (n) => +n.toFixed(2);
+
+// escala/desloca caminhos só com M L H V Z (o símbolo N), mantendo a grade de camadas
+function reposiciona(d, s, tx, ty) {
+  return d.replace(/([MLHVZ])([^MLHVZ]*)/g, (_, c, args) => {
+    const n = args.trim() ? args.trim().split(/[\s,]+/).map(Number) : [];
+    if (c === "H") return "H" + fx(n[0] * s + tx);
+    if (c === "V") return "V" + fx(n[0] * s + ty);
+    if (c === "Z") return "Z";
+    const out = [];
+    for (let i = 0; i < n.length; i += 2) out.push(`${fx(n[i] * s + tx)} ${fx(n[i + 1] * s + ty)}`);
+    return c + out.join(" ");
+  });
 }
-
-// elementos: F = peça fatiada, S = sólido, L = traço
-const F = (d, o = {}) => ({ tipo: "F", d, ...o });
-const S = (cor, d, o = {}) => ({ tipo: "S", cor, d, ...o });
-const L = (cor, d, larg, o = {}) => ({ tipo: "L", cor, d, larg, ...o });
 
 function estrela(cx, cy, R, r, pontas = 5) {
   const pts = [];
   for (let i = 0; i < pontas * 2; i++) {
     const a = (-90 + (180 / pontas) * i) * Math.PI / 180, k = i % 2 ? r : R;
-    pts.push(`${(cx + k * Math.cos(a)).toFixed(2)} ${(cy + k * Math.sin(a)).toFixed(2)}`);
+    pts.push(`${fx(cx + k * Math.cos(a))} ${fx(cy + k * Math.sin(a))}`);
   }
   return `M${pts.join("L")}Z`;
 }
-const circulo = (cx, cy, r) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`;
+const circulo = (cx, cy, r) => `M${fx(cx - r)} ${cy}a${r} ${r} 0 1 0 ${fx(2 * r)} 0a${r} ${r} 0 1 0 ${fx(-2 * r)} 0Z`;
 
-// carretel visto de frente: disco, janelas e cubo vazados
-const carretel = (cx, cy, r) => [circulo(cx, cy, r), circulo(cx, cy, r * 0.34),
-  ...[0, 120, 240].map((a) => {
-    const t = (a - 90) * Math.PI / 180, d = r * 0.66;
-    return circulo(+(cx + d * Math.cos(t)).toFixed(2), +(cy + d * Math.sin(t)).toFixed(2), r * 0.17);
-  })].join(" ");
+// ---------- peças impressas ----------
+let seq = 0;
+function forma(d, o, pintura, extra = "") {
+  if (o.traco) return `<path d="${d}" fill="none" stroke="${pintura}" stroke-width="${o.traco}" stroke-linejoin="miter"${extra}/>`;
+  return `<path d="${d}"${o.evenodd ? ' fill-rule="evenodd"' : ""} fill="${pintura}"${extra}/>`;
+}
+
+// peça extrudada (placa, etiqueta, balão, N): frente + espessura para a direita
+function ext(d, mat, o = {}) {
+  const prof = o.prof ?? 6, k = `m${seq++}`;
+  const copias = (p) => { let s = ""; for (let i = prof; i > 0; i -= 0.5) s += forma(d, o, p, ` transform="translate(${i} 0)"`); return s; };
+  return `<g>${copias(mat.lado)}</g>
+    <mask id="${k}" maskUnits="userSpaceOnUse" x="-20" y="-20" width="136" height="136">${copias("#fff")}</mask>
+    <rect x="-20" y="-20" width="136" height="136" fill="url(#rib)" mask="url(#${k})"/>
+    ${forma(d, o, mat.frente)}${forma(d, o, "url(#vole)")}${forma(d, o, "url(#rib)")}`;
+}
+
+// peça de revolução (vaso, lâmpada): sombreado cilíndrico + camadas
+const rev = (d, mat, o = {}) => forma(d, o, mat.frente) + forma(d, o, "url(#volr)") + forma(d, o, "url(#rib)");
+
+// metal (bico, bloco aquecedor, dissipador): sem camadas
+const metal = (d) => `<path d="${d}" fill="url(#metal)"/><path d="${d}" fill="url(#vole)"/>`;
+
+// cordão recém-extrudado, ainda quente, com a ponta incandescente
+function quente(x1, x2, y, ponta = true) {
+  const cordao = `<rect x="${x1}" y="${y}" width="${x2 - x1}" height="${P}" rx="${P / 2}"`;
+  return `${cordao} fill="${T.base}" filter="url(#brilho)" opacity=".9"/>${cordao} fill="url(#quente)"/>${cordao} fill="url(#rib)"/>` +
+    (ponta ? `<circle cx="${x2 - 1}" cy="${y + P / 2}" r="4.5" fill="${T.luz}" filter="url(#brilho)"/><circle cx="${x2 - 1}" cy="${y + P / 2}" r="1.5" fill="#FFE2CC"/>` : "");
+}
+
+// mesa de impressão vista de frente, levemente de cima; a peça projeta luz laranja nela
+function mesa(x1 = 6, x2 = 90) {
+  const linhas = [];
+  for (let x = x1 + 8; x < x2 - 2; x += 8) linhas.push(`M${fx(48 + (x - 48) * 0.93)} ${MESA - 3}L${x} ${MESA + 1}`);
+  return `<ellipse cx="48" cy="${MESA + 4}" rx="${(x2 - x1) / 2 + 4}" ry="4" fill="#000" opacity=".55" filter="url(#sombra)"/>
+    <path d="M${x1 + 4} ${MESA - 3}H${x2 - 4}L${x2} ${MESA + 1}H${x1}Z" fill="url(#tampo)"/>
+    <path d="${linhas.join(" ")} M${x1 + 2} ${MESA - 1}H${x2 - 2}" stroke="#F3F2EE" stroke-opacity=".06" stroke-width=".3" fill="none"/>
+    <ellipse cx="48" cy="${MESA - 1}" rx="${(x2 - x1) / 2 - 10}" ry="2.2" fill="${T.base}" opacity=".35" filter="url(#sombra)"/>
+    <rect x="${x1}" y="${MESA + 1}" width="${x2 - x1}" height="5" fill="${T.grafite}"/>
+    <rect x="${x1}" y="${MESA + 1}" width="${x2 - x1}" height=".5" fill="#F3F2EE" opacity=".18"/>`;
+}
+
+// ---------- os oito destaques ----------
+const VASO = "M34 81H62C62 76 74 67 74 53C74 39 60 32 58 25V17H62V10H34V17H38V25C36 32 22 39 22 53C22 67 34 76 34 81Z";
+const N_PLACA = reposiciona(SIMBOLO, 0.68, 12.4, MESA - 96 * 0.68);
+const N_LAMPADA = reposiciona(SIMBOLO, 0.17, 39.8, 25);
+
+function cubo() {
+  // isométrico: metade de baixo já impressa (paredes + preenchimento), metade de cima é o modelo
+  const B = [48, 81], E = [22, 66], D = [74, 66], h = 16;
+  const up = ([x, y], k) => `${x} ${y - k}`;
+  const esq = `M${E[0]} ${E[1]}L${B[0]} ${B[1]}L${up(B, h)}L${up(E, h)}Z`;
+  const dir = `M${B[0]} ${B[1]}L${D[0]} ${D[1]}L${up(D, h)}L${up(B, h)}Z`;
+  const topo = `M${up(E, h)}L${up(B, h)}L${up(D, h)}L48 ${51 - h + 0}Z`; // 48,35
+  const parede = "M27.2 50L48 62L68.8 50L48 38Z";
+  const infill = [];
+  for (let k = -30; k <= 30; k += 3.5) {
+    infill.push(`M${48 + k * 0.866 - 26} ${50 + k * 0.5 - 15}l52 30`, `M${48 + k * 0.866 - 26} ${50 - k * 0.5 + 15}l52 -30`);
+  }
+  const fantasma = "M22 50V36L48 21L74 36V50 M22 36L48 51L74 36 M48 51V65";
+  return `<path d="M48 92L4 66.6L48 41.2L92 66.6Z" fill="#000" opacity=".5" filter="url(#sombra)" transform="translate(0 3)"/>
+    <path d="M48 89L8 66L48 43L88 66Z" fill="url(#tampo)"/>
+    <path d="M8 66L48 89V93L8 70Z" fill="#1A1C1F"/><path d="M48 89L88 66V70L48 93Z" fill="${T.grafite}"/>
+    <path d="M48 87L14 67.3L48 47.6L82 67.3Z" fill="${T.base}" opacity=".18" filter="url(#sombra)"/>
+    <path d="${esq}" fill="${MAT.laranja.frente}"/><path d="${esq}" fill="url(#ribe)"/>
+    <path d="${dir}" fill="${MAT.laranja.lado}"/><path d="${dir}" fill="url(#ribd)"/>
+    <path d="${topo}" fill="#C9500F"/>
+    <clipPath id="tp"><path d="${parede}"/></clipPath>
+    <path d="${infill.join(" ")}" stroke="${T.luz}" stroke-width=".7" opacity=".7" clip-path="url(#tp)"/>
+    <path d="${parede}" fill="none" stroke="${T.luz}" stroke-width="1.6"/>
+    <path d="${topo}" fill="none" stroke="#FFB085" stroke-width=".8" opacity=".8"/>
+    <path d="${fantasma} M48 35V21" fill="none" stroke="${T.min}" stroke-width="1.1" stroke-dasharray="2.4 1.8" opacity=".7"/>
+    ${[[48, 21], [22, 36], [74, 36], [48, 51]].map(([x, y]) => `<rect x="${x - 2.6}" y="${y - 2.6}" width="5.2" height="5.2" fill="${T.min}"/>`).join("")}
+    <circle cx="68.8" cy="50" r="5" fill="${T.luz}" filter="url(#brilho)"/><circle cx="68.8" cy="50" r="1.6" fill="#FFE2CC"/>`;
+}
+
+function hotend() {
+  const aletas = [0, 1, 2, 3, 4].map((i) => metal(`M32 ${6 + i * 4.4}H60V${8.8 + i * 4.4}H32Z`)).join("");
+  return `${metal("M44 6H52V31H44Z")}${aletas}
+    ${metal("M30 31H62V45H30Z")}
+    <circle cx="35" cy="38" r="1.6" fill="#55585E"/><circle cx="57" cy="38" r="1.6" fill="#55585E"/>
+    ${metal("M40 45H56V49H40Z")}${metal("M42 49H54L50.2 56.2H45.8Z")}`;
+}
+
+function carretel(cx, cy, r, mat, id) {
+  return `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="1.7" gradientUnits="userSpaceOnUse" spreadMethod="repeat">
+      <stop offset="0" stop-color="#000" stop-opacity=".38"/><stop offset=".35" stop-color="#fff" stop-opacity=".22"/>
+      <stop offset=".6" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#000" stop-opacity=".38"/></radialGradient>
+    <circle cx="${cx + 3}" cy="${cy}" r="${r}" fill="${MAT.carbono.lado}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#3A3D43"/>
+    <circle cx="${cx}" cy="${cy}" r="${r - 1.6}" fill="${mat.frente}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r - 1.6}" fill="url(#${id})"/>
+    <circle cx="${cx}" cy="${cy}" r="${r - 1.6}" fill="url(#volc)"/>
+    <circle cx="${cx}" cy="${cy}" r="${r * 0.42}" fill="${T.carbono}"/>
+    <circle cx="${cx}" cy="${cy}" r="${r * 0.42}" fill="none" stroke="#4A4D54" stroke-width="1"/>
+    <circle cx="${cx}" cy="${cy}" r="${r * 0.17}" fill="#08090A"/>`;
+}
 
 const DESTAQUES = [
   {
     id: "01-pecas", nome: "Peças", sobre: "Portfólio: as peças prontas, bem fotografadas",
-    // vaso em camadas sobre pedestal, com um brilho de peça acabada
-    el: [
-      S(T.esc, "M14 80H82V96H14Z"),
-      F("M30 8H66V16H60C60 24 76 32 76 48C76 64 66 72 60 72H36C30 72 20 64 20 48C20 32 36 24 36 16H30Z"),
-      S(T.min, estrela(84, 12, 10, 2.6, 4)),
-    ],
+    svg: () => mesa(18, 78) + rev(VASO, MAT.laranja) +
+      `<path d="${estrela(80, 14, 9, 2.2, 4)}" fill="${T.min}" filter="url(#brilho)" opacity=".7"/><path d="${estrela(80, 14, 9, 2.2, 4)}" fill="${T.min}"/>`,
   },
   {
     id: "02-orcamento", nome: "Orçamento", sobre: "Como pedir, prazos, formas de pagamento",
-    // etiqueta de preço com cifrão desenhado na geometria em degraus do N
-    el: [
-      F("M22 28L48 2L74 28V88H22Z " + circulo(48, 24, 6), { evenodd: true }),
-      L(T.min, "M60 42H36V58H60V74H36 M48 34V82", 6),
-    ],
+    svg: () => mesa(16, 84) +
+      ext(`M24 81V32L46 10L68 32V81Z ${circulo(46, 27, 4.5)}`, MAT.laranja, { evenodd: true }) +
+      ext("M57 41H35V53H57V65H35 M46 35V71", MAT.mineral, { traco: 5.5, prof: 1.6 }),
   },
   {
     id: "03-clientes", nome: "Clientes", sobre: "Depoimentos, prints de conversa, cliente com a peça",
-    el: [
-      F("M8 8H88V64H44L24 86V64H8Z"),
-      S(T.min, estrela(48, 36, 21, 8.6)),
-    ],
+    svg: () => mesa(6, 90) + ext("M10 12H80V62H46L30 81V62H10Z", MAT.laranja) +
+      ext(estrela(45, 37, 19, 7.8), MAT.mineral, { prof: 1.6 }),
   },
   {
     id: "04-sua-ideia", nome: "Sua ideia", sobre: "Personalizados: o que o cliente pediu → o que entregamos",
-    // lâmpada cuja rosca nasce das próprias camadas; o filamento é o N
-    el: [
-      F("M36 61.3A28 28 0 1 1 60 61.3V88H36Z M42 88H54V96H42Z"),
-      S(T.min, SIMBOLO, { t: "translate(37 25) scale(.23)" }),
-    ],
+    svg: () => mesa(18, 78) +
+      `<circle cx="48" cy="32" r="30" fill="${T.base}" opacity=".35" filter="url(#brilho)"/>` +
+      rev("M38 53.8A24 24 0 1 1 58 53.8V62H38Z", MAT.laranja) +
+      `<circle cx="44" cy="29" r="18" fill="url(#acesa)"/>` +
+      rev("M38.5 62H57.5V76H38.5Z", MAT.mineral) + rev("M42 76H54V81H42Z", MAT.carbono) +
+      ext(N_LAMPADA, MAT.mineral, { prof: 1.2 }),
   },
   {
     id: "05-do-zero", nome: "Do zero", sobre: "Modelagem 3D: do desenho na tela à peça",
-    // cubo isométrico meio impresso: camadas seguem as faces, o resto é o modelo
-    iso: true,
-    el: [
-      F("M12 48L48 68V88L12 68Z", { cor: T.base }),
-      F("M48 68L84 48V68L48 88Z", { cor: T.esc }),
-      S(T.luz, "M48 28L84 48L48 68L12 48Z"),
-      L(T.min, "M48 8L84 28L48 48L12 28Z M12 28V48 M84 28V48 M48 48V68", 1.6, { opacidade: 0.6, tracejado: "3 2.4" }),
-      ...[[48, 8], [84, 28], [48, 48], [12, 28]].map(([x, y]) => S(T.min, `M${x - 3.5} ${y - 3.5}h7v7h-7Z`)),
-    ],
+    svg: cubo,
   },
   {
     id: "06-bastidores", nome: "Bastidores", sobre: "A impressora trabalhando, time-lapses, processo",
-    // impressora de frente com a peça a meio caminho; máquina sólida, só a peça tem camadas
-    el: [
-      S(T.esc, "M6 6H90V14H82V96H74V14H22V96H14V14H6Z"),
-      S(T.esc, "M22 38H74V44H22Z"),
-      S(T.min, "M38 30H58V50H38Z"),
-      S(T.luz, "M43 50H53L50 57H46Z"),
-      F("M30 72H66V88H30Z M30 64H50V70H30Z"),
-      S(T.base, "M22 88H74V96H22Z"),
-    ],
+    svg: () => mesa(6, 90) + ext("M12 81V61H80V81Z", MAT.laranja) + quente(12, 49, 57) + hotend() +
+      `<circle cx="48" cy="56.4" r="2.4" fill="${T.luz}" filter="url(#brilho)"/>`,
   },
   {
     id: "07-cores", nome: "Cores", sobre: "Filamentos e cores disponíveis",
-    // três carretéis de filamento, cada um de uma cor (material: sólido, sem camadas)
-    el: [
-      S(T.luz, carretel(48, 26, 22), { evenodd: true }),
-      S(T.esc, carretel(26, 68, 22), { evenodd: true }),
-      S(T.min, carretel(70, 68, 22), { evenodd: true }),
-    ],
+    svg: () => mesa(8, 88) + carretel(30, 64.5, 16.5, MAT.carbono, "fa") + carretel(66, 64.5, 16.5, MAT.mineral, "fb") +
+      carretel(48, 32.5, 16.5, MAT.laranja, "fc") +
+      `<path d="M63.5 28C72 30 80 40 82 54" fill="none" stroke="${T.base}" stroke-width="1.6" stroke-linecap="round"/>`,
   },
   {
     id: "08-a-nyvos", nome: "A NYVOS", sobre: "Quem está por trás, missão, contatos",
-    el: [F(SIMBOLO, { t: "translate(6 6) scale(.875)" })],
+    svg: () => mesa(6, 90) + ext(N_PLACA, MAT.laranja, { prof: 7 }),
   },
 ];
 
-// frestas das camadas: horizontais (peças de frente) ou seguindo as faces do cubo
-function mascara(iso) {
-  if (!iso) {
-    const faixas = Array.from({ length: 13 }, (_, k) => `<rect x="-20" y="${k * PASSO}" width="136" height="${PASSO - FRESTA}" fill="#fff"/>`).join("");
-    return `<mask id="camadas" maskUnits="userSpaceOnUse" x="-20" y="-20" width="136" height="136">${faixas}</mask>`;
-  }
-  const linhas = [5, 10, 15].map((h) => `<path d="M12 ${68 - h}L48 ${88 - h}L84 ${68 - h}" stroke="#000" stroke-width="1.5" fill="none"/>`).join("");
-  return `<mask id="camadas" maskUnits="userSpaceOnUse" x="-20" y="-20" width="136" height="136"><rect x="-20" y="-20" width="136" height="136" fill="#fff"/>${linhas}</mask>`;
-}
-
-function gradiente() {
-  const n = 12, stops = [];
-  for (let k = 0; k < n; k++) {
-    const c = corCamada(k, n), a = (k * PASSO / 96).toFixed(4), b = (((k + 1) * PASSO) / 96).toFixed(4);
-    stops.push(`<stop offset="${a}" stop-color="${c}"/><stop offset="${b}" stop-color="${c}"/>`);
-  }
-  return `<linearGradient id="calor" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="96">${stops.join("")}</linearGradient>`;
-}
-
-function desenha(e, brilho = false) {
-  const tr = e.t ? ` transform="${e.t}"` : "";
-  const regra = e.evenodd ? ' fill-rule="evenodd"' : "";
-  if (e.tipo === "L") {
-    if (brilho) return "";
-    return `<path${tr} d="${e.d}" fill="none" stroke="${e.cor}" stroke-width="${e.larg}" stroke-linecap="butt" stroke-linejoin="miter"${e.tracejado ? ` stroke-dasharray="${e.tracejado}"` : ""}${e.opacidade ? ` opacity="${e.opacidade}"` : ""}/>`;
-  }
-  if (brilho) return e.tipo === "F" || e.cor !== T.min ? `<path${tr}${regra} fill="${T.base}" d="${e.d}"/>` : "";
-  if (e.tipo === "F") return `<path${tr}${regra} fill="${e.cor || "url(#calor)"}" mask="url(#camadas)" d="${e.d}"/>`;
-  return `<path${tr}${regra} fill="${e.cor}" d="${e.d}"/>`;
-}
-
-function glifo(dest) {
-  return `<g filter="url(#halo)" opacity=".55">${dest.el.map((e) => desenha(e, true)).join("")}</g>` +
-    dest.el.map((e) => desenha(e)).join("");
+// ---------- capa ----------
+function defs() {
+  const c = (MESA % P).toFixed(3);
+  const t30 = Math.tan(Math.PI / 6);
+  const ce = ((81 - 48 * t30) % P).toFixed(3), cd = ((81 + 48 * t30) % P).toFixed(3);
+  const rib = (id, y, tr = "") => `<pattern id="${id}" patternUnits="userSpaceOnUse" x="-40" y="${y}" width="200" height="${P}"${tr}><rect width="200" height="${P}" fill="url(#ribg)"/></pattern>`;
+  return `<linearGradient id="ribg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".2" stop-color="#fff" stop-opacity=".1"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient>
+    ${rib("rib", c)}${rib("ribe", ce, ' patternTransform="skewY(30)"')}${rib("ribd", cd, ' patternTransform="skewY(-30)"')}
+    <linearGradient id="volr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".2" stop-color="#000" stop-opacity=".06"/>
+      <stop offset=".36" stop-color="#fff" stop-opacity=".24"/><stop offset=".52" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".84" stop-color="#000" stop-opacity=".26"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
+    <linearGradient id="vole" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+    <radialGradient id="volc" cx=".38" cy=".3" r=".8">
+      <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5E6167"/><stop offset=".3" stop-color="#E4E3DF"/>
+      <stop offset=".55" stop-color="#A3A5A9"/><stop offset="1" stop-color="#4B4E54"/></linearGradient>
+    <linearGradient id="quente" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="${T.base}"/><stop offset=".7" stop-color="${T.luz}"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
+    <radialGradient id="acesa"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="${T.luz}" stop-opacity=".15"/>
+      <stop offset="1" stop-color="${T.luz}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="tampo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202226"/><stop offset="1" stop-color="#3A3D44"/></linearGradient>
+    <filter id="brilho" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <filter id="sombra" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>`;
 }
 
 // capa 1080x1920; o Instagram mostra o círculo central
 function capa(dest, opcoes) {
-  return capaBruta(dest, opcoes).replace(/id="([a-z]+)"/g, `id="$1-${dest.id}"`).replace(/url\(#([a-z]+)\)/g, `url(#$1-${dest.id})`);
+  return capaBruta(dest, opcoes).replace(/id="([a-z0-9]+)"/g, `id="$1-${dest.id}"`).replace(/url\(#([a-z0-9]+)\)/g, `url(#$1-${dest.id})`);
 }
 
-function capaBruta(dest, { w = 1080, h = 1920, tam = 640 } = {}) {
+function capaBruta(dest, { w = 1080, h = 1920, tam = 780 } = {}) {
   const cx = w / 2, cy = h / 2, x = cx - tam / 2, y = cy - tam / 2;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}">
   <defs>
-    <radialGradient id="f" cx="${cx}" cy="${cy}" r="${w * 0.6}" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="${FUNDO.centro}"/><stop offset="1" stop-color="${FUNDO.borda}"/>
+    <radialGradient id="f" cx="${cx}" cy="${cy - tam * 0.32}" r="${w * 0.78}" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="${FUNDO.centro}"/><stop offset=".55" stop-color="${FUNDO.meio}"/><stop offset="1" stop-color="${FUNDO.borda}"/>
     </radialGradient>
-    <radialGradient id="g" cx="${cx}" cy="${cy + tam * 0.12}" r="${tam * 0.85}" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="${T.base}" stop-opacity=".13"/><stop offset="1" stop-color="${T.base}" stop-opacity="0"/>
+    <radialGradient id="g" cx="${cx}" cy="${cy + tam * 0.1}" r="${tam * 0.62}" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="${T.base}" stop-opacity=".12"/><stop offset="1" stop-color="${T.base}" stop-opacity="0"/>
     </radialGradient>
-    <filter id="halo" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
-    ${gradiente()}
-    ${mascara(dest.iso)}
+    ${defs()}
   </defs>
   <rect width="${w}" height="${h}" fill="url(#f)"/>
-  <circle cx="${cx}" cy="${cy}" r="${w * 0.47}" fill="url(#g)"/>
-  <circle cx="${cx}" cy="${cy}" r="${w * 0.462}" fill="none" stroke="${T.base}" stroke-opacity=".22" stroke-width="2"/>
-  <g transform="translate(${x} ${y}) scale(${tam / 96})">${glifo(dest)}</g>
+  <circle cx="${cx}" cy="${cy}" r="${w * 0.5}" fill="url(#g)"/>
+  <g transform="translate(${x} ${y}) scale(${tam / 96})">${dest.svg()}</g>
 </svg>`;
 }
 
