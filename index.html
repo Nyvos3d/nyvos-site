@@ -141,57 +141,82 @@ p{text-wrap:pretty}
 .zap-onda{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:rgba(255,255,255,.32);animation:onda .6s ease-out forwards}
 @keyframes onda{to{transform:scale(38);opacity:0}}
 
-/* ── impressora: chassi com display frontal, colunas de alumínio, travessa e pórtico que sobe a cada camada ── */
-.maquina{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none;--alt:150px;--viga:10px}
-.coluna i,.travessa i,.portico i{position:absolute;display:block;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.base{position:absolute;left:7%;top:7%;width:86%;height:86%;transform-style:preserve-3d;transform:translateZ(-1px);border-radius:10px;
-  background:radial-gradient(90% 70% at 30% 20%,rgba(255,255,255,.06),transparent 60%),linear-gradient(135deg,#2d3036,#1c1e22 55%,#15161a);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.12)}
-.base-frente{position:absolute;left:0;top:100%;width:100%;height:17%;transform-origin:50% 0;transform:rotateX(-90deg);
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:0 0 10px 10px;
-  display:flex;align-items:center;justify-content:space-between;padding:0 4.5%;
-  background:linear-gradient(180deg,#34373e,#202226 22%,#18191c);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -2px 0 rgba(0,0,0,.45)}
-.base-lado{position:absolute;top:0;left:-17%;width:17%;height:100%;transform-origin:100% 50%;transform:rotateY(-90deg);
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:10px 0 0 10px;background:linear-gradient(90deg,#121316,#1e2024)}
-.marca-frente{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-weight:500;font-size:9px;letter-spacing:.42em;color:rgba(214,218,224,.45)}
-.marca-frente svg{width:9px;height:9px;fill:var(--acento)}
-/* colunas em perfil de alumínio (V-slot): frente com canal central + face lateral */
-.coluna{position:absolute;top:8.5%;width:4.6%;height:4.6%;transform-style:preserve-3d}
-.c-esq{left:8.5%}.c-dir{left:86.9%}
-.coluna .f{left:0;top:calc(100% - var(--alt));width:100%;height:var(--alt);transform-origin:50% 100%;transform:rotateX(-90deg);
-  background:linear-gradient(90deg,#202328,#474b53 28%,#1a1c20 46%,#15171a 50%,#1a1c20 54%,#3f434a 72%,#1e2125)}
-.coluna .l{left:0;top:0;width:var(--alt);height:100%;transform-origin:0 50%;transform:rotateY(-90deg);
-  background:linear-gradient(180deg,#191b1f,#2f3238 40%,#121316 50%,#2b2e33 60%,#17191c)}
-.travessa,.portico{position:absolute;top:8.5%;height:4.6%;transform-style:preserve-3d}
-.travessa{left:8.5%;width:83%;transform:translateZ(var(--alt))}
-.portico{left:13.1%;width:73.8%;transform:translateZ(40px)}
-.travessa .t,.portico .t{inset:0;background:linear-gradient(180deg,#464a52,#2a2d33)}
-.travessa .f,.portico .f{left:0;top:100%;width:100%;height:var(--viga);transform-origin:50% 0;transform:rotateX(-90deg);
-  background:linear-gradient(180deg,#373a41,#1c1e22)}
-/* pórtico: filete laranja aceso enquanto imprime */
-.portico .f{box-shadow:inset 0 2px 0 rgba(242,101,34,.75)}
-.portico .t{box-shadow:inset 0 -1px 0 rgba(242,101,34,.5)}
+/* ── impressora: modelo minimalista da Bambu Lab A1 — base clara, pórtico em U de alumínio, viga X que sobe a cada camada,
+   cabeçote branco e visor quadrado à direita. Medidas em unidades da cena (u); --esc ajusta tudo ao tamanho do palco ── */
+.cena{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;
+  transform:scale3d(var(--esc,.8),var(--esc,.8),var(--esc,.8)) translate(-58px,-6px)}
+.cx,.maquina,.portico,.cabecote,.mesa,.visor{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+.cx>i,.fenda,.visor>i,.visor-face{position:absolute;left:0;top:0;display:block;transform-origin:0 0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* base em plástico cinza-claro, trilhos do eixo Y e alça frontal */
+.chassi>.t{border-radius:7px;background:radial-gradient(70% 55% at 26% 14%,rgba(255,255,255,.5),transparent 70%),linear-gradient(165deg,#e1e3e4,#c6c9cc);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+.chassi>.f{background:linear-gradient(180deg,#d3d6d8,#b5b9bc 45%,#999da1)}
+.chassi>.l{background:linear-gradient(90deg,#74787c,#979b9f)}
+.fenda{background:#43464b;border-radius:3px;box-shadow:inset 0 1px 2px rgba(0,0,0,.55)}
+.fenda.alca{background:none;border-radius:9px;box-shadow:inset 0 0 0 1.5px rgba(110,115,120,.5)}
+/* perfis de alumínio */
+.coluna>.f{background:linear-gradient(90deg,#8b8f94,#d2d5d8 28%,#b3b7bb 64%,#80848a)}
+.coluna>.l{background:linear-gradient(90deg,#64686d,#80848a)}
+.travessa>.t{background:linear-gradient(180deg,#dcdfe1,#bcc0c3)}
+.travessa>.f{background:linear-gradient(180deg,#c9ccd0,#979ba0)}
+/* plástico grafite: pés das colunas, cantos da travessa e ponta da viga */
+.grafite>.t{background:#5d6065}.grafite>.f{background:linear-gradient(180deg,#4e5156,#383b3f)}.grafite>.l{background:#303337}
+/* viga do eixo X: alumínio com trilho linear e parafusos */
+.viga>.t{background:linear-gradient(180deg,#d3d6d9,#adb1b5)}
+.viga>.f{background:radial-gradient(circle,#505459 1.2px,transparent 1.7px) 6px 54%/24px 100% repeat-x,
+  linear-gradient(180deg,#d9dcdf 0 20%,#8f9398 20% 28%,#c6c9cd 28% 80%,#868a8f 80%)}
+.viga>.l{background:#6d7176}
+/* plástico branco: carenagem do motor X e cabeçote */
+.branco>.t{background:linear-gradient(180deg,#fbfbfa,#eaeae8)}
+.branco>.f{background:linear-gradient(180deg,#f5f5f3,#dadbd9)}
+.branco>.l{background:linear-gradient(90deg,#aeb0b2,#cdcfcf)}
+.motor>.f{display:flex;align-items:flex-end;padding:0 0 9px 10px}
+.selo{display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-weight:500;font-size:7px;line-height:1;letter-spacing:.22em;color:#80848a}
+.selo svg{width:7px;height:7px;fill:var(--acento)}
+/* frente do cabeçote: ventoinha redonda com o N da marca */
+.corpo>.f{display:flex;align-items:center;justify-content:center}
+.corpo>.f::before{content:"";width:62%;aspect-ratio:1;border-radius:50%;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath fill='%23F26522' d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") center/36% no-repeat,
+    radial-gradient(circle,#f1ece3 0 56%,#3b3e43 58% 66%,#e6e4df 68%);
+  box-shadow:0 1px 0 rgba(255,255,255,.9),inset 0 1px 2px rgba(0,0,0,.2)}
+.corpo>.l{display:flex;align-items:center;justify-content:center}
+.corpo>.l::before{content:"";width:34%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 40%,#f7f7f5,#c9cbcb);box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.hotend>.t{background:#4b4e53}.hotend>.f{background:linear-gradient(180deg,#46494e,#2b2d31)}.hotend>.l{background:#25272a}
+.bico>.t{background:#d29a4f}.bico>.f{background:linear-gradient(180deg,#d8a35c,#9c6629)}.bico>.l{background:#86561f}
+.tubo>.f{background:linear-gradient(90deg,#f6f6f4,#d4d5d3)}.tubo>.l{background:#b4b6b6}
+.cab-luz{position:absolute;left:-10px;top:1px;width:20px;height:20px;border-radius:50%;opacity:0;transform:translateZ(.5px);
+  background:radial-gradient(circle,#fff6ea 0,#ffb066 30%,rgba(242,101,34,.5) 52%,transparent 72%)}
+/* mesa: base aquecida clara, chapa PEI texturizada (bronze escuro, como a da foto) e aba de retirada */
+.cama>.f{background:linear-gradient(180deg,#b7bbbe,#989ca0)}.cama>.l{background:#85898d}
+.chapa>.t{border-radius:3px;border:1px solid rgba(255,255,255,.08);
+  /* sem box-shadow aqui: sombra que vaza do plano confunde a ordenação 3D e a chapa aparece por cima da peça */
+  background:radial-gradient(closest-side,transparent 72%,rgba(0,0,0,.28)),
+    linear-gradient(128deg,rgba(255,255,255,.08),transparent 38%,transparent 64%,rgba(255,255,255,.04)),
+    radial-gradient(circle,rgba(236,222,196,.2) .55px,transparent 1.05px) 0 0/4px 4px,
+    radial-gradient(circle,rgba(236,222,196,.12) .5px,transparent 1px) 2px 2px/4px 4px,
+    radial-gradient(circle,rgba(0,0,0,.32) .7px,transparent 1.2px) 1px 3px/6px 6px,
+    radial-gradient(120% 120% at 40% 35%,#5a554b,#3a3731)}
+.chapa>.f{background:linear-gradient(180deg,#6b665b,#2d2b27)}.chapa>.l{background:#24221f}
+.aba>.t{border-radius:0 0 4px 4px;background:linear-gradient(90deg,transparent 18%,#26282b 18% 82%,transparent 82%) 50% 46%/100% 26% no-repeat,#4b4e53}
+.aba>.f{background:#383b3f}.aba>.l{background:#2c2e32}
 
-/* display embutido na frente do chassi, como nas impressoras de verdade: moldura preta, tela branca e seletor */
-.tela{height:74%;aspect-ratio:1.9/1;display:flex;align-items:center;gap:7px;padding:3px 8px 3px 3px;border-radius:5px;
-  background:linear-gradient(180deg,#0c0d0f,#141518);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),0 1px 0 rgba(255,255,255,.08)}
-.tela-vidro{position:relative;flex:1;height:100%;min-width:0;overflow:hidden;border-radius:3px;padding:4px 5px;container-type:size;
+/* visor: tela quadrada branca à direita da frente, levemente inclinada para quem olha */
+.visor-face{left:-46px;top:-92px;width:92px;height:92px;padding:7px;border-radius:9px;
+  background:linear-gradient(160deg,#fbfbfa,#e5e6e4);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),inset 0 -2px 0 rgba(0,0,0,.07)}
+.visor>.vt{left:-46px;top:-98px;width:92px;height:6px;transform-origin:50% 100%;transform:rotateX(90deg);border-radius:3px;background:#d4d5d4}
+.visor>.vl{left:-52px;top:-92px;width:6px;height:92px;transform-origin:100% 50%;transform:rotateY(-90deg);border-radius:3px;background:#a9abad}
+.tela{position:relative;width:100%;height:100%;overflow:hidden;border-radius:4px;padding:10% 9%;container-type:size;
   display:flex;flex-direction:column;justify-content:space-between;
-  background:linear-gradient(165deg,rgba(255,255,255,.96),rgba(232,233,230,.9));box-shadow:0 0 12px rgba(255,255,255,.18);
+  background:linear-gradient(165deg,#fff,#eef0ee);box-shadow:inset 0 0 0 1px rgba(27,29,33,.13);
   font-family:'DM Mono',monospace;font-weight:500;line-height:1;letter-spacing:.06em;text-transform:uppercase;color:#1B1D21}
-.tela-vidro::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.55),transparent 40%)}
-.tela-l1{display:flex;justify-content:space-between;align-items:center;gap:3px;white-space:nowrap;font-size:6px;font-size:12cqh}
+.tela::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.6),transparent 42%)}
+.tela-l1{display:flex;align-items:center;white-space:nowrap;font-size:6px;font-size:9cqh}
 .tela-st{display:inline-flex;align-items:center;gap:.4em;color:#3a3d42}
 .tela-st::before{content:"";width:.7em;height:.7em;border-radius:50%;background:var(--acento);animation:hudpisca 1.1s ease-in-out infinite}
-.tela-tc{color:var(--acento-esc);letter-spacing:0}
-.tela-pc{font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;font-size:34cqh;letter-spacing:-.03em;color:#1B1D21;font-variant-numeric:tabular-nums}
-.tela-bar{height:3px;height:6cqh;border-radius:2px;background:rgba(27,29,33,.13);overflow:hidden}
+.tela-pc{font-family:'Outfit',sans-serif;font-weight:700;font-size:24px;font-size:36cqh;letter-spacing:-.03em;color:#1B1D21;font-variant-numeric:tabular-nums}
+.tela-bar{height:4px;height:6cqh;border-radius:2px;background:rgba(27,29,33,.13);overflow:hidden}
 .tela-bar i{display:block;height:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--acento-esc),var(--acento))}
-.tela-msg{font-size:5px;font-size:10cqh;color:#6E727A;white-space:nowrap}
-.tela-knob{height:64%;aspect-ratio:1/1;flex-shrink:0;border-radius:50%;position:relative;
-  background:radial-gradient(circle at 38% 32%,#5a5e66,#1c1d21 62%);
-  box-shadow:0 0 0 1.5px #0e0f11,0 0 0 2.5px rgba(255,255,255,.1),inset 0 1px 1px rgba(255,255,255,.25)}
-.tela-knob::after{content:"";position:absolute;left:46%;top:12%;width:8%;height:24%;border-radius:2px;background:rgba(255,255,255,.35)}
+.tela-msg{font-size:5px;font-size:8.5cqh;color:#6E727A;white-space:nowrap}
 .tela.ok .tela-st::before{background:#1EB858;animation:none}
 .tela.ok .tela-bar i{background:#1EB858}
 .tela.ok .tela-pc{color:#14894a}
@@ -226,28 +251,16 @@ p{text-wrap:pretty}
 .iso{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(50deg) rotateZ(-15deg);
   will-change:transform;animation:sway 9s ease-in-out infinite alternate}
 @keyframes sway{from{transform:rotateX(50deg) rotateZ(-21deg)}to{transform:rotateX(50deg) rotateZ(-7deg)}}
-.plate{position:absolute;left:50%;top:50%;width:74%;height:74%;transform:translate(-50%,-50%);
-  /* chapa PEI texturizada: microgranulado em duas malhas desencontradas + reflexo especular */
-  background:
-    linear-gradient(128deg,rgba(255,255,255,.07),transparent 38%,transparent 64%,rgba(255,255,255,.035)),
-    radial-gradient(circle,rgba(214,218,224,.22) .55px,transparent 1.05px) 0 0/4px 4px,
-    radial-gradient(circle,rgba(214,218,224,.13) .5px,transparent 1px) 2px 2px/4px 4px,
-    radial-gradient(circle,rgba(0,0,0,.35) .7px,transparent 1.2px) 1px 3px/6px 6px,
-    radial-gradient(120% 120% at 50% 50%,#24272c,#101114);
-  border:1px solid rgba(154,159,166,.30);border-radius:8px;
-  box-shadow:0 30px 50px -20px rgba(0,0,0,.8),0 0 80px -18px rgba(242,101,34,.32),inset 0 0 46px rgba(0,0,0,.55)}
-.plate::after{content:"";position:absolute;inset:7%;border:1px dashed rgba(154,159,166,.14);border-radius:4px}
 .pobj .ao svg,.pobj .cam svg{overflow:visible}
 .pobj .ao{position:absolute;inset:0;opacity:0}
 .pobj .ao path{fill:none;stroke:#000;stroke-linejoin:round}
 .pobj .cam .rim{fill:none;stroke:#fff4e6;stroke-width:.9;stroke-linecap:round;stroke-dasharray:12 88;opacity:0;
   filter:drop-shadow(0 0 1.5px rgba(255,190,130,.9))}
-.pshadow{position:absolute;left:50%;top:50%;width:40%;height:40%;transform:translate(-50%,-50%);
+/* a peça nasce sobre a chapa e anda junto com a mesa: chapa em z = 12u, peça em 14u (a folga evita erro na ordenação 3D) */
+.pshadow{position:absolute;left:-95px;top:-95px;width:190px;height:190px;transform:translateZ(12.8px);
   border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.6),transparent 70%);filter:blur(8px)}
-.print{position:absolute;inset:0;transform-style:preserve-3d;transform:scale3d(1,1,1)}
-.pobj{position:absolute;left:50%;top:50%;width:260px;height:260px;transform-style:preserve-3d;
-  will-change:transform;transform:translate(-50%,-50%);animation:floatz 7s ease-in-out infinite}
-@keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
+.print{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(14px)}
+.pobj{position:absolute;left:50%;top:50%;width:260px;height:260px;transform-style:preserve-3d;transform:translate(-50%,-50%)}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
 .pobj .wall{position:absolute;transform-origin:0 0;opacity:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
@@ -265,19 +278,12 @@ p{text-wrap:pretty}
 .pobj .sheen,.pobj .lit{position:absolute;inset:0;pointer-events:none;opacity:0;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") 0 0/100% 100%;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") 0 0/100% 100%}
-/* cabeçote: linha de deposição + bico com ponta incandescente em zigue-zague */
+/* linha de deposição: filamento quente que acompanha o bico em cada camada */
 .pobj .head{position:absolute;left:0;top:0;width:0;height:100%;transform-style:preserve-3d;pointer-events:none;opacity:0}
 .pobj .head i{position:absolute;display:block}
 .pobj .head .edge{left:-1px;top:4%;width:2px;height:92%;opacity:.5;
   background:linear-gradient(180deg,transparent,rgba(255,176,102,.95) 30%,rgba(255,176,102,.95) 70%,transparent);
   box-shadow:0 0 10px 2px rgba(242,101,34,.55)}
-.pobj .head .tip{left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;transform-style:preserve-3d;
-  background:radial-gradient(circle,#fff6ea 0,#ffb066 32%,rgba(242,101,34,.55) 52%,transparent 72%);
-  animation:zig .34s ease-in-out infinite alternate}
-.pobj .head .noz{left:2px;top:7px;width:10px;height:58px;transform-origin:0 0;transform:rotateX(90deg);border-radius:2px;
-  background:linear-gradient(180deg,#ff8a3d 0,#e9eaec 10%,#9ea3ab 30%,#4a4e55 60%,#24272b 100%);
-  box-shadow:0 0 10px rgba(242,101,34,.45)}
-@keyframes zig{from{transform:translateY(26px)}to{transform:translateY(234px)}}
 
 .descer{margin:22px auto 0;color:var(--cinza-3);font-size:.7rem;font-weight:500;letter-spacing:.16em;
   text-transform:uppercase;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:12px;width:fit-content;
@@ -421,8 +427,7 @@ p{text-wrap:pretty}
   .hero-txt h1{max-width:20ch}
   .hero-txt .cta-wrap,.beneficios{justify-content:center}
   .hero-grid{gap:0}
-  .stage{max-width:340px;margin:-22px auto -46px}
-  .print{transform:scale3d(.72,.72,.72)}
+  .stage{max-width:380px;margin:14px auto 6px}
   .glow{width:54%;height:38%}
   .descer{display:none}
 }
@@ -446,7 +451,6 @@ p{text-wrap:pretty}
 @media(max-width:640px),(hover:none){
   .abre::before{display:none}
   .iso{animation:none;transform:rotateX(50deg) rotateZ(-14deg)}
-  .pobj{animation:none}
   .topbar.on,.tb-drop{backdrop-filter:none;-webkit-backdrop-filter:none}
   .topbar.on{background:rgba(27,29,33,.97)}
   .tb-drop{background:#16181b}
@@ -465,13 +469,8 @@ p{text-wrap:pretty}
   .hero-txt h1{font-size:1.72rem;line-height:1.12;max-width:17ch}
   .hero-txt .lead{margin-top:14px;max-width:30ch;font-size:1.02rem;line-height:1.55;color:var(--cinza)}
   .stage{margin:34px auto 18px}
-  /* chassi um pouco mais alto no celular para o display caber legível */
-  .base-frente{height:20%;padding:0 5%}.base-lado{width:20%;left:-20%}
-  .maquina{--viga:7px}
-  .marca-frente{font-size:6.5px;gap:4px;letter-spacing:.32em}.marca-frente svg{width:7px;height:7px}
-  .tela{height:76%;aspect-ratio:2/1;gap:5px;padding:2px 5px 2px 2px}
-  .tela-vidro{padding:3px 4px}
-  .tela-l1{font-size:16cqh}.tela-pc{font-size:42cqh}.tela-msg,.tela-tc{display:none}.tela-bar{height:8cqh}
+  /* visor menor no celular: só status, porcentagem e barra */
+  .tela{justify-content:space-evenly}.tela-l1{font-size:11cqh;letter-spacing:.02em}.tela-pc{font-size:46cqh}.tela-msg{display:none}.tela-bar{height:8cqh}
 
   /* toque: feedback tátil no lugar do hover que "gruda" no touch */
   .zap:hover{transform:none}
@@ -574,31 +573,28 @@ p{text-wrap:pretty}
           <div class="stage">
             <div class="glow"></div>
             <div class="iso">
-              <div class="maquina" id="maquina" aria-hidden="true">
-                <div class="base">
-                  <div class="base-frente">
-                    <span class="marca-frente"><svg viewBox="0 0 96 96"><path d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/></svg>NYVOS</span>
-                    <div class="tela" id="tela">
-                      <div class="tela-vidro">
-                        <div class="tela-l1"><span class="tela-st" id="telaSt">Peça pronta</span><span class="tela-tc">215°</span></div>
+              <div class="cena" id="cena">
+                <!-- impressora (montada pelo script): base, pórtico, viga X com cabeçote e o visor quadrado -->
+                <div class="maquina" id="maquina" aria-hidden="true">
+                  <div class="portico" id="portico"><div class="cabecote" id="cabecote"><i class="cab-luz" id="cabLuz"></i></div></div>
+                  <div class="visor" id="visor">
+                    <div class="visor-face">
+                      <div class="tela" id="tela">
+                        <div class="tela-l1"><span class="tela-st" id="telaSt">Peça pronta</span></div>
                         <span class="tela-pc" id="telaPc">100%</span>
                         <div class="tela-bar"><i id="telaBar"></i></div>
                         <span class="tela-msg" id="telaMsg">Retire a peça</span>
                       </div>
-                      <i class="tela-knob"></i>
                     </div>
+                    <i class="vt"></i><i class="vl"></i>
                   </div>
-                  <div class="base-lado"></div>
                 </div>
-                <div class="coluna c-esq"><i class="f"></i><i class="l"></i></div>
-                <div class="coluna c-dir"><i class="f"></i><i class="l"></i></div>
-                <div class="portico" id="portico"><i class="t"></i><i class="f"></i></div>
-                <div class="travessa"><i class="t"></i><i class="f"></i></div>
-              </div>
-              <div class="plate"></div>
-              <div class="pshadow"></div>
-              <div class="print">
-                <div class="pobj" id="pobj"></div>
+                <div class="mesa" id="mesa">
+                  <div class="pshadow"></div>
+                  <div class="print">
+                    <div class="pobj" id="pobj"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -753,11 +749,81 @@ set("tbMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`); set("t
   const STEP = mob ? 7 : 5.3;
   const W = 260, K = W / 96, HT = (N - 1) * STEP;
   const T = 11, PE = 52;             // ciclo de 11s: impressão até 52%, depois peça pronta em destaque
+  const FIM = 93, SOME = 96.5;       // a peça some entre 93% e 96,5%; só depois a mesa volta e a viga desce
   const anim = name => `${name} ${T}s linear .5s infinite both`;
   host.style.setProperty("--h", 22);
   let css = "";
   const $ = id => document.getElementById(id);
   const tela = $("tela"), telaSt = $("telaSt"), telaPc = $("telaPc"), telaBar = $("telaBar"), telaMsg = $("telaMsg");
+
+  // impressora (Bambu Lab A1 minimalista), em unidades da cena: x → direita, y → frente, z → altura; origem no centro do palco
+  const BZ = 14;                       // base da peça (= translateZ do .print), logo acima da chapa
+  const YN = 11;                       // linha do bico: a mesa fica centrada nela durante a impressão
+  const AVANCO = 100;                  // no fim, a mesa vem para a frente e apresenta a peça
+  const ZTOP = 262;                    // altura do pórtico em U
+  const PARK = -150;                   // cabeçote estaciona à esquerda quando termina
+  const maq = $("maquina"), pk = $("portico"), cab = $("cabecote"), mesa = $("mesa"), visor = $("visor");
+  // caixa com só as faces que a câmera enxerga (topo, frente e lado esquerdo); x,y,z = canto de trás, à esquerda, embaixo
+  function caixa(pai, cls, x, y, z, w, d, h, faces = "tfl"){
+    const b = document.createElement("div");
+    b.className = "cx " + cls;
+    b.style.transform = `translate3d(${x}px,${y}px,${z}px)`;
+    const face = (c, top, fw, fh, tf) => {
+      const f = document.createElement("i");
+      f.className = c;
+      Object.assign(f.style, { top: top + "px", width: fw + "px", height: fh + "px", transform: tf });
+      b.appendChild(f);
+      return f;
+    };
+    if (faces.includes("t")) face("t", 0, w, d, `translateZ(${h}px)`);
+    if (faces.includes("f")) face("f", d, w, h, `translateZ(${h}px) rotateX(-90deg)`);
+    if (faces.includes("l")) face("l", 0, h, d, "rotateY(-90deg)");
+    pai.insertBefore(b, pai.firstChild);
+    return b;
+  }
+  // base clara com trilhos do eixo Y e alça na frente
+  caixa(maq, "chassi", -204, -170, -34, 408, 480, 34);
+  [[-124, 186, 10, 96, ""], [114, 186, 10, 96, ""], [-46, 286, 92, 16, " alca"]].forEach(([x, y, w, h, c]) => {
+    const f = document.createElement("i");
+    f.className = "fenda" + c;
+    Object.assign(f.style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px", transform: "translateZ(.4px)" });
+    maq.insertBefore(f, maq.firstChild);
+  });
+  // pórtico em U: colunas de alumínio com pés grafite, travessa no topo com cantos grafite
+  [-200, 176].forEach(x => {
+    caixa(maq, "coluna", x, -51, 0, 24, 22, ZTOP, "fl");
+    caixa(maq, "grafite", x - 2, -53, 0, 28, 26, 18);
+    caixa(maq, "grafite", x - 4, -55, ZTOP - 8, 32, 30, 32);
+  });
+  caixa(maq, "travessa", -196, -52, ZTOP, 392, 24, 22, "tf");
+  // viga do eixo X (sobe a cada camada) com a carenagem branca do motor à direita
+  caixa(pk, "viga", -214, -29, 32, 404, 20, 18);
+  caixa(pk, "grafite", -222, -31, 30, 10, 24, 22);
+  const motor = caixa(pk, "branco motor", 188, -56, 22, 74, 62, 50);
+  motor.querySelector(".f").innerHTML = '<span class="selo"><svg viewBox="0 0 96 96"><path d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/></svg>NYVOS</span>';
+  // cabeçote: corpo branco com ventoinha, hotend grafite, bico de latão e tubo de filamento
+  caixa(cab, "tubo", -2, 8, 72, 4, 4, 40, "fl");
+  caixa(cab, "branco corpo", -30, -9, 18, 60, 38, 54);
+  caixa(cab, "hotend", -22, -4, 6, 44, 28, 12);
+  caixa(cab, "bico", -4, 7, 0, 8, 8, 6);
+  // mesa: base aquecida, chapa PEI e aba de retirada na frente
+  caixa(mesa, "aba", 56, 156, 9, 94, 14, 4);
+  caixa(mesa, "chapa", -156, -156, 8, 312, 312, 4);
+  caixa(mesa, "cama", -150, -150, 0, 300, 300, 8, "fl");
+  // visor: quadrado branco na frente, à direita, inclinado para trás e virado para quem olha
+  visor.style.transform = "translate3d(214px,270px,4px) rotateZ(10deg) rotateX(-62deg)";
+  caixa(maq, "grafite", 196, 262, -10, 34, 10, 14);
+  // escala: o modelo inteiro cabe no palco em qualquer largura
+  const stage = document.querySelector(".stage"), cena = $("cena");
+  const ajusta = () => cena.style.setProperty("--esc", (stage.clientWidth / 600).toFixed(3));
+  ajusta();
+  if ("ResizeObserver" in window) new ResizeObserver(ajusta).observe(stage);
+  const yA = `translate3d(0,${YN}px,0)`, yB = `translate3d(0,${YN + AVANCO}px,0)`;
+  const zt = i => (BZ + i * STEP + 1).toFixed(1) + "px";     // altura do bico na camada i
+  const zPark = (BZ + HT + 23).toFixed(1) + "px";
+  mesa.style.transform = yA;
+  pk.style.transform = `translateZ(${zt(0)})`;
+  cab.style.transform = `translateX(${-W / 2}px)`;
 
   // 0. sombra de contato no formato do N: três contornos esmaecendo = oclusão suave, sem filtro de blur
   const ao = document.createElement("div");
@@ -781,7 +847,7 @@ set("tbMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`); set("t
       const hid = i % 2 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)";
       // corte aplicado no <svg> (2D), nunca no plano 3D — o Safari renderiza clip-path em 3D de forma instável
       // camadas internas somem assim que as paredes ficam opacas: nada semitransparente sobreposto
-      const end = top ? `${en}%,95%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}`
+      const end = top ? `${en}%,${FIM}%{opacity:1;clip-path:inset(0 0 0 0)}${SOME}%,100%{opacity:0;clip-path:inset(0 0 0 0)}`
                       : `${en}%,${PE + 5.5}%{opacity:1;clip-path:inset(0 0 0 0)}${PE + 5.7}%,100%{opacity:0;clip-path:inset(0 0 0 0)}`;
       css += `@keyframes ly${i}{0%{opacity:0;clip-path:${hid}}${i ? `${s}%{opacity:1;clip-path:${hid}}` : ""}${end}}`;
       // filamento recém-depositado sai incandescente e esfria em ~0,3s
@@ -823,8 +889,13 @@ set("tbMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`); set("t
   spot.style.transform = "translateZ(.4px)";
   host.prepend(spot);
   host.appendChild(lit);
-  if (reduce){ ao.style.opacity = lit.style.opacity = spot.style.opacity = 1; tela.classList.add("ok"); telaBar.style.transform = "scaleX(1)"; return; }
+  if (reduce){
+    ao.style.opacity = lit.style.opacity = spot.style.opacity = 1; tela.classList.add("ok"); telaBar.style.transform = "scaleX(1)";
+    mesa.style.transform = yB; pk.style.transform = `translateZ(${zPark})`; cab.style.transform = `translateX(${PARK}px)`;
+    return;
+  }
   ao.style.animation = anim("ao");
+  document.querySelector(".pshadow").style.animation = anim("ao");   // sombra só existe enquanto há peça na chapa
   lit.style.animation = spot.style.animation = anim("luzes");
   telaBar.style.animation = anim("barra");          // barra animada pelo navegador: lisa, sem saltos
   document.querySelector(".glow").style.animation = anim("brilho");
@@ -846,50 +917,51 @@ set("tbMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`); set("t
     host.appendChild(f);
   });
 
-  // 4. cabeçote: percorre cada camada, sobe de camada, e no fim se afasta
+  // 4. cabeçote corre pela viga camada a camada; a linha de filamento quente vai junto, sobre a peça
   const hd = document.createElement("div");
   hd.className = "head";
-  hd.innerHTML = '<i class="edge"></i><i class="tip"><i class="noz"></i></i>';
-  let hk = "0%{opacity:0;transform:translate3d(0,0,1px)}1.5%{opacity:1}", endX = 0;
+  hd.innerHTML = '<i class="edge"></i>';
+  let hk = "0%{opacity:0;transform:translate3d(0,0,1px)}1.5%{opacity:1}", ck = `0%{transform:translateX(${-W / 2}px)}`;
+  let pkf = `0%{transform:translateZ(${zt(0)})}`, endX = 0;
   for (let i = 0; i < N; i++){
     const z = i * STEP + 1, a = i % 2 ? W : 0, b = i % 2 ? 0 : W;
-    if (i) hk += `${(PE * i / N).toFixed(2)}%{transform:translate3d(${a}px,0,${z}px)}`;
-    hk += `${(PE * (i + 1) / N - .05).toFixed(2)}%{transform:translate3d(${b}px,0,${z}px)}`;
+    const t0 = PE * i / N, t1 = (PE * (i + 1) / N - .05).toFixed(2);
+    if (i){
+      hk += `${t0.toFixed(2)}%{transform:translate3d(${a}px,0,${z}px)}`;
+      ck += `${t0.toFixed(2)}%{transform:translateX(${a - W / 2}px)}`;
+      // viga sobe uma camada junto com o bico
+      pkf += `${(t0 - .05).toFixed(2)}%{transform:translateZ(${zt(i - 1)})}${t0.toFixed(2)}%{transform:translateZ(${zt(i)})}`;
+    }
+    hk += `${t1}%{transform:translate3d(${b}px,0,${z}px)}`;
+    ck += `${t1}%{transform:translateX(${b - W / 2}px)}`;
     endX = b;
   }
-  hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 6}%{opacity:0;transform:translate3d(${endX}px,0,${HT + 90}px)}100%{opacity:0;transform:translate3d(0,0,1px)}`;
-  // linha do tempo (% de 11s): impressão 0→52 · fusão →57 · inspeção 59→68 · estúdio 68→95 · reinício
-  css += `@keyframes head{${hk}}`;
-  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 5}%,95%{opacity:1}100%{opacity:0}}`;
-  css += `@keyframes ao{0%{opacity:0}${(PE / N).toFixed(2)}%,95%{opacity:1}100%{opacity:0}}`;
-  css += `@keyframes barra{0%{transform:scaleX(0)}${PE}%,95%{transform:scaleX(1)}95.2%,100%{transform:scaleX(0)}}`;
+  const suave = "animation-timing-function:cubic-bezier(.45,0,.2,1)";
+  hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 2}%,100%{opacity:0;transform:translate3d(${endX}px,0,${HT + 1}px)}`;
+  // fim: viga sobe um pouco, cabeçote estaciona à esquerda e a mesa avança para apresentar a peça
+  ck += `${PE + 2}%{transform:translateX(${endX - W / 2}px);${suave}}${PE + 9}%,${SOME}%{transform:translateX(${PARK}px);${suave}}100%{transform:translateX(${-W / 2}px)}`;
+  pkf += `${PE}%{transform:translateZ(${zt(N - 1)});${suave}}${PE + 3}%,${SOME}%{transform:translateZ(${zPark});${suave}}100%{transform:translateZ(${zt(0)})}`;
+  // linha do tempo (% de 11s): impressão 0→52 · mesa avança 55→63 · fusão →57 · inspeção 59→68 · estúdio 68→93 · peça some →96,5 · máquina volta
+  css += `@keyframes head{${hk}}@keyframes cabx{${ck}}@keyframes portico{${pkf}}`;
+  css += `@keyframes mesa{0%,${PE + 3}%{transform:${yA};${suave}}${PE + 11}%,${SOME}%{transform:${yB};${suave}}100%{transform:${yA}}}`;
+  css += `@keyframes bicoluz{0%{opacity:0}1.5%,${PE}%{opacity:1}${PE + 2}%,100%{opacity:0}}`;
+  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 5}%,${FIM}%{opacity:1}${SOME}%,100%{opacity:0}}`;
+  css += `@keyframes ao{0%{opacity:0}${(PE / N).toFixed(2)}%,${FIM}%{opacity:1}${SOME}%,100%{opacity:0}}`;
+  css += `@keyframes barra{0%{transform:scaleX(0)}${PE}%,${FIM}%{transform:scaleX(1)}${FIM + .2}%,100%{transform:scaleX(0)}}`;
   css += `@keyframes rim{0%,${PE + 7}%{opacity:0;stroke-dashoffset:0}${PE + 8}%{opacity:1}${PE + 16}%{opacity:1;stroke-dashoffset:-100}${PE + 17}%,100%{opacity:0;stroke-dashoffset:-100}}`;
-  css += `@keyframes luzes{0%,${PE + 16}%{opacity:0}${PE + 20}%,95%{opacity:1}100%{opacity:0}}`;
+  css += `@keyframes luzes{0%,${PE + 16}%{opacity:0}${PE + 20}%,${FIM}%{opacity:1}${SOME}%,100%{opacity:0}}`;
   css += `@keyframes sheen{0%,${PE + 19}%{opacity:0;background-position:120% 0}${PE + 20}%{opacity:1}${PE + 28}%{opacity:1;background-position:-20% 0}${PE + 29}%,100%{opacity:0;background-position:-20% 0}}`;
   css += `@keyframes brilho{0%,${PE}%{opacity:.7;transform:translate(-50%,-50%) scale(1)}${PE + 16}%{opacity:.9;transform:translate(-50%,-50%) scale(1.06)}${PE + 21}%,92%{opacity:1;transform:translate(-50%,-50%) scale(1.22)}100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}}`;
   hd.style.animation = anim("head");
   host.appendChild(hd);
-
-  // 5. pórtico da impressora: sobe uma camada por vez junto com o bico e estaciona no topo quando termina
-  const pk = document.getElementById("portico");
-  if (pk){
-    const sc = new DOMMatrix(getComputedStyle(document.querySelector(".print")).transform).m11 || 1;
-    const zp = i => ((i * STEP + 30) * sc).toFixed(1) + "px";
-    const park = ((HT + 40) * sc).toFixed(1) + "px";
-    document.getElementById("maquina").style.setProperty("--alt", ((HT + 60) * sc).toFixed(1) + "px");
-    let pkf = `0%{transform:translateZ(${zp(0)})}`;
-    for (let i = 1; i < N; i++){
-      const t = PE * i / N;
-      pkf += `${(t - .25).toFixed(2)}%{transform:translateZ(${zp(i - 1)})}${t.toFixed(2)}%{transform:translateZ(${zp(i)})}`;
-    }
-    pkf += `${PE}%{transform:translateZ(${zp(N - 1)})}${PE + 6}%,95%{transform:translateZ(${park})}100%{transform:translateZ(${zp(0)})}`;
-    css += `@keyframes portico{${pkf}}`;
-    pk.style.animation = anim("portico");
-  }
+  cab.style.animation = anim("cabx");
+  pk.style.animation = anim("portico");
+  mesa.style.animation = anim("mesa");
+  $("cabLuz").style.animation = anim("bicoluz");
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   // cor: no desktop oscila na família laranja durante a impressão; no celular fica fixa no laranja da marca (sem repintar a peça)
-  const ref = host.querySelector(".cam svg"), stage = document.querySelector(".stage");
+  const ref = host.querySelector(".cam svg");
   const t0 = performance.now() + 500, fps = mob ? 100 : 40;
   let rafId = null, last = 0, lastLabel = "";
   function tick(now){
@@ -907,7 +979,7 @@ set("tbMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`); set("t
       let st, msg, ok = false, prog = 1;
       if (pos < PE){ prog = pos / PE; st = "Imprimindo"; msg = `Camada ${String(Math.min(N, Math.floor(prog * N) + 1)).padStart(2, "0")}/${N}`; }
       else if (pos < PE + 16){ st = "Inspeção"; msg = "Acabamento"; }
-      else if (pos < 95){ st = "Peça pronta"; msg = "Retire a peça"; ok = true; }
+      else if (pos < FIM){ st = "Peça pronta"; msg = "Retire a peça"; ok = true; }
       else { st = "Preparando"; msg = "Nivelando mesa"; prog = 0; }
       const pc = Math.round(prog * 100) + "%";
       if (st !== lastLabel){ telaSt.textContent = st; lastLabel = st; tela.classList.toggle("ok", ok); }
