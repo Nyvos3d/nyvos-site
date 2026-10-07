@@ -48,7 +48,14 @@ button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
 :focus-visible{outline:2px solid var(--vermelho-luz);outline-offset:3px;border-radius:6px}
 .col{max-width:var(--col);margin:0 auto;padding:0 24px}
 
-.refletor{position:fixed;inset:0;z-index:0;pointer-events:none;
+.refletor::before,.refletor::after{content:"";position:absolute;width:80vmax;height:80vmax;border-radius:50%;will-change:transform}
+.refletor::before{top:-34vmax;right:-30vmax;background:radial-gradient(closest-side,rgba(196,201,209,.085),transparent 72%);
+  animation:deriva1 26s ease-in-out infinite alternate}
+.refletor::after{bottom:-40vmax;left:-34vmax;background:radial-gradient(closest-side,rgba(170,176,186,.07),transparent 72%);
+  animation:deriva2 34s ease-in-out infinite alternate}
+@keyframes deriva1{to{transform:translate3d(-22vmax,26vmax,0) scale(1.18)}}
+@keyframes deriva2{to{transform:translate3d(24vmax,-22vmax,0) scale(1.12)}}
+.refletor{overflow:hidden;position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(1000px 580px at 72% -4%,rgba(154,159,166,.10),transparent 60%),
    radial-gradient(680px 620px at 12% 30%,rgba(154,159,166,.07),transparent 62%),
    radial-gradient(560px 560px at 90% 92%,rgba(243,242,238,.03),transparent 60%)}
@@ -141,10 +148,13 @@ p{text-wrap:pretty}
   will-change:transform;animation:sway 9s ease-in-out infinite alternate}
 @keyframes sway{from{transform:rotateX(50deg) rotateZ(-21deg)}to{transform:rotateX(50deg) rotateZ(-7deg)}}
 .plate{position:absolute;left:50%;top:50%;width:74%;height:74%;transform:translate(-50%,-50%);
+  /* chapa PEI texturizada: microgranulado em duas malhas desencontradas + reflexo especular */
   background:
-    repeating-linear-gradient(0deg,rgba(154,159,166,.16) 0 1px,transparent 1px 28px),
-    repeating-linear-gradient(90deg,rgba(154,159,166,.16) 0 1px,transparent 1px 28px),
-    radial-gradient(120% 120% at 50% 50%,#1b1e22,#0c0d10);
+    linear-gradient(128deg,rgba(255,255,255,.07),transparent 38%,transparent 64%,rgba(255,255,255,.035)),
+    radial-gradient(circle,rgba(214,218,224,.22) .55px,transparent 1.05px) 0 0/4px 4px,
+    radial-gradient(circle,rgba(214,218,224,.13) .5px,transparent 1px) 2px 2px/4px 4px,
+    radial-gradient(circle,rgba(0,0,0,.35) .7px,transparent 1.2px) 1px 3px/6px 6px,
+    radial-gradient(120% 120% at 50% 50%,#24272c,#101114);
   border:1px solid rgba(154,159,166,.30);border-radius:8px;
   box-shadow:0 30px 50px -20px rgba(0,0,0,.8),0 0 80px -18px rgba(224,50,43,.32),inset 0 0 46px rgba(0,0,0,.55)}
 .plate::after{content:"";position:absolute;inset:7%;border:1px dashed rgba(154,159,166,.14);border-radius:4px}
@@ -156,7 +166,7 @@ p{text-wrap:pretty}
 @keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
-.pobj .wall{position:absolute;transform-origin:0 0;opacity:0}
+.pobj .wall{position:absolute;transform-origin:0 0;opacity:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .pobj .cam .hot{fill:#ffb36b;opacity:0}
 .pobj .sheen{position:absolute;inset:0;pointer-events:none;opacity:0;
   background:linear-gradient(112deg,transparent 38%,rgba(255,236,214,.6) 50%,transparent 62%) 120% 0/250% 100% no-repeat;
@@ -249,6 +259,9 @@ p{text-wrap:pretty}
 .contato .seta{margin-left:auto;flex-shrink:0;color:var(--cinza-3);transition:transform .4s var(--vai),color .4s}
 .contato:hover .seta{transform:translate(4px,-4px);color:var(--vermelho-luz)}
 .contato .seta svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.garantias{display:none;justify-content:center;flex-wrap:wrap;gap:8px 18px;margin-top:14px}
+.garantias span{display:inline-flex;align-items:center;gap:7px;font-size:.8rem;font-weight:500;color:var(--mineral-2)}
+.garantias svg{width:14px;height:14px;stroke:var(--laranja);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .cg-ou{display:none;align-items:center;gap:11px;margin:14px 0 8px}
 .cg-ou::before,.cg-ou::after{content:"";flex:1;height:1px;background:rgba(154,159,166,.16)}
 .cg-ou span{font-family:'DM Mono',monospace;font-size:.66rem;font-weight:500;color:var(--cinza-3);letter-spacing:.12em;text-transform:uppercase}
@@ -358,6 +371,7 @@ p{text-wrap:pretty}
   #contato .cab .et::before{width:18px;height:1.5px}
   #contato .cab h2{font-size:1.6rem;line-height:1.12;max-width:16ch}
   .zap-mob{min-height:52px;letter-spacing:.02em}
+  .garantias{display:flex}
   .cg-ou{margin:18px 0 10px}
   .mail-inline{color:var(--mineral-2)}
 
@@ -395,7 +409,7 @@ p{text-wrap:pretty}
             <span class="logo-tag">Impressão 3D</span>
           </a>
           <h1>Criado do zero, <b>feito só pra você.</b></h1>
-          <p class="lead">Você traz a ideia, a gente desenha, imprime em 3D e entrega.</p>
+          <p class="lead">Você traz a ideia. A gente modela, imprime em 3D e entrega pronta.</p>
           <div class="cta-wrap">
             <a class="zap" id="zapHero" target="_blank" rel="noopener">
               <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
@@ -509,6 +523,10 @@ p{text-wrap:pretty}
         <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
         Clique aqui
       </a>
+      <div class="garantias">
+        <span><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Entrega em poucos dias</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>Acabamento revisado</span>
+      </div>
       <div class="cg-ou"><span>ou</span></div>
       <a class="mail-inline" id="cMailMob">
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -523,7 +541,7 @@ p{text-wrap:pretty}
     <div class="base">
       <div class="rt">
         <div class="redes-cta">
-          <span class="redes-titulo">Acompanhe o processo.</span>
+          <span class="redes-titulo">Veja as peças saindo da impressora.</span>
         </div>
         <div class="rodape-sociais">
           <a class="r-soc" id="rfInsta" target="_blank" rel="noopener" aria-label="Instagram">
@@ -602,12 +620,16 @@ set("ano","textContent",new Date().getFullYear());
     cam.innerHTML = `<svg viewBox="0 0 96 96"><path d="${P}"/>${reduce ? "" : `<path class="hot" d="${P}"/>`}</svg>`;
     cam.querySelector("path").style.fill = `hsl(var(--h),${top ? 84 : 66}%,${top ? 66 : Math.round(26 + e*40)}%)`;
     if (!reduce){
-      const s = (PE * i / N).toFixed(2), en = (PE * (i + 1) / N).toFixed(2), cool = (PE * (i + 1) / N + 5).toFixed(2);
+      const s = (PE * i / N).toFixed(2), en = (PE * (i + 1) / N).toFixed(2), cool = (PE * (i + 1) / N + 3).toFixed(2);
       const hid = i % 2 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)";
-      css += `@keyframes ly${i}{0%{opacity:0;clip-path:${hid}}${i ? `${s}%{opacity:1;clip-path:${hid}}` : ""}${en}%,94%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}}`;
-      // filamento recém-depositado sai incandescente e esfria em ~0,5s
-      css += `@keyframes hot${i}{0%,${en}%{opacity:.9}${cool}%,100%{opacity:0}}`;
-      cam.style.animation = anim("ly" + i);
+      // corte aplicado no <svg> (2D), nunca no plano 3D — o Safari renderiza clip-path em 3D de forma instável
+      // camadas internas somem assim que as paredes ficam opacas: nada semitransparente sobreposto
+      const end = top ? `${en}%,95%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}`
+                      : `${en}%,${PE + 7}%{opacity:1;clip-path:inset(0 0 0 0)}${PE + 7.2}%,100%{opacity:0;clip-path:inset(0 0 0 0)}`;
+      css += `@keyframes ly${i}{0%{opacity:0;clip-path:${hid}}${i ? `${s}%{opacity:1;clip-path:${hid}}` : ""}${end}}`;
+      // filamento recém-depositado sai incandescente e esfria em ~0,3s
+      css += `@keyframes hot${i}{0%,${en}%{opacity:.85}${cool}%,100%{opacity:0}}`;
+      cam.firstChild.style.animation = anim("ly" + i);
       cam.querySelector(".hot").style.animation = anim("hot" + i);
     }
     host.appendChild(cam);
@@ -619,12 +641,15 @@ set("ano","textContent",new Date().getFullYear());
   PTS.forEach(([x1, y1], j) => {
     const [x2, y2] = PTS[(j + 1) % PTS.length];
     const dx = Math.sign(x2 - x1), dy = Math.sign(y2 - y1), L = SHADE[`${dy},${-dx}`];
+    const len = (Math.abs(x2 - x1) + Math.abs(y2 - y1)) * K;
+    // face frontal apontando para fora: com backface oculta, paredes de costas não entram na ordenação 3D
+    const flip = dx ? dx < 0 : dy < 0;
     const w = document.createElement("div");
     w.className = "wall";
     Object.assign(w.style, {
       left: Math.min(x1, x2) * K + "px", top: Math.min(y1, y2) * K + "px",
-      width: (Math.abs(x2 - x1) + Math.abs(y2 - y1)) * K + "px", height: HT + "px",
-      transform: dx ? "rotateX(90deg)" : "rotateZ(90deg) rotateX(90deg)",
+      width: len + "px", height: HT + "px",
+      transform: (dx ? "rotateX(90deg)" : "rotateZ(90deg) rotateX(90deg)") + (flip ? ` translateX(${len}px) rotateY(180deg)` : ""),
       background: `repeating-linear-gradient(180deg,transparent 0 ${STEP - 1}px,rgba(0,0,0,.16) ${STEP - 1}px ${STEP}px),` +
                   `linear-gradient(180deg,hsl(var(--h),70%,${L - 14}%),hsl(var(--h),74%,${L + 6}%))`
     });
@@ -653,14 +678,14 @@ set("ano","textContent",new Date().getFullYear());
   }
   hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 8}%{opacity:0;transform:translate3d(${endX}px,0,${HT + 90}px)}100%{opacity:0;transform:translate3d(0,0,1px)}`;
   css += `@keyframes head{${hk}}`;
-  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 8}%,94%{opacity:1}100%{opacity:0}}`;
+  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 6}%,95%{opacity:1}100%{opacity:0}}`;
   css += `@keyframes sheen{0%,${PE + 9}%{opacity:0;background-position:120% 0}${PE + 11}%{opacity:1}${PE + 22}%{opacity:1;background-position:-20% 0}${PE + 24}%,100%{opacity:0;background-position:-20% 0}}`;
   hd.style.animation = anim("head");
   host.appendChild(hd);
   const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   // cor: oscila na faixa quente durante a impressão e assenta no laranja da marca quando a peça fica pronta
-  const ref = host.querySelector(".cam"), stage = document.querySelector(".stage");
+  const ref = host.querySelector(".cam svg"), stage = document.querySelector(".stage");
   const t0 = performance.now() + 500, fps = mob ? 80 : 40;
   let rafId = null, last = 0;
   function tick(now){
