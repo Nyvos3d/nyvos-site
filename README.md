@@ -10,6 +10,9 @@ Página única, autossuficiente, com foco em contato.
   - `*.svg` — logo, símbolo e wordmark (vetor, escala infinita)
   - `png/` — versões rasterizadas (256–4096 px)
   - `social/` — artes para redes (post, header, faixa)
+    - `instagram/perfil/` — foto de perfil (4 variações, 1080 e 2048 px + SVG)
+    - `instagram/destaques/` — 10 capas de destaques 1080×1920 (+ SVG)
+    - `instagram/fonte/` — gerador (`node fonte/render.js <saida>`, requer Playwright)
   - `favicon/` — ícones 16–512 px + `.ico`
 
 ## Editar contatos
