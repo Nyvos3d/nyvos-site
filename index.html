@@ -156,11 +156,25 @@ p{text-wrap:pretty}
 @keyframes floatz{0%,100%{transform:translate(-50%,-50%) translateZ(0)}50%{transform:translate(-50%,-50%) translateZ(10px)}}
 .pobj .cam{position:absolute;inset:0;backface-visibility:hidden}
 .pobj .cam svg{width:100%;height:100%;display:block}
-.pobj .cam svg path{transition:fill .32s ease}
-.phead{position:absolute;left:50%;top:50%;width:276px;height:276px;transform:translate(-50%,-50%);transform-style:preserve-3d;pointer-events:none}
-.phead .beam{position:absolute;inset:0;border:1.5px solid rgba(242,101,34,.95);border-radius:3px;
-  box-shadow:0 0 28px 5px rgba(242,101,34,.55),inset 0 0 18px rgba(242,101,34,.35);animation:scan 6s linear .5s infinite}
-@keyframes scan{0%{transform:translateZ(2px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateZ(120px);opacity:0}}
+.pobj .wall{position:absolute;transform-origin:0 0;opacity:0}
+.pobj .cam .hot{fill:#ffb36b;opacity:0}
+.pobj .sheen{position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:linear-gradient(112deg,transparent 38%,rgba(255,236,214,.6) 50%,transparent 62%) 120% 0/250% 100% no-repeat;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") 0 0/100% 100%;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cpath d='M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z'/%3E%3C/svg%3E") 0 0/100% 100%}
+/* cabeçote: linha de deposição + bico com ponta incandescente em zigue-zague */
+.pobj .head{position:absolute;left:0;top:0;width:0;height:100%;transform-style:preserve-3d;pointer-events:none;opacity:0}
+.pobj .head i{position:absolute;display:block}
+.pobj .head .edge{left:-1px;top:4%;width:2px;height:92%;opacity:.5;
+  background:linear-gradient(180deg,transparent,rgba(255,176,102,.95) 30%,rgba(255,176,102,.95) 70%,transparent);
+  box-shadow:0 0 10px 2px rgba(242,101,34,.55)}
+.pobj .head .tip{left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;transform-style:preserve-3d;
+  background:radial-gradient(circle,#fff6ea 0,#ffb066 32%,rgba(242,101,34,.55) 52%,transparent 72%);
+  animation:zig .34s ease-in-out infinite alternate}
+.pobj .head .noz{left:2px;top:7px;width:10px;height:58px;transform-origin:0 0;transform:rotateX(90deg);border-radius:2px;
+  background:linear-gradient(180deg,#ff8a3d 0,#e9eaec 10%,#9ea3ab 30%,#4a4e55 60%,#24272b 100%);
+  box-shadow:0 0 10px rgba(242,101,34,.45)}
+@keyframes zig{from{transform:translateY(26px)}to{transform:translateY(234px)}}
 
 .descer{margin:22px auto 0;color:var(--cinza-3);font-size:.7rem;font-weight:500;letter-spacing:.16em;
   text-transform:uppercase;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:12px;width:fit-content;
@@ -406,7 +420,6 @@ p{text-wrap:pretty}
               <div class="pshadow"></div>
               <div class="print">
                 <div class="pobj" id="pobj"></div>
-                <div class="phead"></div>
               </div>
             </div>
           </div>
@@ -571,76 +584,102 @@ set("ano","textContent",new Date().getFullYear());
   if (!host) return;
   const P = "M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const N = innerWidth < 620 ? 12 : 18;
-  const STEP = innerWidth < 620 ? 7 : 5.3;
-  const paths = [];
-  let kfCss = "", lastP1 = 0;
+  const mob = innerWidth < 620;
+  const N = mob ? 12 : 18;
+  const STEP = mob ? 7 : 5.3;
+  const W = 260, K = W / 96, HT = (N - 1) * STEP;
+  const T = 9, PE = 60;              // ciclo de 9s; impressão termina em 60% dele
+  const anim = name => `${name} ${T}s linear .5s infinite both`;
+  host.style.setProperty("--h", 22);
+  let css = "";
 
+  // 1. camadas depositadas atrás do bico, alternando a direção a cada camada
   for (let i = 0; i < N; i++){
-    const t = i / (N - 1);
-    const ease = t*t*(3-2*t);
-    let L = Math.round(28 + ease*48);   // gradiente suave: base escura → topo claro
-    if (i === N-1) L = 82;
-    L = Math.min(86, L);
-    const col = reduce
-      ? `hsl(210,4%,${L}%)`
-      : (i === N-1 ? '#F26522' : `hsl(8,58%,${L}%)`);
+    const t = i / (N - 1), e = t*t*(3-2*t), top = i === N - 1;
     const cam = document.createElement("div");
     cam.className = "cam";
     cam.style.transform = `translateZ(${i*STEP}px)`;
-    cam.innerHTML = `<svg viewBox="0 0 96 96"><path fill="${col}" d="${P}"/></svg>`;
+    cam.innerHTML = `<svg viewBox="0 0 96 96"><path d="${P}"/>${reduce ? "" : `<path class="hot" d="${P}"/>`}</svg>`;
+    cam.querySelector("path").style.fill = `hsl(var(--h),${top ? 84 : 66}%,${top ? 66 : Math.round(26 + e*40)}%)`;
     if (!reduce){
-      const r = Math.max(0, (i*STEP - 2) / 118);
-      const p0 = (r * 100).toFixed(1);
-      const p1 = Math.min(88, r * 100 + 9).toFixed(1);  // fade-in mais longo = mais suave
-      if (i === N-1) lastP1 = parseFloat(p1);
-      const hold = i === N-1 ? "99" : "95";
-      // easing embutido: ease-out na entrada, ease-in na saída — toque premium
-      kfCss += `@keyframes cb${i}{0%,${p0}%{opacity:0;animation-timing-function:cubic-bezier(0,0,.2,1)}${p1}%,${hold}%{opacity:1;animation-timing-function:cubic-bezier(.55,0,1,1)}100%{opacity:0}}`;
-      cam.style.opacity = "0";
-      cam.style.animation = `cb${i} 6s linear .5s infinite`;
+      const s = (PE * i / N).toFixed(2), en = (PE * (i + 1) / N).toFixed(2), cool = (PE * (i + 1) / N + 5).toFixed(2);
+      const hid = i % 2 ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)";
+      css += `@keyframes ly${i}{0%{opacity:0;clip-path:${hid}}${i ? `${s}%{opacity:1;clip-path:${hid}}` : ""}${en}%,94%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}}`;
+      // filamento recém-depositado sai incandescente e esfria em ~0,5s
+      css += `@keyframes hot${i}{0%,${en}%{opacity:.9}${cool}%,100%{opacity:0}}`;
+      cam.style.animation = anim("ly" + i);
+      cam.querySelector(".hot").style.animation = anim("hot" + i);
     }
     host.appendChild(cam);
-    paths.push({ el: cam.querySelector("path"), L });
   }
-  // troca de cor via JS (não usa filter — o 3D continua), leve e pausável
-  if (!reduce){
-    const s = document.createElement("style"); s.textContent = kfCss; document.head.appendChild(s);
-    const CYCLE = 22000;
-    const animStart = performance.now() + 500;
-    const stage = document.querySelector(".stage");
-    let rafId = null, last = 0;
-    function recolor(now){
-      const pos = (Math.max(0, now - animStart) % 6000) / 6000 * 100;
-      const allOrange = pos >= lastP1 && pos <= 99;
-      // oscila só na faixa quente da marca: vermelho (4°) ↔ âmbar (34°)
-      const h = Math.round(19 + 15 * Math.sin(now / CYCLE * Math.PI * 2));
-      if (allOrange){
-        // sombreamento gradiente: base bem escura → topo brilhante, profundidade 3D
-        const n = paths.length;
-        paths.forEach((p,i) => {
-          const t = i / (n - 1);
-          const L = Math.round(16 + t * 64);
-          const S = Math.round(82 + t * 8);
-          p.el.style.fill = `hsl(22,${S}%,${L}%)`;
-        });
-      } else {
-        const top = paths.length - 1;
-        for (let i = 0; i < top; i++) paths[i].el.style.fill = `hsl(${h},64%,${paths[i].L}%)`;
-        paths[top].el.style.fill = `hsl(${h},82%,62%)`;  // última camada acompanha o ciclo
-      }
-    }
-    const fpsLimit = innerWidth < 620 ? 80 : 33; // mobile: ~12fps, desktop: ~30fps
-    function tick(now){
-      if (!document.hidden && now - last > fpsLimit){ last = now; recolor(now); }
-      rafId = requestAnimationFrame(tick);
-    }
-    const start = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
-    const stop  = () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } };
-    if (stage && "IntersectionObserver" in window){
-      new IntersectionObserver(es => es[0].isIntersecting ? start() : stop(), { threshold: 0 }).observe(stage);
-    } else { start(); }
+
+  // 2. paredes laterais: fecham a pilha numa peça sólida, com sombreamento por face e linhas de camada
+  const PTS = [[0,0],[30,0],[30,32],[48,32],[48,64],[66,64],[66,0],[96,0],[96,96],[36,96],[36,64],[24,64],[24,32],[12,32],[12,96],[0,96]];
+  const SHADE = { "0,1": 40, "1,0": 30, "-1,0": 47, "0,-1": 26 };   // normal externa → luminosidade
+  PTS.forEach(([x1, y1], j) => {
+    const [x2, y2] = PTS[(j + 1) % PTS.length];
+    const dx = Math.sign(x2 - x1), dy = Math.sign(y2 - y1), L = SHADE[`${dy},${-dx}`];
+    const w = document.createElement("div");
+    w.className = "wall";
+    Object.assign(w.style, {
+      left: Math.min(x1, x2) * K + "px", top: Math.min(y1, y2) * K + "px",
+      width: (Math.abs(x2 - x1) + Math.abs(y2 - y1)) * K + "px", height: HT + "px",
+      transform: dx ? "rotateX(90deg)" : "rotateZ(90deg) rotateX(90deg)",
+      background: `repeating-linear-gradient(180deg,transparent 0 ${STEP - 1}px,rgba(0,0,0,.16) ${STEP - 1}px ${STEP}px),` +
+                  `linear-gradient(180deg,hsl(var(--h),70%,${L - 14}%),hsl(var(--h),74%,${L + 6}%))`
+    });
+    if (reduce) w.style.opacity = 1; else w.style.animation = anim("solid");
+    host.appendChild(w);
+  });
+  if (reduce) return;
+
+  // 3. brilho de acabamento no topo da peça pronta
+  const sh = document.createElement("div");
+  sh.className = "sheen";
+  sh.style.transform = `translateZ(${HT + .6}px)`;
+  sh.style.animation = anim("sheen");
+  host.appendChild(sh);
+
+  // 4. cabeçote: percorre cada camada, sobe de camada, e no fim se afasta
+  const hd = document.createElement("div");
+  hd.className = "head";
+  hd.innerHTML = '<i class="edge"></i><i class="tip"><i class="noz"></i></i>';
+  let hk = "0%{opacity:0;transform:translate3d(0,0,1px)}1.5%{opacity:1}", endX = 0;
+  for (let i = 0; i < N; i++){
+    const z = i * STEP + 1, a = i % 2 ? W : 0, b = i % 2 ? 0 : W;
+    if (i) hk += `${(PE * i / N).toFixed(2)}%{transform:translate3d(${a}px,0,${z}px)}`;
+    hk += `${(PE * (i + 1) / N - .05).toFixed(2)}%{transform:translate3d(${b}px,0,${z}px)}`;
+    endX = b;
   }
+  hk += `${PE}%{opacity:1;transform:translate3d(${endX}px,0,${HT + 1}px)}${PE + 8}%{opacity:0;transform:translate3d(${endX}px,0,${HT + 90}px)}100%{opacity:0;transform:translate3d(0,0,1px)}`;
+  css += `@keyframes head{${hk}}`;
+  css += `@keyframes solid{0%,${PE}%{opacity:0}${PE + 8}%,94%{opacity:1}100%{opacity:0}}`;
+  css += `@keyframes sheen{0%,${PE + 9}%{opacity:0;background-position:120% 0}${PE + 11}%{opacity:1}${PE + 22}%{opacity:1;background-position:-20% 0}${PE + 24}%,100%{opacity:0;background-position:-20% 0}}`;
+  hd.style.animation = anim("head");
+  host.appendChild(hd);
+  const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+
+  // cor: oscila na faixa quente durante a impressão e assenta no laranja da marca quando a peça fica pronta
+  const ref = host.querySelector(".cam"), stage = document.querySelector(".stage");
+  const t0 = performance.now() + 500, fps = mob ? 80 : 40;
+  let rafId = null, last = 0;
+  function tick(now){
+    if (!document.hidden && now - last > fps){
+      last = now;
+      const a = ref.getAnimations ? ref.getAnimations()[0] : null;
+      const ms = a && a.currentTime != null ? a.currentTime - 500 : now - t0;
+      const pos = (((ms % (T * 1000)) + T * 1000) % (T * 1000)) / (T * 10);
+      const osc = 19 + 15 * Math.sin(now / 22000 * Math.PI * 2);
+      const f = pos < PE ? 0 : pos < PE + 8 ? (pos - PE) / 8 : pos < 96 ? 1 : 1 - (pos - 96) / 4;
+      host.style.setProperty("--h", (osc + (22 - osc) * f * f * (3 - 2 * f)).toFixed(1));
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+  const start = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
+  const stop  = () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } };
+  if (stage && "IntersectionObserver" in window){
+    new IntersectionObserver(es => es[0].isIntersecting ? start() : stop(), { threshold: 0 }).observe(stage);
+  } else { start(); }
 })();
 
 /* ── reveal on scroll ── */
