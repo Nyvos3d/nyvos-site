@@ -10,5 +10,5 @@
   <rect width="1080" height="1920" fill="url(#f)"/>
   <circle cx="540" cy="960" r="418" fill="url(#g)"/>
   <circle cx="540" cy="960" r="432" fill="none" stroke="#F26522" stroke-opacity=".28" stroke-width="2"/>
-  <g transform="translate(320 740) scale(4.583333333333333)"><path fill="#FF8A4C"  d="M6 6H52V52H6Z"/><path fill="#F26522"  d="M25 25H71V71H25Z"/><path fill="#C94A12"  d="M44 44H90V90H44Z"/></g>
+  <g transform="translate(320 740) scale(4.583333333333333)"><g transform="rotate(-6 26 82)"><path fill="#C94A12"  d="M14 6H38V82H14Z"/></g><g transform="rotate(24 26 82)"><path fill="#F26522"  d="M14 6H38V82H14Z"/></g><g transform="rotate(54 26 82)"><path fill="#F3F2EE"  d="M14 6H38V82H14Z"/></g><circle cx="26" cy="76" r="5" fill="#0A0B0D"/></g>
 </svg>

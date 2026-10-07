@@ -10,5 +10,5 @@
   <rect width="1080" height="1920" fill="url(#f)"/>
   <circle cx="540" cy="960" r="418" fill="url(#g)"/>
   <circle cx="540" cy="960" r="432" fill="none" stroke="#F26522" stroke-opacity=".28" stroke-width="2"/>
-  <g transform="translate(320 740) scale(4.583333333333333)"><path fill="#FF8A4C"  d="M6 8H12V40H6Z M84 8H90V40H84Z M12 21H84V27H12Z M12 24L28 14V34Z M84 24L68 14V34Z"/><path fill="#F26522"  d="M6 52H58V68H90V92H6Z"/></g>
+  <g transform="translate(320 740) scale(4.583333333333333)"><path fill="#F3F2EE"  d="M6 6H13V40H6Z M83 6H90V40H83Z M13 20H83V26H13Z M13 23L31 10V36Z M83 23L65 10V36Z"/><path fill="#F26522"  d="M6 92V52H56V68H90V92Z"/></g>
 </svg>
