@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="f-01-impressoes" cx="540" cy="710.4" r="842.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2C2F35"/><stop offset=".55" stop-color="#17181C"/><stop offset="1" stop-color="#0B0C0E"/>
+    </radialGradient>
+    <radialGradient id="g-01-impressoes" cx="540" cy="1038" r="483.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F26522" stop-opacity=".12"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ribg-01-impressoes" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".2" stop-color="#fff" stop-opacity=".1"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient>
+    <pattern id="rib-01-impressoes" patternUnits="userSpaceOnUse" x="-40" y="1.000" width="200" height="4"><rect width="200" height="4" fill="url(#ribg-01-impressoes)"/></pattern><pattern id="ribe-01-impressoes" patternUnits="userSpaceOnUse" x="-40" y="1.287" width="200" height="4" patternTransform="skewY(30)"><rect width="200" height="4" fill="url(#ribg-01-impressoes)"/></pattern><pattern id="ribd-01-impressoes" patternUnits="userSpaceOnUse" x="-40" y="0.713" width="200" height="4" patternTransform="skewY(-30)"><rect width="200" height="4" fill="url(#ribg-01-impressoes)"/></pattern>
+    <linearGradient id="volr-01-impressoes" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".2" stop-color="#000" stop-opacity=".06"/>
+      <stop offset=".36" stop-color="#fff" stop-opacity=".24"/><stop offset=".52" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".84" stop-color="#000" stop-opacity=".26"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
+    <linearGradient id="vole-01-impressoes" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+    <radialGradient id="volc-01-impressoes" cx=".38" cy=".3" r=".8">
+      <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient>
+    <linearGradient id="metal-01-impressoes" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5E6167"/><stop offset=".3" stop-color="#E4E3DF"/>
+      <stop offset=".55" stop-color="#A3A5A9"/><stop offset="1" stop-color="#4B4E54"/></linearGradient>
+    <linearGradient id="metalesc-01-impressoes" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26282D"/><stop offset=".3" stop-color="#4A4D54"/>
+      <stop offset=".6" stop-color="#2F3237"/><stop offset="1" stop-color="#1E2024"/></linearGradient>
+    <linearGradient id="quente-01-impressoes" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F26522"/><stop offset=".7" stop-color="#FF8A4C"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
+    <radialGradient id="acesa-01-impressoes"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="#FF8A4C" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#FF8A4C" stop-opacity="0"/></radialGradient>
+    <linearGradient id="tampo-01-impressoes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202226"/><stop offset="1" stop-color="#3A3D44"/></linearGradient>
+    <filter id="brilho-01-impressoes" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <filter id="sombra-01-impressoes" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#f-01-impressoes)"/>
+  <circle cx="540" cy="960" r="540" fill="url(#g-01-impressoes)"/>
+  <g transform="translate(150 570) scale(8.125)"><path d="M8 8H88V90H8Z M14 14V84H82V14Z" fill-rule="evenodd" fill="#101113" transform="translate(3 0)"/>
+    <path d="M8 8H88V90H8Z M14 14V84H82V14Z" fill-rule="evenodd" fill="url(#metalesc-01-impressoes)"/><path d="M8 8H88V90H8Z M14 14V84H82V14Z" fill-rule="evenodd" fill="url(#vole-01-impressoes)"/>
+    <path d="M14 14H82" stroke="#000" stroke-opacity=".5" stroke-width="1"/>
+    <path d="M8 8.4H88" stroke="#F3F2EE" stroke-opacity=".25" stroke-width=".6"/>
+    <path d="M18.5 14H20.5V81H18.5Z" fill="url(#metal-01-impressoes)"/><path d="M18.5 14H20.5V81H18.5Z" fill="url(#vole-01-impressoes)"/><path d="M75.5 14H77.5V81H75.5Z" fill="url(#metal-01-impressoes)"/><path d="M75.5 14H77.5V81H75.5Z" fill="url(#vole-01-impressoes)"/>
+    <ellipse cx="48" cy="85" rx="36" ry="4" fill="#000" opacity=".55" filter="url(#sombra-01-impressoes)"/>
+    <path d="M20 78H76L80 82H16Z" fill="url(#tampo-01-impressoes)"/>
+    <path d="M25.68 78L24 82 M33.12 78L32 82 M40.56 78L40 82 M48 78L48 82 M55.44 78L56 82 M62.88 78L64 82 M70.32 78L72 82 M18 80H78" stroke="#F3F2EE" stroke-opacity=".06" stroke-width=".3" fill="none"/>
+    <ellipse cx="48" cy="80" rx="22" ry="2.2" fill="#F26522" opacity=".35" filter="url(#sombra-01-impressoes)"/>
+    <rect x="16" y="82" width="64" height="5" fill="#252729"/>
+    <rect x="16" y="82" width="64" height=".5" fill="#F3F2EE" opacity=".18"/>
+    <clipPath id="vb-01-impressoes"><rect x="0" y="53" width="96" height="40"/></clipPath>
+    <clipPath id="vc-01-impressoes"><rect x="0" y="0" width="96" height="53"/></clipPath>
+    <g clip-path="url(#vb-01-impressoes)"><path d="M37.92 81H58.08C58.08 77.4 66.72 70.92 66.72 60.84C66.72 50.76 56.64 45.72 55.2 40.68V34.92H58.08V29.88H37.92V34.92H40.8V40.68C39.36 45.72 29.28 50.76 29.28 60.84C29.28 70.92 37.92 77.4 37.92 81Z" fill="#F26522"/><path d="M37.92 81H58.08C58.08 77.4 66.72 70.92 66.72 60.84C66.72 50.76 56.64 45.72 55.2 40.68V34.92H58.08V29.88H37.92V34.92H40.8V40.68C39.36 45.72 29.28 50.76 29.28 60.84C29.28 70.92 37.92 77.4 37.92 81Z" fill="url(#volr-01-impressoes)"/><path d="M37.92 81H58.08C58.08 77.4 66.72 70.92 66.72 60.84C66.72 50.76 56.64 45.72 55.2 40.68V34.92H58.08V29.88H37.92V34.92H40.8V40.68C39.36 45.72 29.28 50.76 29.28 60.84C29.28 70.92 37.92 77.4 37.92 81Z" fill="url(#rib-01-impressoes)"/></g>
+    <path d="M37.92 81H58.08C58.08 77.4 66.72 70.92 66.72 60.84C66.72 50.76 56.64 45.72 55.2 40.68V34.92H58.08V29.88H37.92V34.92H40.8V40.68C39.36 45.72 29.28 50.76 29.28 60.84C29.28 70.92 37.92 77.4 37.92 81Z" clip-path="url(#vc-01-impressoes)" fill="#F3F2EE" opacity=".05"/>
+    <path d="M37.92 81H58.08C58.08 77.4 66.72 70.92 66.72 60.84C66.72 50.76 56.64 45.72 55.2 40.68V34.92H58.08V29.88H37.92V34.92H40.8V40.68C39.36 45.72 29.28 50.76 29.28 60.84C29.28 70.92 37.92 77.4 37.92 81Z" clip-path="url(#vc-01-impressoes)" fill="none" stroke="#F3F2EE" stroke-width=".8" stroke-dasharray="2 1.5" opacity=".75"/>
+    <rect x="30.6" y="49" width="34.4" height="4" rx="2" fill="#F26522" filter="url(#brilho-01-impressoes)" opacity=".9"/><rect x="30.6" y="49" width="34.4" height="4" rx="2" fill="url(#quente-01-impressoes)"/><rect x="30.6" y="49" width="34.4" height="4" rx="2" fill="url(#rib-01-impressoes)"/><circle cx="64" cy="51" r="4.5" fill="#FF8A4C" filter="url(#brilho-01-impressoes)"/><circle cx="64" cy="51" r="1.5" fill="#FFE2CC"/>
+    <path d="M14 20.5H82V24H14Z" fill="url(#metal-01-impressoes)"/><path d="M14 20.5H82V24H14Z" fill="url(#vole-01-impressoes)"/>
+    <rect x="57.5" y="22.5" width="16" height="18.5" rx="1.6" fill="#0D0E10"/>
+    <rect x="56" y="22.5" width="16" height="18.5" rx="1.6" fill="#33363C"/><rect x="56" y="22.5" width="16" height="18.5" rx="1.6" fill="url(#vole-01-impressoes)"/>
+    <rect x="56" y="22.5" width="16" height=".6" fill="#F3F2EE" opacity=".25"/>
+    <path d="M59.9 26.5H62.45V29.22H63.98V31.94H65.51V26.5H68.06V34.66H62.96V31.94H61.94V29.22H60.92V34.66H59.9Z" fill="#F26522"/>
+    <rect x="56" y="38.6" width="16" height="1.2" fill="#F26522"/>
+    <path d="M60 41H68V44H60Z" fill="url(#metal-01-impressoes)"/><path d="M60 41H68V44H60Z" fill="url(#vole-01-impressoes)"/><path d="M61.8 44H66.2L64.8 49H63.2Z" fill="url(#metal-01-impressoes)"/><path d="M61.8 44H66.2L64.8 49H63.2Z" fill="url(#vole-01-impressoes)"/>
+    <circle cx="64" cy="50" r="2.6" fill="#FF8A4C" filter="url(#brilho-01-impressoes)"/></g>
+</svg>

@@ -24,6 +24,9 @@
     <linearGradient id="metal-02-orcamento" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#5E6167"/><stop offset=".3" stop-color="#E4E3DF"/>
       <stop offset=".55" stop-color="#A3A5A9"/><stop offset="1" stop-color="#4B4E54"/></linearGradient>
+    <linearGradient id="metalesc-02-orcamento" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26282D"/><stop offset=".3" stop-color="#4A4D54"/>
+      <stop offset=".6" stop-color="#2F3237"/><stop offset="1" stop-color="#1E2024"/></linearGradient>
     <linearGradient id="quente-02-orcamento" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#F26522"/><stop offset=".7" stop-color="#FF8A4C"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
     <radialGradient id="acesa-02-orcamento"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="#FF8A4C" stop-opacity=".15"/>

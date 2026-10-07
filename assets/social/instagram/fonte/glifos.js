@@ -2,7 +2,7 @@
 // Cada destaque é uma peça impressa de verdade, fotografada no estúdio da marca:
 // filamento laranja, mineral e carbono (a paleta da NYVOS), camadas visíveis como
 // cordões de FDM com luz e sombra, espessura real e a mesa de impressão embaixo.
-// Onde há processo (Bastidores, Do zero) a camada de cima ainda está quente.
+// Onde há processo (Impressões, Bastidores) a camada de cima ainda está quente.
 const { SIMBOLO } = require("./art.js");
 
 const T = { luz: "#FF8A4C", base: "#F26522", esc: "#B8410E", min: "#F3F2EE", carbono: "#1B1D21", grafite: "#252729" };
@@ -19,9 +19,9 @@ const MAT = {
 
 const fx = (n) => +n.toFixed(2);
 
-// escala/desloca caminhos só com M L H V Z (o símbolo N), mantendo a grade de camadas
+// escala/desloca caminhos absolutos (M L H V C Z), mantendo a grade de camadas
 function reposiciona(d, s, tx, ty) {
-  return d.replace(/([MLHVZ])([^MLHVZ]*)/g, (_, c, args) => {
+  return d.replace(/([MLHVCZ])([^MLHVCZ]*)/g, (_, c, args) => {
     const n = args.trim() ? args.trim().split(/[\s,]+/).map(Number) : [];
     if (c === "H") return "H" + fx(n[0] * s + tx);
     if (c === "V") return "V" + fx(n[0] * s + ty);
@@ -84,7 +84,7 @@ function mesa(x1 = 6, x2 = 90) {
     <rect x="${x1}" y="${MESA + 1}" width="${x2 - x1}" height=".5" fill="#F3F2EE" opacity=".18"/>`;
 }
 
-// ---------- os oito destaques ----------
+// ---------- os sete destaques ----------
 const VASO = "M34 81H62C62 76 74 67 74 53C74 39 60 32 58 25V17H62V10H34V17H38V25C36 32 22 39 22 53C22 67 34 76 34 81Z";
 const N_PLACA = reposiciona(SIMBOLO, 0.68, 12.4, MESA - 96 * 0.68);
 const N_LAMPADA = reposiciona(SIMBOLO, 0.17, 39.8, 25);
@@ -126,6 +126,35 @@ function hotend() {
     ${metal("M40 45H56V49H40Z")}${metal("M42 49H54L50.2 56.2H45.8Z")}`;
 }
 
+// impressora em ação: o vaso está saindo da mesa; a parte de baixo já é peça (camadas),
+// a de cima ainda é o modelo 3D (contorno tracejado com alças) — Peças + Do zero num só ícone
+const N_CABECOTE = reposiciona(SIMBOLO, 0.085, 59.9, 26.5);
+const VASO_MENOR = reposiciona(VASO, 0.72, 48 * 0.28, MESA * 0.28);
+function impressora() {
+  const CORTE = 53, bico = [64, 49];
+  const quadro = "M8 8H88V90H8Z M14 14V84H82V14Z";
+  return `<path d="${quadro}" fill-rule="evenodd" fill="#101113" transform="translate(3 0)"/>
+    <path d="${quadro}" fill-rule="evenodd" fill="url(#metalesc)"/><path d="${quadro}" fill-rule="evenodd" fill="url(#vole)"/>
+    <path d="M14 14H82" stroke="#000" stroke-opacity=".5" stroke-width="1"/>
+    <path d="M8 8.4H88" stroke="#F3F2EE" stroke-opacity=".25" stroke-width=".6"/>
+    ${metal("M18.5 14H20.5V81H18.5Z")}${metal("M75.5 14H77.5V81H75.5Z")}
+    ${mesa(16, 80)}
+    <clipPath id="vb"><rect x="0" y="${CORTE}" width="96" height="40"/></clipPath>
+    <clipPath id="vc"><rect x="0" y="0" width="96" height="${CORTE}"/></clipPath>
+    <g clip-path="url(#vb)">${rev(VASO_MENOR, MAT.laranja)}</g>
+    <path d="${VASO_MENOR}" clip-path="url(#vc)" fill="${T.min}" opacity=".05"/>
+    <path d="${VASO_MENOR}" clip-path="url(#vc)" fill="none" stroke="${T.min}" stroke-width=".8" stroke-dasharray="2 1.5" opacity=".75"/>
+    ${quente(30.6, bico[0] + 1, CORTE - P)}
+    ${metal("M14 20.5H82V24H14Z")}
+    <rect x="57.5" y="22.5" width="16" height="18.5" rx="1.6" fill="#0D0E10"/>
+    <rect x="56" y="22.5" width="16" height="18.5" rx="1.6" fill="${MAT.carbono.frente}"/><rect x="56" y="22.5" width="16" height="18.5" rx="1.6" fill="url(#vole)"/>
+    <rect x="56" y="22.5" width="16" height=".6" fill="#F3F2EE" opacity=".25"/>
+    <path d="${N_CABECOTE}" fill="${T.base}"/>
+    <rect x="56" y="38.6" width="16" height="1.2" fill="${T.base}"/>
+    ${metal(`M60 41H68V44H60Z`)}${metal(`M61.8 44H66.2L${bico[0] + 0.8} ${bico[1]}H${bico[0] - 0.8}Z`)}
+    <circle cx="${bico[0]}" cy="${bico[1] + 1}" r="2.6" fill="${T.luz}" filter="url(#brilho)"/>`;
+}
+
 function carretel(cx, cy, r, mat, id) {
   return `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="1.7" gradientUnits="userSpaceOnUse" spreadMethod="repeat">
       <stop offset="0" stop-color="#000" stop-opacity=".38"/><stop offset=".35" stop-color="#fff" stop-opacity=".22"/>
@@ -142,9 +171,8 @@ function carretel(cx, cy, r, mat, id) {
 
 const DESTAQUES = [
   {
-    id: "01-pecas", nome: "Peças", sobre: "Portfólio: as peças prontas, bem fotografadas",
-    svg: () => mesa(18, 78) + rev(VASO, MAT.laranja) +
-      `<path d="${estrela(80, 14, 9, 2.2, 4)}" fill="${T.min}" filter="url(#brilho)" opacity=".7"/><path d="${estrela(80, 14, 9, 2.2, 4)}" fill="${T.min}"/>`,
+    id: "01-impressoes", nome: "Impressões", sobre: "Peças saindo da impressora: do modelo 3D à peça pronta",
+    svg: impressora,
   },
   {
     id: "02-orcamento", nome: "Orçamento", sobre: "Como pedir, prazos, formas de pagamento",
@@ -167,22 +195,18 @@ const DESTAQUES = [
       ext(N_LAMPADA, MAT.mineral, { prof: 1.2 }),
   },
   {
-    id: "05-do-zero", nome: "Do zero", sobre: "Modelagem 3D: do desenho na tela à peça",
-    svg: cubo,
-  },
-  {
-    id: "06-bastidores", nome: "Bastidores", sobre: "A impressora trabalhando, time-lapses, processo",
+    id: "05-bastidores", nome: "Bastidores", sobre: "A impressora trabalhando, time-lapses, processo",
     svg: () => mesa(6, 90) + ext("M12 81V61H80V81Z", MAT.laranja) + quente(12, 49, 57) + hotend() +
       `<circle cx="48" cy="56.4" r="2.4" fill="${T.luz}" filter="url(#brilho)"/>`,
   },
   {
-    id: "07-cores", nome: "Cores", sobre: "Filamentos e cores disponíveis",
+    id: "06-cores", nome: "Cores", sobre: "Filamentos e cores disponíveis",
     svg: () => mesa(8, 88) + carretel(30, 64.5, 16.5, MAT.carbono, "fa") + carretel(66, 64.5, 16.5, MAT.mineral, "fb") +
       carretel(48, 32.5, 16.5, MAT.laranja, "fc") +
       `<path d="M63.5 28C72 30 80 40 82 54" fill="none" stroke="${T.base}" stroke-width="1.6" stroke-linecap="round"/>`,
   },
   {
-    id: "08-a-nyvos", nome: "A NYVOS", sobre: "Quem está por trás, missão, contatos",
+    id: "07-a-nyvos", nome: "A NYVOS", sobre: "Quem está por trás, missão, contatos",
     svg: () => mesa(6, 90) + ext(N_PLACA, MAT.laranja, { prof: 7 }),
   },
 ];
@@ -211,6 +235,9 @@ function defs() {
     <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#5E6167"/><stop offset=".3" stop-color="#E4E3DF"/>
       <stop offset=".55" stop-color="#A3A5A9"/><stop offset="1" stop-color="#4B4E54"/></linearGradient>
+    <linearGradient id="metalesc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26282D"/><stop offset=".3" stop-color="#4A4D54"/>
+      <stop offset=".6" stop-color="#2F3237"/><stop offset="1" stop-color="#1E2024"/></linearGradient>
     <linearGradient id="quente" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="${T.base}"/><stop offset=".7" stop-color="${T.luz}"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
     <radialGradient id="acesa"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="${T.luz}" stop-opacity=".15"/>

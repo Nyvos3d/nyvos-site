@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="f-05-bastidores" cx="540" cy="710.4" r="842.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2C2F35"/><stop offset=".55" stop-color="#17181C"/><stop offset="1" stop-color="#0B0C0E"/>
+    </radialGradient>
+    <radialGradient id="g-05-bastidores" cx="540" cy="1038" r="483.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F26522" stop-opacity=".12"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ribg-05-bastidores" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".2" stop-color="#fff" stop-opacity=".1"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient>
+    <pattern id="rib-05-bastidores" patternUnits="userSpaceOnUse" x="-40" y="1.000" width="200" height="4"><rect width="200" height="4" fill="url(#ribg-05-bastidores)"/></pattern><pattern id="ribe-05-bastidores" patternUnits="userSpaceOnUse" x="-40" y="1.287" width="200" height="4" patternTransform="skewY(30)"><rect width="200" height="4" fill="url(#ribg-05-bastidores)"/></pattern><pattern id="ribd-05-bastidores" patternUnits="userSpaceOnUse" x="-40" y="0.713" width="200" height="4" patternTransform="skewY(-30)"><rect width="200" height="4" fill="url(#ribg-05-bastidores)"/></pattern>
+    <linearGradient id="volr-05-bastidores" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".2" stop-color="#000" stop-opacity=".06"/>
+      <stop offset=".36" stop-color="#fff" stop-opacity=".24"/><stop offset=".52" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".84" stop-color="#000" stop-opacity=".26"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
+    <linearGradient id="vole-05-bastidores" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+    <radialGradient id="volc-05-bastidores" cx=".38" cy=".3" r=".8">
+      <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient>
+    <linearGradient id="metal-05-bastidores" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5E6167"/><stop offset=".3" stop-color="#E4E3DF"/>
+      <stop offset=".55" stop-color="#A3A5A9"/><stop offset="1" stop-color="#4B4E54"/></linearGradient>
+    <linearGradient id="metalesc-05-bastidores" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26282D"/><stop offset=".3" stop-color="#4A4D54"/>
+      <stop offset=".6" stop-color="#2F3237"/><stop offset="1" stop-color="#1E2024"/></linearGradient>
+    <linearGradient id="quente-05-bastidores" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F26522"/><stop offset=".7" stop-color="#FF8A4C"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
+    <radialGradient id="acesa-05-bastidores"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="#FF8A4C" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#FF8A4C" stop-opacity="0"/></radialGradient>
+    <linearGradient id="tampo-05-bastidores" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202226"/><stop offset="1" stop-color="#3A3D44"/></linearGradient>
+    <filter id="brilho-05-bastidores" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <filter id="sombra-05-bastidores" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#f-05-bastidores)"/>
+  <circle cx="540" cy="960" r="540" fill="url(#g-05-bastidores)"/>
+  <g transform="translate(150 570) scale(8.125)"><ellipse cx="48" cy="85" rx="46" ry="4" fill="#000" opacity=".55" filter="url(#sombra-05-bastidores)"/>
+    <path d="M10 78H86L90 82H6Z" fill="url(#tampo-05-bastidores)"/>
+    <path d="M16.38 78L14 82 M23.82 78L22 82 M31.26 78L30 82 M38.7 78L38 82 M46.14 78L46 82 M53.58 78L54 82 M61.02 78L62 82 M68.46 78L70 82 M75.9 78L78 82 M83.34 78L86 82 M8 80H88" stroke="#F3F2EE" stroke-opacity=".06" stroke-width=".3" fill="none"/>
+    <ellipse cx="48" cy="80" rx="32" ry="2.2" fill="#F26522" opacity=".35" filter="url(#sombra-05-bastidores)"/>
+    <rect x="6" y="82" width="84" height="5" fill="#252729"/>
+    <rect x="6" y="82" width="84" height=".5" fill="#F3F2EE" opacity=".18"/><g><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(6 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(5.5 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(5 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(4.5 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(4 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(3.5 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(3 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(2.5 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(2 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(1.5 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(1 0)"/><path d="M12 81V61H80V81Z" fill="#9E3A0C" transform="translate(0.5 0)"/></g>
+    <mask id="m5-05-bastidores" maskUnits="userSpaceOnUse" x="-20" y="-20" width="136" height="136"><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(6 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(5.5 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(5 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(4.5 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(4 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(3.5 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(3 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(2.5 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(2 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(1.5 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(1 0)"/><path d="M12 81V61H80V81Z" fill="#fff" transform="translate(0.5 0)"/></mask>
+    <rect x="-20" y="-20" width="136" height="136" fill="url(#rib-05-bastidores)" mask="url(#m5-05-bastidores)"/>
+    <path d="M12 81V61H80V81Z" fill="#F26522"/><path d="M12 81V61H80V81Z" fill="url(#vole-05-bastidores)"/><path d="M12 81V61H80V81Z" fill="url(#rib-05-bastidores)"/><rect x="12" y="57" width="37" height="4" rx="2" fill="#F26522" filter="url(#brilho-05-bastidores)" opacity=".9"/><rect x="12" y="57" width="37" height="4" rx="2" fill="url(#quente-05-bastidores)"/><rect x="12" y="57" width="37" height="4" rx="2" fill="url(#rib-05-bastidores)"/><circle cx="48" cy="59" r="4.5" fill="#FF8A4C" filter="url(#brilho-05-bastidores)"/><circle cx="48" cy="59" r="1.5" fill="#FFE2CC"/><path d="M44 6H52V31H44Z" fill="url(#metal-05-bastidores)"/><path d="M44 6H52V31H44Z" fill="url(#vole-05-bastidores)"/><path d="M32 6H60V8.8H32Z" fill="url(#metal-05-bastidores)"/><path d="M32 6H60V8.8H32Z" fill="url(#vole-05-bastidores)"/><path d="M32 10.4H60V13.200000000000001H32Z" fill="url(#metal-05-bastidores)"/><path d="M32 10.4H60V13.200000000000001H32Z" fill="url(#vole-05-bastidores)"/><path d="M32 14.8H60V17.6H32Z" fill="url(#metal-05-bastidores)"/><path d="M32 14.8H60V17.6H32Z" fill="url(#vole-05-bastidores)"/><path d="M32 19.200000000000003H60V22H32Z" fill="url(#metal-05-bastidores)"/><path d="M32 19.200000000000003H60V22H32Z" fill="url(#vole-05-bastidores)"/><path d="M32 23.6H60V26.400000000000002H32Z" fill="url(#metal-05-bastidores)"/><path d="M32 23.6H60V26.400000000000002H32Z" fill="url(#vole-05-bastidores)"/>
+    <path d="M30 31H62V45H30Z" fill="url(#metal-05-bastidores)"/><path d="M30 31H62V45H30Z" fill="url(#vole-05-bastidores)"/>
+    <circle cx="35" cy="38" r="1.6" fill="#55585E"/><circle cx="57" cy="38" r="1.6" fill="#55585E"/>
+    <path d="M40 45H56V49H40Z" fill="url(#metal-05-bastidores)"/><path d="M40 45H56V49H40Z" fill="url(#vole-05-bastidores)"/><path d="M42 49H54L50.2 56.2H45.8Z" fill="url(#metal-05-bastidores)"/><path d="M42 49H54L50.2 56.2H45.8Z" fill="url(#vole-05-bastidores)"/><circle cx="48" cy="56.4" r="2.4" fill="#FF8A4C" filter="url(#brilho-05-bastidores)"/></g>
+</svg>
