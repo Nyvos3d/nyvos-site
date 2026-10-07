@@ -27,6 +27,8 @@
     <linearGradient id="metalesc-06-cores" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#26282D"/><stop offset=".3" stop-color="#4A4D54"/>
       <stop offset=".6" stop-color="#2F3237"/><stop offset="1" stop-color="#1E2024"/></linearGradient>
+    <linearGradient id="latao-06-cores" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7A5226"/><stop offset=".4" stop-color="#E2AE72"/><stop offset="1" stop-color="#8E6230"/></linearGradient>
     <linearGradient id="quente-06-cores" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#F26522"/><stop offset=".7" stop-color="#FF8A4C"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
     <radialGradient id="acesa-06-cores"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="#FF8A4C" stop-opacity=".15"/>

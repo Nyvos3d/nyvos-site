@@ -126,32 +126,46 @@ function hotend() {
     ${metal("M40 45H56V49H40Z")}${metal("M42 49H54L50.2 56.2H45.8Z")}`;
 }
 
-// impressora em ação: o vaso está saindo da mesa; a parte de baixo já é peça (camadas),
-// a de cima ainda é o modelo 3D (contorno tracejado com alças) — Peças + Do zero num só ícone
-const N_CABECOTE = reposiciona(SIMBOLO, 0.085, 59.9, 26.5);
-const VASO_MENOR = reposiciona(VASO, 0.72, 48 * 0.28, MESA * 0.28);
+// a impressora do site (hero 3D) em versão minimalista, de frente: base mineral, mesa PEI,
+// colunas de alumínio, pórtico, cabeçote com anel e faixa laranja, bobina laranja.
+// Ela imprime o N Estrato: embaixo já é peça em camadas, em cima ainda é o modelo tracejado.
+const N_IMPRESSO = reposiciona(SIMBOLO, 1 / 3, 32, 37);
+const N_ETIQUETA = reposiciona(SIMBOLO, 0.055, 74.4, 25.4);
+const N_BASE = reposiciona(SIMBOLO, 0.06, 45.1, 77);
 function impressora() {
-  const CORTE = 53, bico = [64, 49];
-  const quadro = "M8 8H88V90H8Z M14 14V84H82V14Z";
-  return `<path d="${quadro}" fill-rule="evenodd" fill="#101113" transform="translate(3 0)"/>
-    <path d="${quadro}" fill-rule="evenodd" fill="url(#metalesc)"/><path d="${quadro}" fill-rule="evenodd" fill="url(#vole)"/>
-    <path d="M14 14H82" stroke="#000" stroke-opacity=".5" stroke-width="1"/>
-    <path d="M8 8.4H88" stroke="#F3F2EE" stroke-opacity=".25" stroke-width=".6"/>
-    ${metal("M18.5 14H20.5V81H18.5Z")}${metal("M75.5 14H77.5V81H75.5Z")}
-    ${mesa(16, 80)}
-    <clipPath id="vb"><rect x="0" y="${CORTE}" width="96" height="40"/></clipPath>
+  const MESA_N = 69, CORTE = 45, bico = [60, CORTE - P];
+  const caixa = (x, y, w, h, r, mat) =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${mat.frente}"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="url(#vole)"/>` +
+    `<rect x="${x + r}" y="${y}" width="${w - 2 * r}" height=".5" fill="#fff" opacity=".5"/>`;
+  return `<ellipse cx="48" cy="89" rx="42" ry="3.6" fill="#000" opacity=".6" filter="url(#sombra)"/>
+    <path d="M14 69.5H82L86 73H10Z" fill="#F7F6F2"/>
+    ${caixa(10, 73, 76, 14.5, 2.6, MAT.mineral)}
+    <rect x="12" y="87" width="72" height="2" rx="1" fill="${T.carbono}"/>
+    <path d="${N_BASE}" fill="${T.base}"/>
+    <path d="M24 66H72L75.5 ${MESA_N}H20.5Z" fill="url(#tampo)"/>
+    <rect x="20.5" y="${MESA_N}" width="55" height="1.8" fill="#111214"/>
+    <ellipse cx="48" cy="${MESA_N - 1}" rx="18" ry="2" fill="${T.base}" opacity=".45" filter="url(#sombra)"/>
+    ${metal("M16 12H22V68H16Z")}${metal("M74 12H80V68H74Z")}
+    <rect x="14.5" y="64" width="9" height="6" rx="1" fill="${MAT.carbono.frente}"/><rect x="72.5" y="64" width="9" height="6" rx="1" fill="${MAT.carbono.frente}"/>
+    ${metal("M15 8H81V12.5H15Z")}<rect x="15" y="8" width="66" height="1.2" fill="${T.carbono}" opacity=".6"/>
+    <clipPath id="vb"><rect x="0" y="${CORTE}" width="96" height="${MESA_N - CORTE}"/></clipPath>
     <clipPath id="vc"><rect x="0" y="0" width="96" height="${CORTE}"/></clipPath>
-    <g clip-path="url(#vb)">${rev(VASO_MENOR, MAT.laranja)}</g>
-    <path d="${VASO_MENOR}" clip-path="url(#vc)" fill="${T.min}" opacity=".05"/>
-    <path d="${VASO_MENOR}" clip-path="url(#vc)" fill="none" stroke="${T.min}" stroke-width=".8" stroke-dasharray="2 1.5" opacity=".75"/>
-    ${quente(30.6, bico[0] + 1, CORTE - P)}
-    ${metal("M14 20.5H82V24H14Z")}
-    <rect x="57.5" y="22.5" width="16" height="18.5" rx="1.6" fill="#0D0E10"/>
-    <rect x="56" y="22.5" width="16" height="18.5" rx="1.6" fill="${MAT.carbono.frente}"/><rect x="56" y="22.5" width="16" height="18.5" rx="1.6" fill="url(#vole)"/>
-    <rect x="56" y="22.5" width="16" height=".6" fill="#F3F2EE" opacity=".25"/>
-    <path d="${N_CABECOTE}" fill="${T.base}"/>
-    <rect x="56" y="38.6" width="16" height="1.2" fill="${T.base}"/>
-    ${metal(`M60 41H68V44H60Z`)}${metal(`M61.8 44H66.2L${bico[0] + 0.8} ${bico[1]}H${bico[0] - 0.8}Z`)}
+    <g clip-path="url(#vb)">${ext(N_IMPRESSO, MAT.laranja, { prof: 2.5 })}</g>
+    <path d="${N_IMPRESSO}" clip-path="url(#vc)" fill="none" stroke="${T.min}" stroke-width=".8" stroke-dasharray="2 1.5" opacity=".7"/>
+    ${quente(54, bico[0] + 1, CORTE - P)}
+    ${metal("M18 26H78V31H18Z")}<rect x="22" y="28" width="52" height="1.6" fill="#111214"/>
+    ${caixa(13, 23, 12, 11, 1.6, MAT.mineral)}${caixa(71, 23, 12, 11, 1.6, MAT.mineral)}
+    <path d="${N_ETIQUETA}" fill="${T.base}"/>
+    <path d="M84 30C86 34 80 33 70 32.5" fill="none" stroke="#F4F3EF" stroke-opacity=".35" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M84 30C86 34 80 33 70 32.5" fill="none" stroke="${T.base}" stroke-width=".8" stroke-linecap="round"/>
+    ${carretel(85, 18, 9.5, MAT.laranja, "fp")}
+    <rect x="52.5" y="20" width="15" height="18" rx="2.4" fill="#000" opacity=".35" transform="translate(1 .8)"/>
+    ${caixa(51, 20, 18, 18, 2.4, MAT.mineral)}
+    <circle cx="60" cy="27.5" r="4.6" fill="${T.carbono}"/><circle cx="60" cy="27.5" r="4.6" fill="none" stroke="${T.base}" stroke-width="1.1"/>
+    <circle cx="60" cy="27.5" r="1.5" fill="${MAT.mineral.frente}"/>
+    <rect x="51" y="34.2" width="18" height="1.1" fill="${T.base}"/>
+    <rect x="56" y="38" width="8" height="1.6" fill="${T.carbono}"/>
+    <path d="M57.6 39.6H62.4L${bico[0] + .7} ${bico[1]}H${bico[0] - .7}Z" fill="url(#latao)"/>
     <circle cx="${bico[0]}" cy="${bico[1] + 1}" r="2.6" fill="${T.luz}" filter="url(#brilho)"/>`;
 }
 
@@ -238,6 +252,8 @@ function defs() {
     <linearGradient id="metalesc" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#26282D"/><stop offset=".3" stop-color="#4A4D54"/>
       <stop offset=".6" stop-color="#2F3237"/><stop offset="1" stop-color="#1E2024"/></linearGradient>
+    <linearGradient id="latao" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7A5226"/><stop offset=".4" stop-color="#E2AE72"/><stop offset="1" stop-color="#8E6230"/></linearGradient>
     <linearGradient id="quente" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="${T.base}"/><stop offset=".7" stop-color="${T.luz}"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
     <radialGradient id="acesa"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="${T.luz}" stop-opacity=".15"/>
