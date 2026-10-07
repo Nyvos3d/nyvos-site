@@ -256,10 +256,4 @@ function capaBruta(dest, { w = 1080, h = 1920, tam = 780 } = {}) {
 </svg>`;
 }
 
-// a peça sozinha, sem fundo, para compor posts (carrossel etc.)
-function peca(svg, id) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" overflow="visible"><defs>${defs()}</defs>${svg()}</svg>`
-    .replace(/id="([a-z0-9]+)"/g, `id="$1-${id}"`).replace(/url\(#([a-z0-9]+)\)/g, `url(#$1-${id})`);
-}
-
-module.exports = { T, FUNDO, DESTAQUES, capa, peca, impressora, hotend };
+module.exports = { T, FUNDO, DESTAQUES, capa };
