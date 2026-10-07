@@ -30,7 +30,7 @@
     <radialGradient id="acesa-05-bastidores"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="#FF8A4C" stop-opacity=".15"/>
       <stop offset="1" stop-color="#FF8A4C" stop-opacity="0"/></radialGradient>
     <linearGradient id="tampo-05-bastidores" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202226"/><stop offset="1" stop-color="#3A3D44"/></linearGradient>
-    <filter id="brilho-05-bastidores" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <filter id="brilho-05-bastidores" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.4"/></filter>
     <filter id="sombra-05-bastidores" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>
   </defs>
   <rect width="1080" height="1920" fill="url(#f-05-bastidores)"/>

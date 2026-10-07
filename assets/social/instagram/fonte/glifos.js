@@ -229,7 +229,7 @@ function defs() {
     <radialGradient id="acesa"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="${T.luz}" stop-opacity=".15"/>
       <stop offset="1" stop-color="${T.luz}" stop-opacity="0"/></radialGradient>
     <linearGradient id="tampo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202226"/><stop offset="1" stop-color="#3A3D44"/></linearGradient>
-    <filter id="brilho" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <filter id="brilho" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.4"/></filter>
     <filter id="sombra" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>`;
 }
 
@@ -256,4 +256,10 @@ function capaBruta(dest, { w = 1080, h = 1920, tam = 780 } = {}) {
 </svg>`;
 }
 
-module.exports = { T, FUNDO, DESTAQUES, capa };
+// a peça sozinha, sem fundo, para compor posts (carrossel etc.)
+function peca(svg, id) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" overflow="visible"><defs>${defs()}</defs>${svg()}</svg>`
+    .replace(/id="([a-z0-9]+)"/g, `id="$1-${id}"`).replace(/url\(#([a-z0-9]+)\)/g, `url(#$1-${id})`);
+}
+
+module.exports = { T, FUNDO, DESTAQUES, capa, peca, impressora, hotend };
