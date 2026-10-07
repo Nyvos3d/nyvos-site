@@ -369,13 +369,23 @@ p{text-wrap:pretty}
 .tb-marca{display:inline-flex;align-items:center;gap:10px;line-height:1}
 .tb-marca svg{height:26px;width:auto;display:block}
 .tb-marca span{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:.04em;color:var(--mineral)}
+.tb-right{display:inline-flex;align-items:center;gap:7px}
+.tb-sep{width:1px;height:18px;background:var(--traco);margin:0 2px;flex-shrink:0}
+/* ícones sociais na barra fixa */
+.tb-soc{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+  background:transparent;border:1px solid rgba(255,255,255,.09);color:var(--cinza);
+  transition:color .25s,background .25s,border-color .25s,transform .25s var(--vai)}
+.tb-soc svg{width:15px;height:15px}
+.tb-soc:hover{color:var(--mineral);background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);transform:scale(1.08)}
+.tb-soc:active{transform:scale(.93)}
 /* CTA persistente: depois que o hero sai da tela, o WhatsApp continua a um toque */
 .tb-zap{display:inline-flex;align-items:center;gap:8px;padding:8px 15px 8px 13px;border-radius:100px;
   font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;color:var(--mineral);
   background:rgba(43,217,107,.14);border:1px solid rgba(43,217,107,.32);transition:transform .2s var(--vai),background .3s}
 .tb-zap svg{width:16px;height:16px;fill:currentColor}
 .tb-zap:hover{background:rgba(43,217,107,.22)}.tb-zap:active{transform:scale(.96)}
-@media(max-width:760px){.tb-marca svg{height:22px}}
+@media(max-width:760px){.tb-marca svg{height:22px}.tb-soc{width:30px;height:30px}.tb-sep{margin:0}}
+@media(max-width:359px){.tb-soc,.tb-sep{display:none}}
 
 /* ── como funciona: expectativa clara = lead mais qualificado ── */
 .passos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:passo}
@@ -478,7 +488,8 @@ p{text-wrap:pretty}
   .passo h3{margin:5px 0 5px;font-size:1.06rem}
   .passo p{font-size:.92rem;line-height:1.5}
   .fecho{display:flex;flex-direction:column;align-items:stretch;gap:16px;margin-top:30px;padding-top:28px;border-top:1px solid var(--traco);text-align:center}
-  .fecho p{font-family:'Outfit',sans-serif;font-weight:600;font-size:1.22rem;letter-spacing:-.015em;color:var(--mineral);text-wrap:balance}
+  .fecho p{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.52rem;letter-spacing:-.025em;color:var(--mineral);text-wrap:balance;line-height:1.18}
+  .fecho p b{background:linear-gradient(var(--acento),var(--acento)) 0 100%/100% .09em no-repeat;padding-bottom:.08em;-webkit-box-decoration-break:clone;box-decoration-break:clone;font-weight:800}
   .fecho .zap{display:flex;width:100%;min-height:52px}
 
   /* rodapé respeita a barra do iPhone */
@@ -497,10 +508,19 @@ p{text-wrap:pretty}
     <a class="tb-marca" id="tbMarca" href="#" aria-label="NYVOS — voltar ao topo">
       <svg viewBox="0 0 96 96" aria-hidden="true"><path fill="#F26522" d="M0 0H30V32H48V64H66V0H96V96H36V64H24V32H12V96H0Z"/></svg><span>NYVOS</span>
     </a>
-    <a class="tb-zap" id="zapTop" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
-      WhatsApp
-    </a>
+    <div class="tb-right">
+      <a class="tb-soc" id="tbInsta" target="_blank" rel="noopener" aria-label="Instagram NYVOS">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg>
+      </a>
+      <a class="tb-soc" id="tbTiktok" target="_blank" rel="noopener" aria-label="TikTok NYVOS">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 3c.32 2.03 1.62 3.58 3.5 3.86v2.63c-1.28 0-2.48-.32-3.5-.9v6.06A5.58 5.58 0 1 1 10.9 9.2c.32 0 .63.03.93.09v2.72a2.86 2.86 0 1 0 2 2.73V3h2.67Z"/></svg>
+      </a>
+      <span class="tb-sep" aria-hidden="true"></span>
+      <a class="tb-zap" id="zapTop" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+        WhatsApp
+      </a>
+    </div>
   </div>
 </div>
 
@@ -618,9 +638,9 @@ p{text-wrap:pretty}
         </div>
       </div>
       <div class="fecho rev">
-        <p>Sua peça começa com uma mensagem.</p>
+        <p>Sua peça <b>começa com uma mensagem.</b></p>
         <a class="zap" id="zapFim" target="_blank" rel="noopener">
-          <span class="zap-luz" aria-hidden="true"></span><span class="zap-ico"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg></span>
+          <span class="zap-luz" aria-hidden="true"></span><span class="zap-ico"><svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.4c-.1.1-.3.3-.1.5.1.3.7 1.1 1.5 1.8 1 .9 1.8 1.1 2 1.2.3.1.4.1.6-.1l.7-.9c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.7-.1 1.3Z"/></svg><span class="zap-bolha" aria-hidden="true"><i></i><i></i><i></i></span></span>
           Clique aqui
         </a>
       </div>
@@ -633,8 +653,8 @@ p{text-wrap:pretty}
   <section class="secao" id="contato" style="scroll-margin-top:78px">
     <div class="col">
       <div class="cab rev">
-        <span class="et">Direto com quem imprime</span>
-        <h2>Chama a gente. <b>Resposta no mesmo dia.</b></h2>
+        <span class="et">Como funciona</span>
+        <h2>Direto com quem imprime. <b>Resposta no mesmo dia.</b></h2>
       </div>
       <div class="contatos rev">
         <a class="contato" id="cWhats" target="_blank" rel="noopener">
@@ -751,6 +771,7 @@ set("chMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
 set("rfInsta","href",insta); set("rfTiktok","href",tiktok);
 set("rfInstaTxt","textContent","@"+CONFIG.instagram); set("rfTiktokTxt","textContent","@"+CONFIG.tiktok);
 set("rfMail","href",`mailto:${CONFIG.email}?subject=Orçamento%20NYVOS`);
+set("tbInsta","href",insta); set("tbTiktok","href",tiktok);
 set("cLocal","href",CONFIG.mapa);
 set("cidade","textContent","Retirada em "+CONFIG.cidade);
 set("ano","textContent",new Date().getFullYear());
