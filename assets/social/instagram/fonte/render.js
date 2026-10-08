@@ -1,7 +1,7 @@
 const { chromium } = require("/opt/node-tools/node_modules/playwright");
 const fs = require("fs"), path = require("path");
 const { perfil, PERFIS } = require("./art.js");
-const { DESTAQUES, ALTERNATIVAS, capa } = require("./glifos.js");
+const { DESTAQUES, capa } = require("./glifos.js");
 
 const OUT = process.argv[2];
 
@@ -18,20 +18,15 @@ const circ = (d) => capa(d, { w: 1080, h: 1080 }).replace("<svg ", '<svg width="
   const b = await chromium.launch();
   const page = await b.newPage();
   const page2 = await b.newPage({ deviceScaleFactor: 2.5 });
-  for (const d of ["perfil", "perfil/svg", "destaques", "destaques/svg", "destaques/alternativas"]) fs.mkdirSync(path.join(OUT, d), { recursive: true });
+  for (const d of ["perfil", "perfil/svg", "destaques"]) fs.mkdirSync(path.join(OUT, d), { recursive: true });
 
   for (const [nome, cfg] of Object.entries(PERFIS)) {
     const svg = perfil(cfg);
     fs.writeFileSync(path.join(OUT, "perfil/svg", `nyvos-${nome}.svg`), svg);
     for (const px of [1080, 2048]) await shot(page, svg, px, px, path.join(OUT, "perfil", `nyvos-${nome}-${px}.png`));
   }
-  for (const d of DESTAQUES) {
-    const svg = capa(d);
-    fs.writeFileSync(path.join(OUT, "destaques/svg", `${nomeArq(d)}.svg`), svg);
-    await shot(page, svg, 1080, 1920, path.join(OUT, "destaques", `${nomeArq(d)}.png`));
-  }
-  // versões alternativas de uma capa, para trocar se preferir
-  for (const d of ALTERNATIVAS) await shot(page, capa(d), 1080, 1920, path.join(OUT, "destaques/alternativas", `${nomeArq(d)}.png`));
+  // as capas dos destaques compõem os renders 3D de fonte/icones (gerados por icones3d.js)
+  for (const d of DESTAQUES) await shot(page, capa(d), 1080, 1920, path.join(OUT, "destaques", `${nomeArq(d)}.png`));
 
   // prévia realista: fileira rolável como no app (só para conferência)
   const av = perfil(PERFIS["perfil-invertido"]).replace("<svg ", '<svg width="100%" height="100%" ');
