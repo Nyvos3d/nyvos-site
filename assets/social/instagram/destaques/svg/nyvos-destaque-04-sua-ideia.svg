@@ -1,47 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
-  <defs>
-    <radialGradient id="f-04-sua-ideia" cx="540" cy="710.4" r="842.4" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2C2F35"/><stop offset=".55" stop-color="#17181C"/><stop offset="1" stop-color="#0B0C0E"/>
-    </radialGradient>
-    <radialGradient id="g-04-sua-ideia" cx="540" cy="1038" r="483.6" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#F26522" stop-opacity=".12"/><stop offset="1" stop-color="#F26522" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="ribg-04-sua-ideia" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".2" stop-color="#fff" stop-opacity=".1"/>
-      <stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity=".14"/>
-      <stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient>
-    <pattern id="rib-04-sua-ideia" patternUnits="userSpaceOnUse" x="-40" y="1.000" width="200" height="4"><rect width="200" height="4" fill="url(#ribg-04-sua-ideia)"/></pattern><pattern id="ribe-04-sua-ideia" patternUnits="userSpaceOnUse" x="-40" y="1.287" width="200" height="4" patternTransform="skewY(30)"><rect width="200" height="4" fill="url(#ribg-04-sua-ideia)"/></pattern><pattern id="ribd-04-sua-ideia" patternUnits="userSpaceOnUse" x="-40" y="0.713" width="200" height="4" patternTransform="skewY(-30)"><rect width="200" height="4" fill="url(#ribg-04-sua-ideia)"/></pattern>
-    <linearGradient id="volr-04-sua-ideia" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".2" stop-color="#000" stop-opacity=".06"/>
-      <stop offset=".36" stop-color="#fff" stop-opacity=".24"/><stop offset=".52" stop-color="#fff" stop-opacity="0"/>
-      <stop offset=".84" stop-color="#000" stop-opacity=".26"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
-    <linearGradient id="vole-04-sua-ideia" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/>
-      <stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
-    <radialGradient id="volc-04-sua-ideia" cx=".38" cy=".3" r=".8">
-      <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/>
-      <stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient>
-    <linearGradient id="metal-04-sua-ideia" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#5E6167"/><stop offset=".3" stop-color="#E4E3DF"/>
-      <stop offset=".55" stop-color="#A3A5A9"/><stop offset="1" stop-color="#4B4E54"/></linearGradient>
-    
-    <linearGradient id="quente-04-sua-ideia" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#F26522"/><stop offset=".7" stop-color="#FF8A4C"/><stop offset="1" stop-color="#FFC9A6"/></linearGradient>
-    <radialGradient id="acesa-04-sua-ideia"><stop offset="0" stop-color="#FFE6D4" stop-opacity=".55"/><stop offset=".6" stop-color="#FF8A4C" stop-opacity=".15"/>
-      <stop offset="1" stop-color="#FF8A4C" stop-opacity="0"/></radialGradient>
-    <linearGradient id="tampo-04-sua-ideia" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202226"/><stop offset="1" stop-color="#3A3D44"/></linearGradient>
-    <filter id="brilho-04-sua-ideia" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="2.4"/></filter>
-    <filter id="sombra-04-sua-ideia" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="1.6"/></filter>
-  </defs>
+  <defs><radialGradient id="f-04-sua-ideia" cx="540" cy="960" r="1190.4" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#24272C"/><stop offset=".45" stop-color="#1B1D21"/><stop offset="1" stop-color="#16171A"/>
+  </radialGradient></defs>
   <rect width="1080" height="1920" fill="url(#f-04-sua-ideia)"/>
-  <circle cx="540" cy="960" r="540" fill="url(#g-04-sua-ideia)"/>
-  <g transform="translate(150 570) scale(8.125)"><ellipse cx="48" cy="85" rx="34" ry="4" fill="#000" opacity=".55" filter="url(#sombra-04-sua-ideia)"/>
-    <path d="M22 78H74L78 82H18Z" fill="url(#tampo-04-sua-ideia)"/>
-    <path d="M27.54 78L26 82 M34.98 78L34 82 M42.42 78L42 82 M49.86 78L50 82 M57.3 78L58 82 M64.74 78L66 82 M72.18 78L74 82 M20 80H76" stroke="#F3F2EE" stroke-opacity=".06" stroke-width=".3" fill="none"/>
-    <ellipse cx="48" cy="80" rx="20" ry="2.2" fill="#F26522" opacity=".35" filter="url(#sombra-04-sua-ideia)"/>
-    <rect x="18" y="82" width="60" height="5" fill="#252729"/>
-    <rect x="18" y="82" width="60" height=".5" fill="#F3F2EE" opacity=".18"/><circle cx="48" cy="32" r="30" fill="#F26522" opacity=".35" filter="url(#brilho-04-sua-ideia)"/><path d="M38 53.8A24 24 0 1 1 58 53.8V62H38Z" fill="#F26522"/><path d="M38 53.8A24 24 0 1 1 58 53.8V62H38Z" fill="url(#volr-04-sua-ideia)"/><path d="M38 53.8A24 24 0 1 1 58 53.8V62H38Z" fill="url(#rib-04-sua-ideia)"/><circle cx="44" cy="29" r="18" fill="url(#acesa-04-sua-ideia)"/><path d="M38.5 62H57.5V76H38.5Z" fill="#ECEAE4"/><path d="M38.5 62H57.5V76H38.5Z" fill="url(#volr-04-sua-ideia)"/><path d="M38.5 62H57.5V76H38.5Z" fill="url(#rib-04-sua-ideia)"/><path d="M42 76H54V81H42Z" fill="#33363C"/><path d="M42 76H54V81H42Z" fill="url(#volr-04-sua-ideia)"/><path d="M42 76H54V81H42Z" fill="url(#rib-04-sua-ideia)"/><g><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#9C998F" transform="translate(1.2 0)"/><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#9C998F" transform="translate(0.7 0)"/><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#9C998F" transform="translate(0.19999999999999996 0)"/></g>
-    <mask id="m8-04-sua-ideia" maskUnits="userSpaceOnUse" x="-20" y="-20" width="136" height="136"><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#fff" transform="translate(1.2 0)"/><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#fff" transform="translate(0.7 0)"/><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#fff" transform="translate(0.19999999999999996 0)"/></mask>
-    <rect x="-20" y="-20" width="136" height="136" fill="url(#rib-04-sua-ideia)" mask="url(#m8-04-sua-ideia)"/>
-    <path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="#ECEAE4"/><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="url(#vole-04-sua-ideia)"/><path d="M39.8 25H44.9V30.44H47.96V35.88H51.02V25H56.12V41.32H45.92V35.88H43.88V30.44H41.84V41.32H39.8Z" fill="url(#rib-04-sua-ideia)"/></g>
+  <g transform="translate(90 510) scale(9.375)"><g transform="translate(0 2.5)"><path d="M40 58V55C40 50 31 47.5 31 38.5A17 17 0 0 1 65 38.5C65 47.5 56 50 56 55V58Z" fill="#F26522"/><path d="M40 58V55C40 50 31 47.5 31 38.5A17 17 0 0 1 65 38.5C65 47.5 56 50 56 55V58Z" fill="none" stroke="#F3F2EE" stroke-width="4.5" stroke-linejoin="miter" stroke-miterlimit="4"/><path d="M41 65H55" fill="none" stroke="#F3F2EE" stroke-width="4.5" stroke-linejoin="miter" stroke-miterlimit="4"/><path d="M44 71.5H52" fill="none" stroke="#F3F2EE" stroke-width="4.5" stroke-linejoin="miter" stroke-miterlimit="4"/></g></g>
 </svg>
