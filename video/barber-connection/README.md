@@ -1,6 +1,6 @@
 # Vídeo · Suporte Barber Connection — "O Clarão"
 
-Prévia 3D para o cliente aprovar a peça: 1080×1920 (9:16), 30 fps, 19 s, H.264 + AAC.
+Prévia 3D para o cliente aprovar a peça: 1080×1920 (9:16), 30 fps, 20 s, H.264 + AAC.
 Direção criativa e storyboard: [`direcao-criativa.md`](direcao-criativa.md).
 
 A geometria vem **direto do 3MF do cliente** (`suporte_barber_connection_2_cores.3mf`, R2), sem remodelagem.
@@ -12,7 +12,7 @@ O vídeo é CGI renderizado com three.js. Não é foto nem vídeo gerado por IA.
 cd video/barber-connection
 python3 -I extrair_3mf.py <arquivo.3mf> cena/modelo     # malhas → buffers (cena/modelo/ não é versionado)
 ./build.sh                                              # empacota a cena (requer npm install na raiz)
-ESCALA=1.5 node render.js quadros <pasta-quadros>       # 570 PNGs 1620×2880 (~8 s/quadro, só CPU)
+ESCALA=1.5 node render.js quadros <pasta-quadros>       # 600 PNGs 1620×2880 (~8 s/quadro, só CPU)
 python3 audio.py som.wav                                # desenho de som sintetizado
 ./montar.sh <pasta-quadros> som.wav <saida>             # MP4 com som, MP4 sem som e capa JPG
 ```

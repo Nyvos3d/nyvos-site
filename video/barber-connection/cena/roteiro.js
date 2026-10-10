@@ -5,7 +5,7 @@
 // raio direito na face x ≈ 36,6, da base frontal (z 30, y 5) ao topo traseiro (z −39, y 113).
 
 export const FPS = 30;
-export const DURACAO = 19;
+export const DURACAO = 20;
 // cortes (s): plano a plano
 export const CORTES = { s3a: 7.4, s3b: 9.9, s3c: 12.2, s4: 14.4, s5: 16.5 };
 
@@ -153,8 +153,9 @@ export function ROTEIRO(t) {
     e.fundo = { brilho: 0.075, flash: 0.13 * f, centro: [0.5, 0.66], raio: 0.48 };
     e.bloom = 0.08 + 0.2 * Math.min(f, 1);
     e.clarao = clarao(t, CORTES.s5, 0.2);
-    e.texto = seg(t, CORTES.s5 + 0.6, CORTES.s5 + 1.5);
-    e.fade = 1 - suave(seg(t, DURACAO - 0.4, DURACAO));
+    e.texto = seg(t, CORTES.s5 + 0.5, CORTES.s5 + 1.4);
+    e.marca = seg(t, CORTES.s5 + 1.4, CORTES.s5 + 2.1);   // logo NYVOS entra depois do texto
+    e.fade = 1 - suave(seg(t, DURACAO - 0.45, DURACAO));
   }
   return e;
 }

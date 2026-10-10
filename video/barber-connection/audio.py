@@ -1,4 +1,4 @@
-"""Desenho de som de "O Clarão" (19 s, 48 kHz, estéreo), sincronizado com cena/roteiro.js.
+"""Desenho de som de "O Clarão" (20 s, 48 kHz, estéreo), sincronizado com cena/roteiro.js.
 
 Só síntese (numpy, semente fixa): ambiência grave, pad em lá menor, trovões nos clarões,
 impactos nos cortes com clarão e um brilho de ar acompanhando a luz que varre o logo.
@@ -11,7 +11,7 @@ import wave
 import numpy as np
 
 SR = 48000
-DUR = 19.0
+DUR = 20.0
 N = int(SR * DUR)
 rng = np.random.default_rng(7)
 T = np.arange(N) / SR
@@ -128,7 +128,7 @@ def main(saida):
     # 1) ambiência de sala, sempre presente
     amb = filtro(ruido_marrom(N), lo=30, hi=320)
     amb = amb * 0.3
-    mix += amb * (suave(T / 1.2) * (1 - suave((T - 18.4) / 0.6)))[:, None]
+    mix += amb * (suave(T / 1.2) * (1 - suave((T - (DUR - 0.6)) / 0.6)))[:, None]
 
     # 2) pad em lá menor (lá2, dó3, mi3 + sub lá1), abre na órbita do plano 2
     pad = np.zeros((N, 2))
@@ -143,7 +143,7 @@ def main(saida):
     sub = np.sin(2 * np.pi * 55 * T) * (0.8 + 0.2 * np.sin(2 * np.pi * 0.11 * T))
     pad += sub[:, None] * 1.2
     vol_pad = suave((T - 2.4) / 2.6) * (1 - 0.35 * suave((T - 9.9) / 2.0)) * (1 + 0.4 * suave((T - 16.5) / 0.6))
-    vol_pad *= 1 - suave((T - 18.2) / 0.8)
+    vol_pad *= 1 - suave((T - (DUR - 0.8)) / 0.8)
     pad = pad / np.abs(pad).max() * vol_pad[:, None] * 0.24
 
     # 3) trovões nos clarões
@@ -172,7 +172,7 @@ def main(saida):
         for nome, x in [('ambiência', amb), ('pad', pad), ('efeitos', fx)]:
             print(f'{nome:10s} rms {db(x):6.1f} dB  pico {20 * np.log10(np.abs(x).max() + 1e-12):6.1f} dB')
     mix = reverb(mix)
-    mix *= (1 - suave((T - 18.55) / 0.45))[:, None]   # acompanha o fade do vídeo
+    mix *= (1 - suave((T - (DUR - 0.45)) / 0.45))[:, None]   # acompanha o fade do vídeo
     mix /= np.abs(mix).max() / 0.89
     with wave.open(saida, 'wb') as w:
         w.setnchannels(2)

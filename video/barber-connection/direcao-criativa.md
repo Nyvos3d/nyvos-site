@@ -54,7 +54,7 @@ silhueta. Uma névoa atmosférica muito leve, opcional, dá corpo ao feixe de co
 
 **Paleta de luz:** flashes levemente frios, luz principal neutra. Nada de cor que dispute com o preto e o prata.
 
-## 4. Storyboard — 9:16 · 1080×1920 · ~19 s · 30 fps
+## 4. Storyboard — 9:16 · 1080×1920 · 20 s · 30 fps
 
 | # | Tempo | Plano | Câmera | Luz | Objetivo |
 |---|---|---|---|---|---|
@@ -64,7 +64,7 @@ silhueta. Uma névoa atmosférica muito leve, opcional, dá corpo ao feixe de co
 | 3b | 9,5–11,5 s | Macro: raio dentro do "O", depois "A TEMPESTADE" | **mudança de foco** do "O" para o subtítulo | mesma luz rasante | detalhe e assinatura da barbearia |
 | 3c | 11,5–13,5 s | Macro na borda do raio lateral | travelling ao longo da diagonal do raio | luz lateral rasante desenha a sombra fina do relevo de 2 mm | prova física do relevo (precisão) |
 | 4 | 13,5–16,0 s | ver opções abaixo | — | — | contexto ou uso |
-| 5 | 16,0–19,0 s | *Hero* frontal limpo, peça no terço superior | câmera para, com uma aproximação mínima | último clarão suave, depois luz estável | assinatura; **faixa inferior livre** para marca e chamada |
+| 5 | 16,5–20,0 s | *Hero* frontal limpo, peça no terço superior | câmera para, com uma aproximação mínima | último clarão suave, depois luz estável | assinatura; **faixa inferior livre** para marca e chamada |
 
 **Cena 4, duas opções:**
 - **A — função confirmada:** o aparelho confirmado entra no berço com movimento de encaixe real e na escala correta. O

@@ -7,13 +7,16 @@ const { chromium } = require('/opt/node-tools/node_modules/playwright');
 const http = require('http'), fs = require('fs'), path = require('path');
 
 const RAIZ = path.join(__dirname, 'cena');
+const MARCA = path.join(__dirname, '..', '..', 'assets');   // logos NYVOS do repositório, servidos em /assets/
 const TIPOS = { '.html': 'text/html', '.js': 'text/javascript', '.bin': 'application/octet-stream', '.svg': 'image/svg+xml', '.png': 'image/png' };
 
 function servidor() {
   return new Promise((ok) => {
     const s = http.createServer((req, res) => {
-      const p = path.join(RAIZ, decodeURIComponent(new URL(req.url, 'http://x').pathname));
-      if (!p.startsWith(RAIZ) || !fs.existsSync(p) || fs.statSync(p).isDirectory()) { res.writeHead(404); return res.end(); }
+      const rota = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+      const base = rota.startsWith('/assets/') ? MARCA : RAIZ;
+      const p = path.join(base, rota.replace(/^\/assets\//, '/'));
+      if (!p.startsWith(base) || !fs.existsSync(p) || fs.statSync(p).isDirectory()) { res.writeHead(404); return res.end(); }
       res.writeHead(200, { 'Content-Type': TIPOS[path.extname(p)] || 'application/octet-stream' });
       fs.createReadStream(p).pipe(res);
     }).listen(0, '127.0.0.1', () => ok(s));
@@ -35,6 +38,7 @@ function servidor() {
   const erro = await page.evaluate(() => window.CENA.erro);
   if (erro) throw new Error(erro);
   await page.evaluate(() => document.fonts.ready);
+  await page.waitForFunction(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 30000 });
 
   const foto = (arq) => page.screenshot({ path: arq, clip: { x: 0, y: 0, width: 1080, height: 1920 } });
   if (modo === 'livre') {

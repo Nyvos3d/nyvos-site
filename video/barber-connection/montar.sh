@@ -15,6 +15,6 @@ ffmpeg -hide_banner -loglevel error -y -framerate 30 -i "$Q/q%05d.png" -i "$SOM"
   -vf "$VF" $X264 -af "loudnorm=I=-16:TP=-1.5:LRA=11:linear=true:$ARG,aresample=48000" \
   -c:a aac -b:a 192k -shortest "$OUT.mp4"
 ffmpeg -hide_banner -loglevel error -y -framerate 30 -i "$Q/q%05d.png" -vf "$VF" $X264 -an "$OUT"_sem-audio.mp4
-# capa: quadro do hero final com a assinatura completa (t = 18,2 s)
-ffmpeg -hide_banner -loglevel error -y -i "$Q/q00546.png" -vf "scale=1080:1920:flags=lanczos" -q:v 2 "$OUT"_capa.jpg
+# capa: quadro do hero final com a assinatura completa e o logo (t = 19,2 s)
+ffmpeg -hide_banner -loglevel error -y -i "$Q/q00576.png" -vf "scale=1080:1920:flags=lanczos" -q:v 2 "$OUT"_capa.jpg
 ls -l "$OUT".mp4 "$OUT"_sem-audio.mp4 "$OUT"_capa.jpg
