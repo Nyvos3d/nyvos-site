@@ -1,7 +1,7 @@
 # Barber Connection · A Tempestade — Direção criativa do vídeo
 
-**Versão:** v1 · storyboard para aprovação
-**Status:** aguardando as respostas da seção 8 antes de renderizar
+**Versão:** v2 · em produção (render a partir do 3MF R2)
+**Status:** vídeo renderizado a partir do arquivo 3D do cliente; decisões na seção 9
 
 Referência analisada: prancha "Protótipo R2 · Raios mais largos", com vistas geradas do arquivo 3D.
 É um **render de CAD, não uma foto da peça impressa**.
@@ -127,3 +127,20 @@ Restariam duas alternativas:
 4. **Objetivo do vídeo:** vender este suporte? Ou mostrar a barbearias e outros negócios que vocês fazem peças
    personalizadas? A resposta define a chamada final.
 5. **Acabamento:** a peça já foi impressa? O prata é seda (brilhante) ou fosco? Há autorização da Barber Connection?
+
+## 9. Decisões da v2 (após receber o 3MF)
+
+- **Finalidade:** prévia para o cliente (Barber Connection) ver como a peça vai ficar. Por isso a assinatura final diz
+  "Prévia 3D · Protótipo R2" e traz as medidas e as cores. Não há chamada de venda.
+- **Arquivo:** `suporte_barber_connection_2_cores.3mf`, com 4 objetos fechados (corpo preto, raio esquerdo, raio direito,
+  logo e subtítulo). Isso confirma que há **um raio em cada lateral**. As medidas batem com a prancha: 75 × 85 × 115 mm.
+- **Cena 4:** opção **B**, a vista traseira com a luz atravessando o recorte. A função da peça não foi confirmada, então
+  nenhum aparelho aparece.
+- **Marca do estúdio:** ainda indefinida (NYVOS ou Mundo 3D Lab). A assinatura final sai sem logo.
+- **Acabamento:** cores do 3MF; prata como plástico com brilho metálico; sem linhas de camada simuladas.
+- **Ajustes de fidelidade feitos durante a produção:**
+  - bloom limitado aos clarões, para nenhuma borda prateada parecer luz de LED;
+  - a abertura saiu do perfil exato (az ≈ 80°), para as bordas finas não piscarem por serrilhado;
+  - luz de preenchimento na lateral direita, para o raio continuar lendo como prata de frente.
+- **Áudio:** desenho de som sintetizado (trovões nos clarões, pad grave, impactos nos cortes), normalizado a −16 LUFS.
+  Também sai uma versão sem áudio, para usar com trilha licenciada.

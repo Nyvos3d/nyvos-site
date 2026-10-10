@@ -4,3 +4,6 @@ desktop.ini
 .claude/
 entrega/
 node_modules/
+video/**/modelo
+video/**/quadros/
+video/**/*.bundle.js

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>O Clarão · Barber Connection</title>
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #palco { position: relative; width: 1080px; height: 1920px; }
+  #palco canvas { display: block; }
+  /* assinatura final (plano 5). Fica acima de ~20% da base: zona livre de botões em Reels/TikTok */
+  #assinatura {
+    position: absolute; left: 0; right: 0; top: 1286px;
+    text-align: center; color: #e9ebef; opacity: 0;
+    font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+  }
+  #assinatura > * { will-change: opacity, transform; }
+  .kicker { font-weight: 500; font-size: 23px; letter-spacing: 0.34em; color: #9aa2b0; text-indent: 0.34em; }
+  .linha { height: 2px; width: 0; margin: 26px auto 28px; background: linear-gradient(90deg, transparent, #c9cdd4, transparent); }
+  .titulo { font-family: 'Inter Display', 'Inter', sans-serif; font-weight: 600; font-size: 62px; letter-spacing: -0.01em; }
+  .specs { margin-top: 18px; font-weight: 400; font-size: 27px; line-height: 1.5; color: #b9bec7; }
+</style>
+</head>
+<body>
+<div id="palco">
+  <div id="assinatura">
+    <div class="kicker">PRÉVIA 3D · PROTÓTIPO R2</div>
+    <div class="linha"></div>
+    <div class="titulo">Suporte Barber Connection</div>
+    <div class="specs">75 × 85 × 115 mm<br>Corpo preto · raios, logo e subtítulo em prata</div>
+  </div>
+</div>
+<script>
+  // Animação do texto guiada pelo roteiro (estado.texto: 0→1; estado.fade: escurecimento final)
+  (() => {
+    const el = document.getElementById('assinatura');
+    const [kicker, linha, titulo, specs] = el.children;
+    const fx = (a, b, k) => { const x = Math.min(1, Math.max(0, (k - a) / (b - a))); return x * x * (3 - 2 * x); };
+    window.SOBREPOSICAO = (t, e) => {
+      const k = e.texto || 0;
+      el.style.opacity = k > 0 ? e.fade : 0;
+      const sobe = (n, a, b) => { const v = fx(a, b, k); n.style.opacity = v; n.style.transform = `translateY(${(1 - v) * 16}px)`; };
+      sobe(kicker, 0, 0.5);
+      linha.style.width = `${fx(0.12, 0.75, k) * 180}px`;
+      sobe(titulo, 0.22, 0.82);
+      sobe(specs, 0.42, 1);
+    };
+  })();
+</script>
+<script type="module" src="cena.bundle.js"></script>
+</body>
+</html>
