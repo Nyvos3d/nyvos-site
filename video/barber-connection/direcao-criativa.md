@@ -136,7 +136,8 @@ Restariam duas alternativas:
   logo e subtítulo). Isso confirma que há **um raio em cada lateral**. As medidas batem com a prancha: 75 × 85 × 115 mm.
 - **Cena 4:** opção **B**, a vista traseira com a luz atravessando o recorte. A função da peça não foi confirmada, então
   nenhum aparelho aparece.
-- **Marca do estúdio:** ainda indefinida (NYVOS ou Mundo 3D Lab). A assinatura final sai sem logo.
+- **Marca do estúdio:** NYVOS (confirmada). O logo horizontal negativo (`assets/nyvos-logo-horizontal-negativo.svg`)
+  entra no fim da assinatura, a partir do arquivo original. Por isso o vídeo passou a ter 20 s.
 - **Acabamento:** cores do 3MF; prata como plástico com brilho metálico; sem linhas de camada simuladas.
 - **Ajustes de fidelidade feitos durante a produção:**
   - bloom limitado aos clarões, para nenhuma borda prateada parecer luz de LED;

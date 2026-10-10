@@ -36,4 +36,4 @@ Para conferir um instante sem renderizar tudo: `ESCALA=1.5 node render.js still 
 - **Linhas de camada FDM não simuladas.** A superfície mostra o acabamento do modelo, não o da impressão.
 - **Prata e preto aproximados.** Seguem as cores do 3MF (#D4D7DD e #20232B). O prata foi tratado como plástico com brilho
   metálico; o tom real depende do filamento usado.
-- **Sem marca do estúdio.** A assinatura final não tem logo enquanto a marca não for definida (NYVOS ou Mundo 3D Lab).
+- **Logo NYVOS.** A assinatura usa `assets/nyvos-logo-horizontal-negativo.svg` sem alteração; o render serve a pasta `assets/` em `/assets/`.
